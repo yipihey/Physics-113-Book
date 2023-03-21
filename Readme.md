@@ -11,3 +11,9 @@ To build the book after you added more content (or cloned the repository the fir
 Physics-113-Book> jupyter-book build ./
 ```
 and it will be found in your local ```_build/html``` directory. 
+
+To publish it to the website we execute in the main directory of the repository. 
+
+```bash
+ghp-import -n -p -f _build/html
+```
