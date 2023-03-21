@@ -1,0 +1,944 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Trapezoidal and Simpson’s Rule &#8212; Physics 113 - Computational Physics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'numerical_integration/numerical_integration';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Monte Carlo Integration" href="MonteCarloIntegration-Basics.html" />
+    <link rel="prev" title="Introduction to NumPy" href="../python_basics/intro-to-numpy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to Physics 113
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Trapezoidal and Simpson’s Rule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Jupyter-book examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/yipihey/Physics-113-Book/master?urlpath=tree/docs/numerical_integration/numerical_integration.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/yipihey/Physics-113-Book/blob/master/docs/numerical_integration/numerical_integration.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Fnumerical_integration/numerical_integration.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/numerical_integration/numerical_integration.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Trapezoidal and Simpson’s Rule</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules-numerical-integration">Modules - Numerical Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-task">The Task</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trapezoidal-rule">Trapezoidal Rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-room-exercise">Breakout room exercise</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simpson-s-rule">Simpson’s Rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Breakout room exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exploration">Further exploration</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <p><a href="https://www.numfys.net"><img class="logo" /></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="trapezoidal-and-simpsons-rule">
+<h1>Trapezoidal and Simpson’s Rule<a class="headerlink" href="#trapezoidal-and-simpsons-rule" title="Permalink to this headline">#</a></h1>
+<section id="modules-numerical-integration">
+<h2>Modules - Numerical Integration<a class="headerlink" href="#modules-numerical-integration" title="Permalink to this headline">#</a></h2>
+<section class="post-meta">
+By Magnus A. Gjennestad, Vegard Hagen, Aksel Kvaal, Morten Vassvik, Trygve B. Wiig and Peter Berg
+</section>
+Last edited:  Jan  2021, Tom Abel 
+___</section>
+<section id="the-task">
+<h2>The Task<a class="headerlink" href="#the-task" title="Permalink to this headline">#</a></h2>
+<p>How do we determine a definite integral like
+$<span class="math notranslate nohighlight">\(\int_a^b f(x) \mathrm{d}x\)</span><span class="math notranslate nohighlight">\(
+if we cannot solve it analytically, i.e. if we cannot find a function \)</span>F(x)<span class="math notranslate nohighlight">\( with
+\)</span><span class="math notranslate nohighlight">\(\frac{\mathrm{d}}{\mathrm{d}x}F(x) = f(x)\)</span><span class="math notranslate nohighlight">\(
+and 
+\)</span><span class="math notranslate nohighlight">\( \int_a^b f(x) \mathrm{d}x = F(b)-F(a).\)</span>$</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h2>
+<p>We cannot determine the integral
+$<span class="math notranslate nohighlight">\( \int_0^1 \sqrt{x^5+e^{5x}} \mathrm{d}x\)</span>$
+analytically. So what do we do?</p>
+<p>Let’s plot the integrand <span class="math notranslate nohighlight">\(f(x)=\sqrt{x^5+e^{5x}}\)</span> for <span class="math notranslate nohighlight">\(x\in[0,1]\)</span>. First we import the necessary libraries and set some figure parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Set common figure parameters</span>
+<span class="n">newparams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="s1">&#39;axes.grid&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+             <span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">newparams</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c497a1dd05453e2d7e7ea1b78f16cf6d7225258be3c8af624573d14526aaf0ca.png" src="../_images/c497a1dd05453e2d7e7ea1b78f16cf6d7225258be3c8af624573d14526aaf0ca.png" />
+</div>
+</div>
+<p>We know that the integral represents, in this case, the area under the graph. The area is well defined and finite.</p>
+<p>We could approximate it by a Riemann sum. For this purpose, we divide the interval <span class="math notranslate nohighlight">\([0, 1]\)</span> into <span class="math notranslate nohighlight">\(N − 1\)</span> intervals of the same
+length <span class="math notranslate nohighlight">\(h\)</span> with
+$<span class="math notranslate nohighlight">\(h = \frac{1}{N-1}.\)</span>$</p>
+<p>The endpoints of these intervals are located at
+$<span class="math notranslate nohighlight">\(x_n = (n-1)h,\qquad \mathrm{with}\quad n=1,2,3,...,N.\)</span><span class="math notranslate nohighlight">\(
+This leads naturally to the definition of a rectangle for each interval \)</span>[x_n, x_{n+1}]<span class="math notranslate nohighlight">\( whose height is determined by the value of the function at \)</span>x_n<span class="math notranslate nohighlight">\(, i.e. \)</span>f(x_n)$.</p>
+<p>For N = 6, we can sketch this in our previous plot. But first we need to define a function for drawing trapezoids:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.path</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+
+<span class="k">def</span> <span class="nf">draw_trapezoid</span><span class="p">(</span><span class="n">xpoints</span><span class="p">,</span> <span class="n">ypoints</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Function for drawing trapezoids. Takes arrays of x- and y-values as input,</span>
+<span class="sd">    moving clockwise from bottom left corner. &quot;&quot;&quot;</span>
+    <span class="n">verts</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">xpoints</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ypoints</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="c1"># left, bottom</span>
+        <span class="p">(</span><span class="n">xpoints</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ypoints</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="c1"># left, top</span>
+        <span class="p">(</span><span class="n">xpoints</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">ypoints</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="c1"># right, top</span>
+        <span class="p">(</span><span class="n">xpoints</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">ypoints</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="c1"># right, bottom</span>
+        <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="c1"># ignored</span>
+        <span class="p">]</span>
+
+    <span class="n">codes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="o">.</span><span class="n">MOVETO</span><span class="p">,</span>
+             <span class="n">Path</span><span class="o">.</span><span class="n">LINETO</span><span class="p">,</span>
+             <span class="n">Path</span><span class="o">.</span><span class="n">LINETO</span><span class="p">,</span>
+             <span class="n">Path</span><span class="o">.</span><span class="n">LINETO</span><span class="p">,</span>
+             <span class="n">Path</span><span class="o">.</span><span class="n">CLOSEPOLY</span><span class="p">,</span>
+             <span class="p">]</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">codes</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">patch</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">PathPatch</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;#d3d3d3&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">patch</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot rectangles:</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">draw_trapezoid</span><span class="p">([(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">,(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">h</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">h</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">f</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">),</span><span class="n">f</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">),</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d37c641cc321fa7803be49749160a8797cdbbefd6ed01d69ff2ec93934237727.png" src="../_images/d37c641cc321fa7803be49749160a8797cdbbefd6ed01d69ff2ec93934237727.png" />
+</div>
+</div>
+<p>We can see that we make a fairly large error in our estimate of the integral when we use these rectangles. How can we do better?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Well we could evaluate the function not at the end but at the midpoint of the interval. </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot rectangles:</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">f</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">)</span>
+    <span class="n">draw_trapezoid</span><span class="p">([(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">,(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">h</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">h</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/446670dbe70f3211d9c835333de7e53ac52cff10b23ab14ea5d63dc4298b361d.png" src="../_images/446670dbe70f3211d9c835333de7e53ac52cff10b23ab14ea5d63dc4298b361d.png" />
+</div>
+</div>
+</section>
+<section id="trapezoidal-rule">
+<h2>Trapezoidal Rule<a class="headerlink" href="#trapezoidal-rule" title="Permalink to this headline">#</a></h2>
+<p>One way to go forward is to make the intervals smaller. In the limit when their length goes to zero, we should find the exact value of the integral.</p>
+<p>However, this is impractical on the computer since it involves infinitely many calculations. What else can we do?</p>
+<p>Well, a better approximation can already be obtained with our last set of intervals if we use trapezoids instead. Two sides (top and bottom) of each trapezoid are determined by the interval along the x-axis, while the other two sides (left and right) are determined by the values of the function <span class="math notranslate nohighlight">\(f(x)\)</span> at each end of the interval.
+Let’s see what this looks like in the plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot trapezoids:</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">draw_trapezoid</span><span class="p">([(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">,(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">h</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">h</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">f</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">),</span><span class="n">f</span><span class="p">((</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">h</span><span class="p">),</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0898c46c6494471f95f632c73d85f3e5db3a2f8f375b996f9bf05b35ea476a92.png" src="../_images/0898c46c6494471f95f632c73d85f3e5db3a2f8f375b996f9bf05b35ea476a92.png" />
+</div>
+</div>
+<p>It seems that we are making a much smaller error than before, given the same set of intervals. The error seems to increase when the curvature of the graph increases (towards the right in this plot).</p>
+<p>Let us derive a formula for the area that the trapezoids cover. Using our notation above, the area of a trapezoid is given by
+$<span class="math notranslate nohighlight">\(A_n=h\frac{f_n+f_{n+1}}{2} \)</span><span class="math notranslate nohighlight">\(
+with \)</span>f_n=f(x_n)<span class="math notranslate nohighlight">\(.
+Here, \)</span>h<span class="math notranslate nohighlight">\( is the length of each interval, and hence the length of the base of each trapezoid, and the expression
+￼\)</span><span class="math notranslate nohighlight">\(\frac{f_n + f_{n+1}}{2}\)</span>$
+represents the “average height” of the corresponding trapezoid.</p>
+<p>Adding up all the trapezoids, we obtain the total area
+$<span class="math notranslate nohighlight">\(A=A_1 +A_2 +A_3 +...+A_{N−1}\)</span><span class="math notranslate nohighlight">\(
+and so
+\)</span><span class="math notranslate nohighlight">\(A=h\frac{f_1 +f_2}{2} +h\frac{f_2 +f_3}{2} +h\frac{f_3 +f_4}{2} +...h\frac{f_{N−1} +f_N}{2}.\)</span><span class="math notranslate nohighlight">\(
+￼￼￼￼Factoring out h and rearranging terms gives
+\)</span><span class="math notranslate nohighlight">\(A=h\left(\frac{1}{2}f_1+f_2+f_3+...+f_{N−1}+\frac{1}{2}f_N\right).\)</span>$
+￼￼This formula describes the <strong>trapezoidal rule</strong> and approximates the original integral.</p>
+<p>The factors inside the bracket are 0.5, 1, 1, …, 1, 0.5. This stems from the fact that we only use the endpoints 0 and 1 once in our calculation while all other points are involved twice in the determination of trapezoidal areas.</p>
+<p>Note that we do not need to assume an interval <span class="math notranslate nohighlight">\([0, 1]\)</span>. Instead, we can use this method for any interval <span class="math notranslate nohighlight">\([a, b]\)</span>. The definitions then change to
+$<span class="math notranslate nohighlight">\(h= \frac{b−a}{N-1}\qquad \mathrm{and} \qquad x_n =a+(n−1)h.\)</span><span class="math notranslate nohighlight">\(
+￼This way, we can approximate the integral by
+\)</span><span class="math notranslate nohighlight">\(\boxed{\int_a^b f(x) \mathrm{d}x \approx h\left(\frac{1}{2}f_1+f_2+f_3+...+f_{N−1}+\frac{1}{2}f_N\right).}\)</span>$</p>
+<p>It can be shown that this method contains an error (i.e. actual value of the definite integral vs. numerical value) that is proportional to</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\((b−a)^3\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\frac{1}{N^2}\)</span>, and</p></li>
+<li><p>the (maximum) magnitude of the second derivative of <span class="math notranslate nohighlight">\(f(x)\)</span>
+over the respective interval.</p></li>
+</ol>
+<p>Hence, doubling the amount of intervals reduces the error by a factor of four! However, choosing very large <span class="math notranslate nohighlight">\(N\)</span> is not a good idea for two reasons:</p>
+<ul class="simple">
+<li><p>It increases the computational time.</p></li>
+<li><p>The computer has finite precision; rounding errors become important!</p></li>
+</ul>
+<p>The second derivative is linked to the curvature of the graph and we saw above that the error indeed increased where the curvature was larger. This makes sense since we are trying to approximate a curved graph with a straight line.</p>
+<p>Let’s approximate the integral
+$<span class="math notranslate nohighlight">\( \int_0^1 \sqrt{x^5+e^{5x}} \mathrm{d}x\)</span><span class="math notranslate nohighlight">\(
+for various \)</span>N$. As we increase N, the values for the trapezoidal rule converge. Try it yourself!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the interval</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>                  <span class="c1"># defining the amount of points making up the smaller intervals</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>         <span class="c1"># defining the length of each small interval</span>
+
+<span class="n">area</span> <span class="o">=</span> <span class="mi">0</span>                <span class="c1"># setting the area to zero</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span>
+    <span class="n">func</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">i</span><span class="o">==</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># First and last point</span>
+        <span class="n">area</span> <span class="o">+=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">func</span><span class="o">*</span><span class="n">h</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">area</span> <span class="o">+=</span> <span class="n">func</span><span class="o">*</span><span class="n">h</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;The value of the integral is </span><span class="si">%f</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="n">area</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The value of the integral is 4.512140.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="breakout-room-exercise">
+<h2>Breakout room exercise<a class="headerlink" href="#breakout-room-exercise" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Let’s turn this into a function we call trapezoidal which takes, a, b, N and func as input and gives back the definite integral.</p></li>
+<li><p>Double check it gives the correct result</p></li>
+<li><p><em>Bonus</em>, implement a keyword argument midpoint, which uses the trick from above that uses the linear approximation i.e. same slope but around the midpoint of the interval</p></li>
+</ul>
+<section id="simpson-s-rule">
+<h3>Simpson’s Rule<a class="headerlink" href="#simpson-s-rule" title="Permalink to this headline">#</a></h3>
+<p><strong>Question:</strong>
+Is there a better, i.e. more precise, method to approximate an integral? Can we do just as well with fewer intervals?</p>
+<p><strong>Answer:</strong>
+Yes, there are several methods.
+One method is called <strong>Simpson’s rule</strong>. The idea behind this method is that we do not approximate the graph locally by a straight line, as is the case for the trapezoidal method, but rather by a polynomial of order 2. This means that we approximate the function <span class="math notranslate nohighlight">\(f(x)\)</span> in each subinterval by
+$<span class="math notranslate nohighlight">\(f(x) \approx c_n x^2 + d_n x + e_n =: g_n(x).\)</span><span class="math notranslate nohighlight">\(
+The parameters \)</span>c_n<span class="math notranslate nohighlight">\(, \)</span>d_n<span class="math notranslate nohighlight">\(, \)</span>e_n<span class="math notranslate nohighlight">\( are chosen so that \)</span>f(x)<span class="math notranslate nohighlight">\( and \)</span>g_n(x)$ coincide at the endpoints of the interval and at its midpoint.</p>
+<section id="id1">
+<h4>Example:<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
+<p>Let us plot our original function and approximate it by a second-order polynomial with the above characteristics. We get the equations</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+e_n &amp;= f(0), \\
+\frac{1}{4}c_n+\frac{1}{2}d_n+e_n &amp;= f(0.5), \\
+c_n+d_n+e_n &amp;= f(1),
+\end{align*}\]</div>
+<p>which yields</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+c_n &amp;= 2f(1)-4f(0.5)+2f(0),\\
+d_n &amp;= -f(1) + 4f(0.5) - 3f(0),\\
+e_n &amp;= f(0).
+\end{align*}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Determine the parameter values:</span>
+<span class="n">c_n</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">f</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span><span class="o">+</span><span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">d_n</span> <span class="o">=</span> <span class="o">-</span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">f</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">e_n</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">c_n</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">d_n</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">e_n</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$g(x)$&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f04cdbf2c04df91c33ae12b6af43e818df9b787c0bbdb34b6b7dac9068dcb606.png" src="../_images/f04cdbf2c04df91c33ae12b6af43e818df9b787c0bbdb34b6b7dac9068dcb606.png" />
+</div>
+</div>
+<p>We see that the polynomial describes the original function already quite well. And we have not even started to divide the interval <span class="math notranslate nohighlight">\([0, 1]\)</span> into subintervals…</p>
+<p>It is important to note that Simpson’s rule requires and odd number of points (<span class="math notranslate nohighlight">\(N\)</span> = 3, 5, 7, …) along the <span class="math notranslate nohighlight">\(x\)</span>-axis since we need to use three points for each interval, i.e. left endpoint, right endpoint and midpoint.</p>
+<p>At the same time, two adjacent intervals share one endpoint, i.e. the right endpoint of one interval coincides with the left endpoint of another interval (except at <span class="math notranslate nohighlight">\(x = b\)</span>).</p>
+<p>All along, we still maintain a uniform division of the original interval <span class="math notranslate nohighlight">\([a, b]\)</span> into smaller subintervals.</p>
+<p>The simplest case is using three points for the original interval, representing one interval with one midpoint:
+$<span class="math notranslate nohighlight">\(x_1 =a,\, x_2 =\frac{b-a}{2},\, x_3 =b.\)</span><span class="math notranslate nohighlight">\(
+This case is exhibited in the previous plot. In this case, it can be shown that the integral approximation reduces to
+\)</span><span class="math notranslate nohighlight">\(\int_a^b f(x) \mathrm{d}x \approx \frac{b-a}{6}\left[f(x_1)+4f(x_2)+f(x_3)\right].\)</span><span class="math notranslate nohighlight">\(
+The next case uses five points: two intervals with one midpoint each. Now, we obtain
+\)</span><span class="math notranslate nohighlight">\(\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f(x_1)+4f(x_2)+2f(x_3)+4f(x_4)+f(x_5)\right],\)</span><span class="math notranslate nohighlight">\(
+where \)</span>h<span class="math notranslate nohighlight">\( is the distance between two successive points along the \)</span>x$-axis. This scenario is plotted below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Plot lines</span>
+<span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">i</span><span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="n">h</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">h</span><span class="p">)],</span> <span class="n">color</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3d344ab4fd59e4ecd3f4378cec2ea06a4c9187643e9c1523ef57f937a4eb5738.png" src="../_images/3d344ab4fd59e4ecd3f4378cec2ea06a4c9187643e9c1523ef57f937a4eb5738.png" />
+</div>
+</div>
+<p>The case of two intervals: <span class="math notranslate nohighlight">\([0, 0.5]\)</span> and <span class="math notranslate nohighlight">\([0.5, 1]\)</span>. We have a total of 5 points along the <span class="math notranslate nohighlight">\(x\)</span>-axis, namely 3 interval endpoints <span class="math notranslate nohighlight">\((x_1 = 0,\, x_3 = 0.5,\, x_5 = 1)\)</span> and 2 midpoints
+<span class="math notranslate nohighlight">\((x_2 = 0.25,\, x_4 = 0.75)\)</span>. Simpson’s rule employs second-order polynomials in each interval.</p>
+<p>The general expression for an arbitrary number of intervals is
+$<span class="math notranslate nohighlight">\(\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f(x_1)+4f(x_2)+2f(x_3)+4f(x_4)+...2f(x_{N-2})+4f(x_{N-1})+f(x_N)\right],\)</span><span class="math notranslate nohighlight">\(
+or using our previous notation above
+\)</span><span class="math notranslate nohighlight">\(\boxed{\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f_1+4f_2+2f_3+4f_4+...+2f_{N-2}+4f_{N-1}+f_N\right].}\)</span>$
+Let us compute the same integral as for the trapezoidal rule, only this time using Simpson’s rule.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.0</span>           <span class="c1"># defining the interval</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">1.0</span>           <span class="c1"># defining the interval</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>             <span class="c1"># defining the amount of points making up the smaller intervals</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># defining the length of each small interval</span>
+<span class="n">area</span> <span class="o">=</span> <span class="mi">0</span>          <span class="c1"># setting the aera to zero</span>
+ 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">a</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">h</span>        
+    <span class="n">func</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="n">N</span><span class="p">):</span>    <span class="c1"># if we are at the left or right end of the main</span>
+        <span class="n">area</span> <span class="o">+=</span> <span class="n">func</span>         <span class="c1"># interval </span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">2</span>==0:         # if we are at an &quot;even&quot; point
+            <span class="n">area</span> <span class="o">+=</span> <span class="mi">4</span><span class="o">*</span><span class="n">func</span>     
+        <span class="k">else</span><span class="p">:</span>              <span class="c1"># if we are at an &quot;odd&quot; point</span>
+            <span class="n">area</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">func</span>
+ 
+<span class="n">area</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">area</span>    <span class="c1"># multiplying everything by h/3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;The value of the integral is </span><span class="si">%f</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="n">area</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The value of the integral is 4.533789.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Try for different <span class="math notranslate nohighlight">\(N\)</span>. Does it converge faster than before?</p>
+<p>In contrast to the trapezoidal rule, Simpson’s rule contains an error that is proportional to</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\((b−a)^5\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\frac{1}{N^4},\)</span> and</p></li>
+<li><p>the (maximum) magnitude of the fourth derivative of <span class="math notranslate nohighlight">\(f(x)\)</span> over the respective interval.</p></li>
+</ol>
+<p>In other words, it is superior in accuracy to the trapezoidal rule with respect to the amount of intervals <span class="math notranslate nohighlight">\(N\)</span>.</p>
+</section>
+</section>
+</section>
+<section id="id2">
+<h2>Breakout room exercise<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Again turn the Simpson rule into a function analogous to the trapezoidal one you made above.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\int 4x^3 dx = x^4\)</span> and also <span class="math notranslate nohighlight">\(\int 5x^4 dx = x^5\)</span>  Let’s check the answer of our functions trapezoidal and Simpson for the interval <span class="math notranslate nohighlight">\([0..2]\)</span> against this analytic expectation.</p></li>
+<li><p>Now let us make a plot of the absolute of the relative error of the results of each of our integration functions as compared to the analytic expectations as a function of N (the number of intervals used in the approximation. Should be a log log plot varying N from 2 to 1024</p></li>
+</ul>
+</section>
+<section id="further-exploration">
+<h2>Further exploration<a class="headerlink" href="#further-exploration" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">trapz</span> 
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Explore the use of trapz, simps and quad we imported from scipy. You can compare these with our own functions and familiarize yourself with when one would use which.</p>
+<p>Another approach we can recommend learning more about is implemented in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.UnivariateSpline.html">scipy.UnivariateSpline</a>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./numerical_integration"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../python_basics/intro-to-numpy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to NumPy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="MonteCarloIntegration-Basics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Monte Carlo Integration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules-numerical-integration">Modules - Numerical Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-task">The Task</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trapezoidal-rule">Trapezoidal Rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-room-exercise">Breakout room exercise</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simpson-s-rule">Simpson’s Rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Breakout room exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exploration">Further exploration</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tom Abel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
