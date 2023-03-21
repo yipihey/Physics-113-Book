@@ -4,3 +4,10 @@ This repository contains the source files and Jupyter notebooks used in the cour
 taught by Tom Abel.
 
 Spring quarter 2022/20023 academic year, April-June 2023
+
+To build the book after you added more content (or cloned the repository the first time) use
+
+```bash
+Physics-113-Book> jupyter-book build ./
+```
+and it will be found in your local ```_build/html``` directory. 

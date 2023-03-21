@@ -3,7 +3,18 @@
 
 format: jb-book
 root: intro
-chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+parts:
+  - caption: "Python Basics"
+    chapters:
+    - file: python_basics/intro
+    - file: python_basics/intro-to-numpy
+  - caption: Numerical Integration
+    chapters:
+    - file: numerical_integration/numerical_integration
+    - file: numerical_integration/MonteCarloIntegration-Basics
+    - file: numerical_integration/ODE-Integration-HarmonicOscillator
+  - caption: Jupyter-book examples
+    chapters: 
+    - file: markdown
+    - file: notebooks
+    - file: markdown-notebooks
