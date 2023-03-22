@@ -63,7 +63,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Python Basics" href="python_basics/intro.html" />
+    <link rel="next" title="Get started with Python" href="python_basics/intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -156,20 +156,15 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="python_basics/intro.html">Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_basics/intro.html">Get started with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_basics/Exercise-python-basics.html">Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Jupyter-book examples</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
 </ul>
 
     </div>
@@ -364,10 +359,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#textbooks">Textbooks</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anaconda-python-installer">Anaconda Python installer</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-python-libraries">Useful Python libraries</a><ul class="nav section-nav flex-column">
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -398,41 +389,14 @@ document.write(`
 <li><p>The descriptions of algorithms in <a class="reference external" href="http://www.numerical.recipes%22">Numerical Recipes</a> (even in their obsolete versions of the books) remains a useful resources to get a quick overview to understand the idea behind certain algorithms.</p></li>
 </ul>
 <p>You will also find a lot of material on “Computational Physics with Python”; online that will be helpful to you.</p>
-<section id="anaconda-python-installer">
-<h3>Anaconda Python installer<a class="headerlink" href="#anaconda-python-installer" title="Permalink to this headline">#</a></h3>
-<p>Quick way to install and keep python up to date on your machine</p>
-<ul class="simple">
-<li><p>Anaconda:<a class="reference external" href="https://docs.anaconda.com/">https://docs.anaconda.com/</a>,</p></li>
-</ul>
-<p>is an open source
-distribution of the Python, Julia and R programming languages for large-scale data processing, predictive analytics, and scientific computing, that simplifies package management and deployment. Package versionsare managed by the package management system <em>conda</em>.</p>
-<p>Furthermore, Google’s Colab:<a class="reference external" href="https://colab.research.google.com/notebooks/welcome.ipynb">https://colab.research.google.com/notebooks/welcome.ipynb</a> is a free Jupyter notebook environment that requires
-no setup and runs entirely in the cloud. Try it out!</p>
-</section>
-<section id="useful-python-libraries">
-<h3>Useful Python libraries<a class="headerlink" href="#useful-python-libraries" title="Permalink to this headline">#</a></h3>
-<p>Here is a list of useful Python libraries
-(if you use anaconda many of these are already there)</p>
-<ul class="simple">
-<li><p><em>NumPy</em>:<a class="reference external" href="https://www.numpy.org/">https://www.numpy.org/</a> is a highly popular library for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays</p></li>
-<li><p><em>The pandas</em>:<a class="reference external" href="https://pandas.pydata.org/">https://pandas.pydata.org/</a> library provides high-performance, easy-to-use data structures and data analysis tools</p></li>
-<li><p><em>Xarray</em>:<a class="reference external" href="http://xarray.pydata.org/en/stable/">http://xarray.pydata.org/en/stable/</a> is a Python package that makes working with labelled multi-dimensional arrays simple, efficient, and fun!</p></li>
-<li><p><em>Scipy</em>:<a class="reference external" href="https://www.scipy.org/">https://www.scipy.org/</a> (pronounced “Sigh Pie”) is a Python-based ecosystem of open-source software for mathematics, science, and engineering.</p></li>
-<li><p><em>Matplotlib</em>:<a class="reference external" href="https://matplotlib.org/">https://matplotlib.org/</a> is a Python 2D plotting library which produces publication quality figures in a variety of hardcopy formats and interactive environments across platforms.</p></li>
-<li><p><em>Autograd</em>:<a class="github reference external" href="https://github.com/HIPS/autograd">HIPS/autograd</a> can automatically differentiate native Python and Numpy code. It can handle a large subset of Python’s features, including loops, ifs, recursion and closures, and it can even take derivatives of derivatives of derivatives</p></li>
-<li><p><em>SymPy</em>:<a class="reference external" href="https://www.sympy.org/en/index.html">https://www.sympy.org/en/index.html</a> is a Python library for symbolic mathematics.</p></li>
-<li><p><em>scikit-learn</em>:<a class="reference external" href="https://scikit-learn.org/stable/">https://scikit-learn.org/stable/</a> has simple and efficient tools for machine learning, data mining and data analysis</p></li>
-<li><p><em>TensorFlow</em>:<a class="reference external" href="https://www.tensorflow.org/">https://www.tensorflow.org/</a> is a Python library for fast numerical computing created and released by Google</p></li>
-<li><p><em>Keras</em>:<a class="reference external" href="https://keras.io/">https://keras.io/</a> is a high-level neural networks API, written in Python and capable of running on top of TensorFlow, CNTK, or Theano</p></li>
-<li><p>And many more such as <em>pytorch</em>:<a class="reference external" href="https://pytorch.org/">https://pytorch.org/</a>,  <em>Theano</em>:<a class="reference external" href="https://pypi.org/project/Theano/">https://pypi.org/project/Theano/</a> etc</p></li>
-</ul>
 <p>Some of the materials were taken from <a class="reference external" href="https://www.numfys.net">NumFys.net</a>.
 Using the <code class="docutils literal notranslate"><span class="pre">jupyter-book</span></code> format was inspired by studying the amazing and varied content that <a class="reference external" href="https://github.com/zingale">Mike Zingale</a> from Stonybrook produces such as his <a class="reference external" href="https://zingale.github.io/computational_astrophysics/intro.html">Computational Astrophysics course</a>.</p>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="python_basics/intro.html">Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_basics/intro.html">Get started with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_basics/Exercise-python-basics.html">Exercises</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -443,15 +407,6 @@ Using the <code class="docutils literal notranslate"><span class="pre">jupyter-b
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
 </ul>
 </div>
-<div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Jupyter-book examples</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
-</ul>
-</div>
-</section>
 </section>
 </section>
 
@@ -488,7 +443,7 @@ Using the <code class="docutils literal notranslate"><span class="pre">jupyter-b
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Python Basics</p>
+        <p class="prev-next-title">Get started with Python</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -508,10 +463,6 @@ Using the <code class="docutils literal notranslate"><span class="pre">jupyter-b
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#textbooks">Textbooks</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anaconda-python-installer">Anaconda Python installer</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-python-libraries">Useful Python libraries</a><ul class="nav section-nav flex-column">
-</ul>
-</li>
 </ul>
 </li>
 </ul>

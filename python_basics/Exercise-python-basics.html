@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Get started with Python &#8212; Physics 113 - Computational Physics</title>
+    <title>Exercises &#8212; Physics 113 - Computational Physics</title>
   
   
   
@@ -60,11 +60,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'python_basics/intro';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'python_basics/Exercise-python-basics';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction to NumPy" href="intro-to-numpy.html" />
-    <link rel="prev" title="Welcome to Physics 113" href="../intro.html" />
+    <link rel="next" title="Trapezoidal and Simpson’s Rule" href="../numerical_integration/numerical_integration.html" />
+    <link rel="prev" title="Introduction to NumPy" href="intro-to-numpy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -157,9 +159,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Get started with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Get started with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro-to-numpy.html">Introduction to NumPy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise-python-basics.html">Exercises</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
 <ul class="nav bd-sidenav">
@@ -212,6 +214,55 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/yipihey/Physics-113-Book/master?urlpath=tree/docs/python_basics/Exercise-python-basics.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/yipihey/Physics-113-Book/blob/master/docs/python_basics/Exercise-python-basics.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-source-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
     <i class="fab fa-github"></i>
@@ -237,7 +288,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Fpython_basics/intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Fpython_basics/Exercise-python-basics.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -267,7 +318,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/python_basics/intro.md" target="_blank"
+      <li><a href="../_sources/python_basics/Exercise-python-basics.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -277,7 +328,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -349,7 +400,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Get started with Python</h1>
+    <h1>Exercises</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -359,11 +410,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-python-on-your-computer">Setup python on your computer</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anaconda-python-installer">Anaconda Python installer</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-python-libraries">Useful Python libraries</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-figure">Make a figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-integration-of-a-5-dimensional-function">Monte Carlo Integration of a 5 dimensional function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-scipy-routines-to-integrate-a-function">Use <code class="docutils literal notranslate"><span class="pre">scipy</span></code> routines to integrate a function</a></li>
 </ul>
             </nav>
         </div>
@@ -375,41 +425,52 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="get-started-with-python">
-<h1>Get started with Python<a class="headerlink" href="#get-started-with-python" title="Permalink to this headline">#</a></h1>
-<p>In this chapter we give some first steps and references for you to quickly learn about python and the software eco-system that will allow you to be productive in computational physics.</p>
-<p>We can recommend <a class="reference external" href="https://nbviewer.org/github/jakevdp/WhirlwindTourOfPython/blob/master/Index.ipynb">Whirlwind Tour of Python</a> as an excellent way to quickly learn important concepts useful in this course.</p>
-<section id="setup-python-on-your-computer">
-<h2>Setup python on your computer<a class="headerlink" href="#setup-python-on-your-computer" title="Permalink to this headline">#</a></h2>
-<section id="anaconda-python-installer">
-<h3>Anaconda Python installer<a class="headerlink" href="#anaconda-python-installer" title="Permalink to this headline">#</a></h3>
-<p>Quick way to install and keep python up to date on your machine</p>
-<ul class="simple">
-<li><p>Anaconda:<a class="reference external" href="https://docs.anaconda.com/">https://docs.anaconda.com/</a>,</p></li>
-</ul>
-<p>is an open source
-distribution of the Python, Julia and R programming languages for large-scale data processing, predictive analytics, and scientific computing, that simplifies package management and deployment. Package versionsare managed by the package management system <em>conda</em>.</p>
-<p>Furthermore, Google’s Colab:<a class="reference external" href="https://colab.research.google.com/notebooks/welcome.ipynb">https://colab.research.google.com/notebooks/welcome.ipynb</a> is a free Jupyter notebook environment that requires
-no setup and runs entirely in the cloud. Try it out!</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="exercises">
+<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h1>
+<p>We understand all students will have very diverse backgrounds when it comes to computing. From some that are doing any of these things for the first time to some with extensive backgrounds in computing. Consider these exercises here as a check on how much you know already and if it is easy for you try to consider it as an opportunity to practice getting the job done faster, more elegantly, and also as a chance to engage with the material.</p>
+<section id="make-a-figure">
+<h2>Make a figure<a class="headerlink" href="#make-a-figure" title="Permalink to this headline">#</a></h2>
+<p>Using your favorite software make a figure like the one below.
+<a class="reference download internal" download="" href="../_downloads/931a538d806d873b44c30c19dbc62a2d/GlobalTemperatures.csv"><span class="xref download myst">The data</span></a> is in comma separated form and comes from the <a class="reference external" href="https://berkeleyearth.org/">Berkley Earth project</a>.
+Submit the <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> of the figure and a paragraph describing how you made it and provide detailed instructions of how we can reproduce it.</p>
+<p><img alt="Global Average Temperatures" src="../_images/GlobalAverageTemperature_01.png" /></p>
 </section>
-<section id="useful-python-libraries">
-<h3>Useful Python libraries<a class="headerlink" href="#useful-python-libraries" title="Permalink to this headline">#</a></h3>
-<p>Here is a list of useful Python libraries
-(if you use anaconda many of these are already there)</p>
-<ul class="simple">
-<li><p><em>NumPy</em>:<a class="reference external" href="https://www.numpy.org/">https://www.numpy.org/</a> is a highly popular library for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays</p></li>
-<li><p><em>The pandas</em>:<a class="reference external" href="https://pandas.pydata.org/">https://pandas.pydata.org/</a> library provides high-performance, easy-to-use data structures and data analysis tools</p></li>
-<li><p><em>Xarray</em>:<a class="reference external" href="http://xarray.pydata.org/en/stable/">http://xarray.pydata.org/en/stable/</a> is a Python package that makes working with labelled multi-dimensional arrays simple, efficient, and fun!</p></li>
-<li><p><em>Scipy</em>:<a class="reference external" href="https://www.scipy.org/">https://www.scipy.org/</a> (pronounced “Sigh Pie”) is a Python-based ecosystem of open-source software for mathematics, science, and engineering.</p></li>
-<li><p><em>Matplotlib</em>:<a class="reference external" href="https://matplotlib.org/">https://matplotlib.org/</a> is a Python 2D plotting library which produces publication quality figures in a variety of hardcopy formats and interactive environments across platforms.</p></li>
-<li><p><em>Autograd</em>:<a class="github reference external" href="https://github.com/HIPS/autograd">HIPS/autograd</a> can automatically differentiate native Python and Numpy code. It can handle a large subset of Python’s features, including loops, ifs, recursion and closures, and it can even take derivatives of derivatives of derivatives</p></li>
-<li><p><em>SymPy</em>:<a class="reference external" href="https://www.sympy.org/en/index.html">https://www.sympy.org/en/index.html</a> is a Python library for symbolic mathematics.</p></li>
-<li><p><em>scikit-learn</em>:<a class="reference external" href="https://scikit-learn.org/stable/">https://scikit-learn.org/stable/</a> has simple and efficient tools for machine learning, data mining and data analysis</p></li>
-<li><p><em>TensorFlow</em>:<a class="reference external" href="https://www.tensorflow.org/">https://www.tensorflow.org/</a> is a Python library for fast numerical computing created and released by Google</p></li>
-<li><p><em>Keras</em>:<a class="reference external" href="https://keras.io/">https://keras.io/</a> is a high-level neural networks API, written in Python and capable of running on top of TensorFlow, CNTK, or Theano</p></li>
-<li><p>And many more such as <em>pytorch</em>:<a class="reference external" href="https://pytorch.org/">https://pytorch.org/</a>,  <em>Theano</em>:<a class="reference external" href="https://pypi.org/project/Theano/">https://pypi.org/project/Theano/</a> etc</p></li>
-</ul>
+<section id="id1">
+<h2><a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 </section>
+<section id="monte-carlo-integration-of-a-5-dimensional-function">
+<h2>Monte Carlo Integration of a 5 dimensional function<a class="headerlink" href="#monte-carlo-integration-of-a-5-dimensional-function" title="Permalink to this headline">#</a></h2>
+<p>Let’s take this function,
+$<span class="math notranslate nohighlight">\( 
+F(\vec{x}) = \left[ (\vec{a}\cdot (\vec{x}-\vec{b})\right]^{3}
+\)</span><span class="math notranslate nohighlight">\(
+with 
+\)</span>\vec{a}=(1,2,3,4,5)^T<span class="math notranslate nohighlight">\( 
+and 
+\)</span>\vec{b}= (\frac{1}{2},\frac{1}{2},\frac{1}{2},\frac{1}{2},\frac{1}{2})^T$,
+and integrate over the unit interval.</p>
+<div class="math notranslate nohighlight">
+\[ 
+A = \int_{(0,0,0,0,0)}^{(1,1,1,1,1)} F(\vec{x}) dV
+\]</div>
+<p>Calculate <span class="math notranslate nohighlight">\(A\)</span> using Monte Carlo Integration and give an error estimate.
+Submit the code you used to do it.</p>
+<p><strong>Bonus:</strong> Use the <code class="docutils literal notranslate"><span class="pre">scipy.nquad</span></code> function to also calculate this integral.</p>
+</section>
+<section id="use-scipy-routines-to-integrate-a-function">
+<h2>Use <code class="docutils literal notranslate"><span class="pre">scipy</span></code> routines to integrate a function<a class="headerlink" href="#use-scipy-routines-to-integrate-a-function" title="Permalink to this headline">#</a></h2>
+<p>Let’s approximate the integral
+$<span class="math notranslate nohighlight">\( \int_0^1 \sqrt{x^5+e^{5x}} \mathrm{d}x\)</span><span class="math notranslate nohighlight">\(
+for various \)</span>N$. As we increase N, the values for the trapezoidal rule converge.</p>
+<p>Look up the four <code class="docutils literal notranslate"><span class="pre">scipy</span></code> functions below</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">trapz</span> 
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">cumtrapz</span> 
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+</pre></div>
+</div>
+<p>and employ each to solve the integral above.
+Please submit the code and write a paragraph about what you learned about when to use which routine.</p>
 </section>
 </section>
 
@@ -442,20 +503,20 @@ no setup and runs entirely in the cloud. Try it out!</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../intro.html"
+       href="intro-to-numpy.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Welcome to Physics 113</p>
+        <p class="prev-next-title">Introduction to NumPy</p>
       </div>
     </a>
     <a class="right-next"
-       href="intro-to-numpy.html"
+       href="../numerical_integration/numerical_integration.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Introduction to NumPy</p>
+        <p class="prev-next-title">Trapezoidal and Simpson’s Rule</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -474,11 +535,10 @@ no setup and runs entirely in the cloud. Try it out!</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-python-on-your-computer">Setup python on your computer</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anaconda-python-installer">Anaconda Python installer</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-python-libraries">Useful Python libraries</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-figure">Make a figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-integration-of-a-5-dimensional-function">Monte Carlo Integration of a 5 dimensional function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-scipy-routines-to-integrate-a-function">Use <code class="docutils literal notranslate"><span class="pre">scipy</span></code> routines to integrate a function</a></li>
 </ul>
   </nav></div>
 
