@@ -13,4 +13,9 @@ parts:
     chapters:
     - file: numerical_integration/numerical_integration
     - file: numerical_integration/MonteCarloIntegration-Basics
-    - file: numerical_integration/ODE-Integration-HarmonicOscillator
+    - file: numerical_integration/Exercises-numerical-integration
+  - caption: Integrating ODEs
+    chapters:
+    - file: ode/ODE-Integration-HarmonicOscillator
+    - file: ode/Exercises-ode
+    
