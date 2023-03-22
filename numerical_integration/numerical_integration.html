@@ -167,7 +167,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Trapezoidal and Simpson’s Rule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ode/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
 </ul>
 
     </div>
@@ -446,12 +451,15 @@ Last edited:  Jan  2021, Tom Abel
 ___</section>
 <section id="the-task">
 <h2>The Task<a class="headerlink" href="#the-task" title="Permalink to this headline">#</a></h2>
-<p>How do we determine a definite integral like
-$<span class="math notranslate nohighlight">\(\int_a^b f(x) \mathrm{d}x\)</span><span class="math notranslate nohighlight">\(
-if we cannot solve it analytically, i.e. if we cannot find a function \)</span>F(x)<span class="math notranslate nohighlight">\( with
-\)</span><span class="math notranslate nohighlight">\(\frac{\mathrm{d}}{\mathrm{d}x}F(x) = f(x)\)</span><span class="math notranslate nohighlight">\(
-and 
-\)</span><span class="math notranslate nohighlight">\( \int_a^b f(x) \mathrm{d}x = F(b)-F(a).\)</span>$</p>
+<p>How do we determine a definite integral like</p>
+<div class="math notranslate nohighlight">
+\[\int_a^b f(x) \mathrm{d}x\]</div>
+<p>if we cannot solve it analytically, i.e. if we cannot find a function <span class="math notranslate nohighlight">\(F(x)\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[\frac{\mathrm{d}}{\mathrm{d}x}F(x) = f(x)\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[ \int_a^b f(x) \mathrm{d}x = F(b)-F(a).\]</div>
 </section>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h2>
@@ -466,7 +474,7 @@ analytically. So what do we do?</p>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># Set common figure parameters</span>
-<span class="n">newparams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="s1">&#39;axes.grid&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="n">newparams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="s1">&#39;axes.grid&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
              <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
              <span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">newparams</span><span class="p">)</span>
@@ -486,16 +494,17 @@ analytically. So what do we do?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c497a1dd05453e2d7e7ea1b78f16cf6d7225258be3c8af624573d14526aaf0ca.png" src="../_images/c497a1dd05453e2d7e7ea1b78f16cf6d7225258be3c8af624573d14526aaf0ca.png" />
+<img alt="../_images/4872d699d5cac1ec1f8d2b938a1cec5dcbb1169cbf264ed5eb65e2232dc421a7.png" src="../_images/4872d699d5cac1ec1f8d2b938a1cec5dcbb1169cbf264ed5eb65e2232dc421a7.png" />
 </div>
 </div>
 <p>We know that the integral represents, in this case, the area under the graph. The area is well defined and finite.</p>
 <p>We could approximate it by a Riemann sum. For this purpose, we divide the interval <span class="math notranslate nohighlight">\([0, 1]\)</span> into <span class="math notranslate nohighlight">\(N − 1\)</span> intervals of the same
 length <span class="math notranslate nohighlight">\(h\)</span> with
 $<span class="math notranslate nohighlight">\(h = \frac{1}{N-1}.\)</span>$</p>
-<p>The endpoints of these intervals are located at
-$<span class="math notranslate nohighlight">\(x_n = (n-1)h,\qquad \mathrm{with}\quad n=1,2,3,...,N.\)</span><span class="math notranslate nohighlight">\(
-This leads naturally to the definition of a rectangle for each interval \)</span>[x_n, x_{n+1}]<span class="math notranslate nohighlight">\( whose height is determined by the value of the function at \)</span>x_n<span class="math notranslate nohighlight">\(, i.e. \)</span>f(x_n)$.</p>
+<p>The endpoints of these intervals are located at</p>
+<div class="math notranslate nohighlight">
+\[x_n = (n-1)h,\qquad \mathrm{with}\quad n=1,2,3,...,N.\]</div>
+<p>This leads naturally to the definition of a rectangle for each interval <span class="math notranslate nohighlight">\([x_n, x_{n+1}]\)</span> whose height is determined by the value of the function at <span class="math notranslate nohighlight">\(x_n\)</span>, i.e. <span class="math notranslate nohighlight">\(f(x_n)\)</span>.</p>
 <p>For N = 6, we can sketch this in our previous plot. But first we need to define a function for drawing trapezoids:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -543,7 +552,7 @@ This leads naturally to the definition of a rectangle for each interval \)</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d37c641cc321fa7803be49749160a8797cdbbefd6ed01d69ff2ec93934237727.png" src="../_images/d37c641cc321fa7803be49749160a8797cdbbefd6ed01d69ff2ec93934237727.png" />
+<img alt="../_images/12440b39fe1325d9f4a871d3330f061b16be8d418915ccbd557e3d2f642f600d.png" src="../_images/12440b39fe1325d9f4a871d3330f061b16be8d418915ccbd557e3d2f642f600d.png" />
 </div>
 </div>
 <p>We can see that we make a fairly large error in our estimate of the integral when we use these rectangles. How can we do better?</p>
@@ -564,7 +573,7 @@ This leads naturally to the definition of a rectangle for each interval \)</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/446670dbe70f3211d9c835333de7e53ac52cff10b23ab14ea5d63dc4298b361d.png" src="../_images/446670dbe70f3211d9c835333de7e53ac52cff10b23ab14ea5d63dc4298b361d.png" />
+<img alt="../_images/76e8b169f538ccf5bc6ecfb56bd59dd8b47b380b2c15ac379aebcb98d76bb87e.png" src="../_images/76e8b169f538ccf5bc6ecfb56bd59dd8b47b380b2c15ac379aebcb98d76bb87e.png" />
 </div>
 </div>
 </section>
@@ -589,7 +598,7 @@ Let’s see what this looks like in the plot.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0898c46c6494471f95f632c73d85f3e5db3a2f8f375b996f9bf05b35ea476a92.png" src="../_images/0898c46c6494471f95f632c73d85f3e5db3a2f8f375b996f9bf05b35ea476a92.png" />
+<img alt="../_images/52eee0eb87317c07d5a92deb00fc1e659086e95353fa99928ab24a3582c89720.png" src="../_images/52eee0eb87317c07d5a92deb00fc1e659086e95353fa99928ab24a3582c89720.png" />
 </div>
 </div>
 <p>It seems that we are making a much smaller error than before, given the same set of intervals. The error seems to increase when the curvature of the graph increases (towards the right in this plot).</p>
@@ -624,9 +633,10 @@ over the respective interval.</p></li>
 <li><p>The computer has finite precision; rounding errors become important!</p></li>
 </ul>
 <p>The second derivative is linked to the curvature of the graph and we saw above that the error indeed increased where the curvature was larger. This makes sense since we are trying to approximate a curved graph with a straight line.</p>
-<p>Let’s approximate the integral
-$<span class="math notranslate nohighlight">\( \int_0^1 \sqrt{x^5+e^{5x}} \mathrm{d}x\)</span><span class="math notranslate nohighlight">\(
-for various \)</span>N$. As we increase N, the values for the trapezoidal rule converge. Try it yourself!</p>
+<p>Let’s approximate the integral</p>
+<div class="math notranslate nohighlight">
+\[ \int_0^1 \sqrt{x^5+e^{5x}} \mathrm{d}x\]</div>
+<p>for various <span class="math notranslate nohighlight">\(N\)</span>. As we increase N, the values for the trapezoidal rule converge. Try it yourself!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the interval</span>
@@ -708,7 +718,7 @@ e_n &amp;= f(0).
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f04cdbf2c04df91c33ae12b6af43e818df9b787c0bbdb34b6b7dac9068dcb606.png" src="../_images/f04cdbf2c04df91c33ae12b6af43e818df9b787c0bbdb34b6b7dac9068dcb606.png" />
+<img alt="../_images/e76db74ed8046f43b628ccee26e2cd9a1c1ce2c17b5ebf46bbd79d3109566de2.png" src="../_images/e76db74ed8046f43b628ccee26e2cd9a1c1ce2c17b5ebf46bbd79d3109566de2.png" />
 </div>
 </div>
 <p>We see that the polynomial describes the original function already quite well. And we have not even started to divide the interval <span class="math notranslate nohighlight">\([0, 1]\)</span> into subintervals…</p>
@@ -738,7 +748,7 @@ where \)</span>h<span class="math notranslate nohighlight">\( is the distance be
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3d344ab4fd59e4ecd3f4378cec2ea06a4c9187643e9c1523ef57f937a4eb5738.png" src="../_images/3d344ab4fd59e4ecd3f4378cec2ea06a4c9187643e9c1523ef57f937a4eb5738.png" />
+<img alt="../_images/25faa67eb6832a305045616829f0d28ecba31411ec295478eb2e5f006a63dc4c.png" src="../_images/25faa67eb6832a305045616829f0d28ecba31411ec295478eb2e5f006a63dc4c.png" />
 </div>
 </div>
 <p>The case of two intervals: <span class="math notranslate nohighlight">\([0, 0.5]\)</span> and <span class="math notranslate nohighlight">\([0.5, 1]\)</span>. We have a total of 5 points along the <span class="math notranslate nohighlight">\(x\)</span>-axis, namely 3 interval endpoints <span class="math notranslate nohighlight">\((x_1 = 0,\, x_3 = 0.5,\, x_5 = 1)\)</span> and 2 midpoints

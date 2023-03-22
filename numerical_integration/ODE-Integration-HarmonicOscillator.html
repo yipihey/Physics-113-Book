@@ -466,10 +466,16 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <section id="the-harmonic-oscillator-definition">
 <h2>The harmonic oscillator definition<a class="headerlink" href="#the-harmonic-oscillator-definition" title="Permalink to this headline">#</a></h2>
-<p>This is a 2nd order ordinary differential equation
-$<span class="math notranslate nohighlight">\( \frac{d^2x}{dt^2} = -w_0^2 x \)</span><span class="math notranslate nohighlight">\(
-Substitute in v(t), turn into a coupled set of 2 first-order ODE
-\)</span><span class="math notranslate nohighlight">\( v(t) = \frac{dx}{dt} \)</span>$</p>
+<p>This is a 2nd order ordinary differential equation</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d^2x}{dt^2} = -w_0^2 x 
+\]</div>
+<p>Substitute in <span class="math notranslate nohighlight">\(v(t)\)</span>, to turn into a coupled set of 2 first-order ODE</p>
+<div class="math notranslate nohighlight">
+\[ 
+v(t) = \frac{dx}{dt} 
+\]</div>
 <section id="final-set-of-evolution-equations">
 <h3>Final set of evolution equations<a class="headerlink" href="#final-set-of-evolution-equations" title="Permalink to this headline">#</a></h3>
 <div class="math notranslate nohighlight">
@@ -838,42 +844,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_imge547fd48b8d046a48cb5364e6f92bb7b">
+  <img id="_anim_img13ff9f51ef344bafbf446879c2f7e0b1">
   <div class="anim-controls">
-    <input id="_anim_slidere547fd48b8d046a48cb5364e6f92bb7b" type="range" class="anim-slider"
+    <input id="_anim_slider13ff9f51ef344bafbf446879c2f7e0b1" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anime547fd48b8d046a48cb5364e6f92bb7b.set_frame(parseInt(this.value));"></input>
+           oninput="anim13ff9f51ef344bafbf446879c2f7e0b1.set_frame(parseInt(this.value));"></input>
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anime547fd48b8d046a48cb5364e6f92bb7b.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim13ff9f51ef344bafbf446879c2f7e0b1.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selecte547fd48b8d046a48cb5364e6f92bb7b"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select13ff9f51ef344bafbf446879c2f7e0b1"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_e547fd48b8d046a48cb5364e6f92bb7b"
+      <input type="radio" name="state" value="once" id="_anim_radio1_13ff9f51ef344bafbf446879c2f7e0b1"
              >
-      <label for="_anim_radio1_e547fd48b8d046a48cb5364e6f92bb7b">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_e547fd48b8d046a48cb5364e6f92bb7b"
+      <label for="_anim_radio1_13ff9f51ef344bafbf446879c2f7e0b1">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_13ff9f51ef344bafbf446879c2f7e0b1"
              checked>
-      <label for="_anim_radio2_e547fd48b8d046a48cb5364e6f92bb7b">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_e547fd48b8d046a48cb5364e6f92bb7b"
+      <label for="_anim_radio2_13ff9f51ef344bafbf446879c2f7e0b1">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_13ff9f51ef344bafbf446879c2f7e0b1"
              >
-      <label for="_anim_radio3_e547fd48b8d046a48cb5364e6f92bb7b">Reflect</label>
+      <label for="_anim_radio3_13ff9f51ef344bafbf446879c2f7e0b1">Reflect</label>
     </form>
   </div>
 </div>
@@ -883,9 +889,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_imge547fd48b8d046a48cb5364e6f92bb7b";
-    var slider_id = "_anim_slidere547fd48b8d046a48cb5364e6f92bb7b";
-    var loop_select_id = "_anim_loop_selecte547fd48b8d046a48cb5364e6f92bb7b";
+    var img_id = "_anim_img13ff9f51ef344bafbf446879c2f7e0b1";
+    var slider_id = "_anim_slider13ff9f51ef344bafbf446879c2f7e0b1";
+    var loop_select_id = "_anim_loop_select13ff9f51ef344bafbf446879c2f7e0b1";
     var frames = new Array(125);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAJYCAYAAAC+ZpjcAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -50041,7 +50047,7 @@ YII=\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anime547fd48b8d046a48cb5364e6f92bb7b = new Animation(frames, img_id, slider_id, 59.0,
+        anim13ff9f51ef344bafbf446879c2f7e0b1 = new Animation(frames, img_id, slider_id, 59.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -50418,14 +50424,14 @@ Reuse some of the routines above for plotting and testing.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Euler &lt;function SolveHarmOscEuler at 0x10f264670&gt;
-Back-Euler &lt;function SolveHarmOscEulerBackward at 0x10f6deee0&gt;
-Heun &lt;function SolveHarmOscHeun at 0x10f7d5700&gt;
-Numerov &lt;function SolveHarmOscNumerov at 0x10f7a9160&gt;
-Leap-Frog &lt;function SolveHarmOscLeapFrog at 0x10f7a9040&gt;
-Verlet &lt;function SolveHarmOscVerlet at 0x10f3fd5e0&gt;
-Hermite &lt;function SolveHarmOscHermite at 0x10f7a93a0&gt;
-RK4 &lt;function SolveHarmOscRK4 at 0x10f56fdc0&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Euler &lt;function SolveHarmOscEuler at 0x1061ff670&gt;
+Back-Euler &lt;function SolveHarmOscEulerBackward at 0x106679ee0&gt;
+Heun &lt;function SolveHarmOscHeun at 0x10676e700&gt;
+Numerov &lt;function SolveHarmOscNumerov at 0x106390160&gt;
+Leap-Frog &lt;function SolveHarmOscLeapFrog at 0x106390040&gt;
+Verlet &lt;function SolveHarmOscVerlet at 0x106397040&gt;
+Hermite &lt;function SolveHarmOscHermite at 0x1063903a0&gt;
+RK4 &lt;function SolveHarmOscRK4 at 0x10651c4c0&gt;
 </pre></div>
 </div>
 </div>
@@ -50489,7 +50495,7 @@ RK4        [&#39;6.58e-02&#39;, &#39;5.77e-05&#39;, &#39;5.69e-08&#39;, &#39;5.7
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_53798/2248002137.py:4: UserWarning: linestyle is redundantly defined by the &#39;linestyle&#39; keyword argument and the fmt string &quot;-&quot; (-&gt; linestyle=&#39;-&#39;). The keyword argument will take precedence.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_65404/2248002137.py:4: UserWarning: linestyle is redundantly defined by the &#39;linestyle&#39; keyword argument and the fmt string &quot;-&quot; (-&gt; linestyle=&#39;-&#39;). The keyword argument will take precedence.
   plt.loglog(Ns, Ns.astype(&#39;float64&#39;)**(-2)*1e2, &#39;-&#39;, label=r&#39;$\propto N{^-2}$&#39;, ls=&#39;--&#39;, lw=3.0)
 </pre></div>
 </div>

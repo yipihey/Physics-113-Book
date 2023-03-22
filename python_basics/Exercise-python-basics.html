@@ -60,6 +60,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_basics/Exercise-python-basics';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -165,7 +167,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ode/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
 </ul>
 
     </div>
@@ -410,6 +417,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-figure">Make a figure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-a-one-dimensional-function">Plot a one dimensional function</a></li>
 </ul>
             </nav>
         </div>
@@ -433,6 +441,13 @@ Submit the <code class="docutils literal notranslate"><span class="pre">.pdf</sp
 </section>
 <section id="id1">
 <h2><a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="plot-a-one-dimensional-function">
+<h2>Plot a one dimensional function<a class="headerlink" href="#plot-a-one-dimensional-function" title="Permalink to this headline">#</a></h2>
+<p>Let’s use pythons <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> library to plot the function</p>
+<p>$<span class="math notranslate nohighlight">\(
+\sqrt{x^5+e^{5x}} 
+\)</span>$ .</p>
 </section>
 </section>
 
@@ -499,6 +514,7 @@ Submit the <code class="docutils literal notranslate"><span class="pre">.pdf</sp
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-figure">Make a figure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-a-one-dimensional-function">Plot a one dimensional function</a></li>
 </ul>
   </nav></div>
 
