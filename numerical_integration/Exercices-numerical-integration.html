@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Exercises &#8212; Physics 113 - Computational Physics</title>
+    <title>Monte Carlo Integration of a 5 dimensional function &#8212; Physics 113 - Computational Physics</title>
   
   
   
@@ -60,11 +60,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'python_basics/Exercise-python-basics';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'numerical_integration/Exercices-numerical-integration';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Trapezoidal and Simpson’s Rule" href="../numerical_integration/numerical_integration.html" />
-    <link rel="prev" title="Introduction to NumPy" href="intro-to-numpy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -156,16 +156,16 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Get started with Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro-to-numpy.html">Introduction to NumPy</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Exercises</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Get started with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/Exercise-python-basics.html">Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
 </ul>
 
     </div>
@@ -220,7 +220,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://mybinder.org/v2/gh/yipihey/Physics-113-Book/master?urlpath=tree/docs/python_basics/Exercise-python-basics.ipynb" target="_blank"
+      <li><a href="https://mybinder.org/v2/gh/yipihey/Physics-113-Book/master?urlpath=tree/docs/numerical_integration/Exercices-numerical-integration.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onBinder"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -238,7 +238,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/yipihey/Physics-113-Book/blob/master/docs/python_basics/Exercise-python-basics.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/yipihey/Physics-113-Book/blob/master/docs/numerical_integration/Exercices-numerical-integration.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -286,7 +286,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Fpython_basics/Exercise-python-basics.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Fnumerical_integration/Exercices-numerical-integration.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -316,7 +316,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/python_basics/Exercise-python-basics.ipynb" target="_blank"
+      <li><a href="../_sources/numerical_integration/Exercices-numerical-integration.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -398,7 +398,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Exercises</h1>
+    <h1>Monte Carlo Integration of a 5 dimensional function</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -408,9 +408,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-figure">Make a figure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Monte Carlo Integration of a 5 dimensional function</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-scipy-routines-to-integrate-a-function">Use <code class="docutils literal notranslate"><span class="pre">scipy</span></code> routines to integrate a function</a></li>
 </ul>
+
             </nav>
         </div>
     </div>
@@ -421,19 +422,39 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="exercises">
-<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h1>
-<p>We understand all students will have very diverse backgrounds when it comes to computing. From some that are doing any of these things for the first time to some with extensive backgrounds in computing. Consider these exercises here as a check on how much you know already and if it is easy for you try to consider it as an opportunity to practice getting the job done faster, more elegantly, and also as a chance to engage with the material.</p>
-<section id="make-a-figure">
-<h2>Make a figure<a class="headerlink" href="#make-a-figure" title="Permalink to this headline">#</a></h2>
-<p>Using your favorite software make a figure like the one below.
-<a class="reference download internal" download="" href="../_downloads/931a538d806d873b44c30c19dbc62a2d/GlobalTemperatures.csv"><span class="xref download myst">The data</span></a> is in comma separated form and comes from the <a class="reference external" href="https://berkeleyearth.org/">Berkley Earth project</a>.
-Submit the <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> of the figure and a paragraph describing how you made it and provide detailed instructions of how we can reproduce it.</p>
-<p><img alt="Global Average Temperatures" src="../_images/GlobalAverageTemperature_01.png" /></p>
+  <section id="monte-carlo-integration-of-a-5-dimensional-function">
+<h1>Monte Carlo Integration of a 5 dimensional function<a class="headerlink" href="#monte-carlo-integration-of-a-5-dimensional-function" title="Permalink to this headline">#</a></h1>
+<p>Let’s take this function,
+$<span class="math notranslate nohighlight">\( 
+F(\vec{x}) = \left[ (\vec{a}\cdot (\vec{x}-\vec{b})\right]^{3}
+\)</span><span class="math notranslate nohighlight">\(
+with 
+\)</span>\vec{a}=(1,2,3,4,5)^T<span class="math notranslate nohighlight">\( 
+and 
+\)</span>\vec{b}= (\frac{1}{2},\frac{1}{2},\frac{1}{2},\frac{1}{2},\frac{1}{2})^T$,
+and integrate over the unit interval.</p>
+<div class="math notranslate nohighlight">
+\[ 
+A = \int_{(0,0,0,0,0)}^{(1,1,1,1,1)} F(\vec{x}) dV
+\]</div>
+<p>Calculate <span class="math notranslate nohighlight">\(A\)</span> using Monte Carlo Integration and give an error estimate.
+Submit the code you used to do it.</p>
+<p><strong>Bonus:</strong> Use the <code class="docutils literal notranslate"><span class="pre">scipy.nquad</span></code> function to also calculate this integral.</p>
 </section>
-<section id="id1">
-<h2><a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
-</section>
+<section id="use-scipy-routines-to-integrate-a-function">
+<h1>Use <code class="docutils literal notranslate"><span class="pre">scipy</span></code> routines to integrate a function<a class="headerlink" href="#use-scipy-routines-to-integrate-a-function" title="Permalink to this headline">#</a></h1>
+<p>Let’s approximate the integral
+$<span class="math notranslate nohighlight">\( \int_0^1 \sqrt{x^5+e^{5x}} \mathrm{d}x\)</span><span class="math notranslate nohighlight">\(
+for various \)</span>N$. As we increase N, the values for the trapezoidal rule converge.</p>
+<p>Look up the four <code class="docutils literal notranslate"><span class="pre">scipy</span></code> functions below</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">trapz</span> 
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">cumtrapz</span> 
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+</pre></div>
+</div>
+<p>and employ each to solve the integral above.
+Please submit the code and write a paragraph about what you learned about when to use which routine.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -449,7 +470,7 @@ Submit the <code class="docutils literal notranslate"><span class="pre">.pdf</sp
         },
         kernelOptions: {
             name: "python3",
-            path: "./python_basics"
+            path: "./numerical_integration"
         },
         predefinedOutput: true
     }
@@ -464,24 +485,6 @@ Submit the <code class="docutils literal notranslate"><span class="pre">.pdf</sp
                 <footer class="bd-footer-article">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="intro-to-numpy.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introduction to NumPy</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../numerical_integration/numerical_integration.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Trapezoidal and Simpson’s Rule</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -497,9 +500,10 @@ Submit the <code class="docutils literal notranslate"><span class="pre">.pdf</sp
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-figure">Make a figure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Monte Carlo Integration of a 5 dimensional function</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-scipy-routines-to-integrate-a-function">Use <code class="docutils literal notranslate"><span class="pre">scipy</span></code> routines to integrate a function</a></li>
 </ul>
+
   </nav></div>
 
 </div></div>
