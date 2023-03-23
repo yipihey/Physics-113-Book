@@ -8,6 +8,7 @@ parts:
     chapters:
     - file: python_basics/intro
     - file: python_basics/intro-to-numpy
+    - file: python_basics/basic-plotting
     - file: python_basics/Exercise-python-basics
   - caption: Numerical Integration
     chapters:
@@ -18,4 +19,4 @@ parts:
     chapters:
     - file: ode/ODE-Integration-HarmonicOscillator
     - file: ode/Exercises-ode
-    
+
