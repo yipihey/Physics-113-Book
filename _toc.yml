@@ -17,6 +17,6 @@ parts:
     - file: numerical_integration/Exercises-numerical-integration
   - caption: Integrating ODEs
     chapters:
-    - file: ode/ODE-Integration-HarmonicOscillator
+    - file: ode/ode-integration-HarmonicOscillator
     - file: ode/Exercises-ode
 
