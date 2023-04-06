@@ -161,6 +161,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Get started with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/Exercise-python-basics.html">Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
@@ -171,7 +172,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ode/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
 </ul>
 
@@ -419,14 +420,14 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-task">The Task</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trapezoidal-rule">Trapezoidal Rule</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-room-exercise">Breakout room exercise</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-class-exercise">In class exercise</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simpson-s-rule">Simpson’s Rule</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example:</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Breakout room exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">In class exercise</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exploration">Further exploration</a></li>
 </ul>
             </nav>
@@ -494,7 +495,7 @@ analytically. So what do we do?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4872d699d5cac1ec1f8d2b938a1cec5dcbb1169cbf264ed5eb65e2232dc421a7.png" src="../_images/4872d699d5cac1ec1f8d2b938a1cec5dcbb1169cbf264ed5eb65e2232dc421a7.png" />
+<img alt="../_images/c4828570918109b26859d2c7476c1a764a9273d6685296cb18a0610da376467d.png" src="../_images/c4828570918109b26859d2c7476c1a764a9273d6685296cb18a0610da376467d.png" />
 </div>
 </div>
 <p>We know that the integral represents, in this case, the area under the graph. The area is well defined and finite.</p>
@@ -512,7 +513,7 @@ $<span class="math notranslate nohighlight">\(h = \frac{1}{N-1}.\)</span>$</p>
 <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
 
 <span class="k">def</span> <span class="nf">draw_trapezoid</span><span class="p">(</span><span class="n">xpoints</span><span class="p">,</span> <span class="n">ypoints</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Function for drawing trapezoids. Takes arrays of x- and y-values as input,</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Function for drawing trapezoids. Takes arrays of x- and y-values as input,</span>
 <span class="sd">    moving clockwise from bottom left corner. &quot;&quot;&quot;</span>
     <span class="n">verts</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span><span class="n">xpoints</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ypoints</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="c1"># left, bottom</span>
@@ -552,7 +553,7 @@ $<span class="math notranslate nohighlight">\(h = \frac{1}{N-1}.\)</span>$</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12440b39fe1325d9f4a871d3330f061b16be8d418915ccbd557e3d2f642f600d.png" src="../_images/12440b39fe1325d9f4a871d3330f061b16be8d418915ccbd557e3d2f642f600d.png" />
+<img alt="../_images/3c5aa6f2b689ed2793fb4b67e17dd35f4b0543c0fde424f9b2018f83dc1c4fd6.png" src="../_images/3c5aa6f2b689ed2793fb4b67e17dd35f4b0543c0fde424f9b2018f83dc1c4fd6.png" />
 </div>
 </div>
 <p>We can see that we make a fairly large error in our estimate of the integral when we use these rectangles. How can we do better?</p>
@@ -573,7 +574,7 @@ $<span class="math notranslate nohighlight">\(h = \frac{1}{N-1}.\)</span>$</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/76e8b169f538ccf5bc6ecfb56bd59dd8b47b380b2c15ac379aebcb98d76bb87e.png" src="../_images/76e8b169f538ccf5bc6ecfb56bd59dd8b47b380b2c15ac379aebcb98d76bb87e.png" />
+<img alt="../_images/eff3d3621db4af71dcd30b7eb5dc91d5892f758bbd250354fe9bff4ec9713957.png" src="../_images/eff3d3621db4af71dcd30b7eb5dc91d5892f758bbd250354fe9bff4ec9713957.png" />
 </div>
 </div>
 </section>
@@ -598,7 +599,7 @@ Let’s see what this looks like in the plot.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/52eee0eb87317c07d5a92deb00fc1e659086e95353fa99928ab24a3582c89720.png" src="../_images/52eee0eb87317c07d5a92deb00fc1e659086e95353fa99928ab24a3582c89720.png" />
+<img alt="../_images/a75d0458bba37a4cd0ca51d79925289789bf3772d73c52d23ce89c205dbeba45.png" src="../_images/a75d0458bba37a4cd0ca51d79925289789bf3772d73c52d23ce89c205dbeba45.png" />
 </div>
 </div>
 <p>It seems that we are making a much smaller error than before, given the same set of intervals. The error seems to increase when the curvature of the graph increases (towards the right in this plot).</p>
@@ -668,8 +669,8 @@ over the respective interval.</p></li>
 </div>
 </div>
 </section>
-<section id="breakout-room-exercise">
-<h2>Breakout room exercise<a class="headerlink" href="#breakout-room-exercise" title="Permalink to this headline">#</a></h2>
+<section id="in-class-exercise">
+<h2>In class exercise<a class="headerlink" href="#in-class-exercise" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Let’s turn this into a function we call trapezoidal which takes, a, b, N and func as input and gives back the definite integral.</p></li>
 <li><p>Double check it gives the correct result</p></li>
@@ -718,7 +719,7 @@ e_n &amp;= f(0).
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e76db74ed8046f43b628ccee26e2cd9a1c1ce2c17b5ebf46bbd79d3109566de2.png" src="../_images/e76db74ed8046f43b628ccee26e2cd9a1c1ce2c17b5ebf46bbd79d3109566de2.png" />
+<img alt="../_images/d3ade66bc664579ed090f8273252fa026c0f61a28c7909ab0db802002e8b5152.png" src="../_images/d3ade66bc664579ed090f8273252fa026c0f61a28c7909ab0db802002e8b5152.png" />
 </div>
 </div>
 <p>We see that the polynomial describes the original function already quite well. And we have not even started to divide the interval <span class="math notranslate nohighlight">\([0, 1]\)</span> into subintervals…</p>
@@ -748,7 +749,7 @@ where \)</span>h<span class="math notranslate nohighlight">\( is the distance be
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/25faa67eb6832a305045616829f0d28ecba31411ec295478eb2e5f006a63dc4c.png" src="../_images/25faa67eb6832a305045616829f0d28ecba31411ec295478eb2e5f006a63dc4c.png" />
+<img alt="../_images/a2e84dd031bce7104323bcdbdf8d13631e808ba0f6e647e46b6ac69bac46920d.png" src="../_images/a2e84dd031bce7104323bcdbdf8d13631e808ba0f6e647e46b6ac69bac46920d.png" />
 </div>
 </div>
 <p>The case of two intervals: <span class="math notranslate nohighlight">\([0, 0.5]\)</span> and <span class="math notranslate nohighlight">\([0.5, 1]\)</span>. We have a total of 5 points along the <span class="math notranslate nohighlight">\(x\)</span>-axis, namely 3 interval endpoints <span class="math notranslate nohighlight">\((x_1 = 0,\, x_3 = 0.5,\, x_5 = 1)\)</span> and 2 midpoints
@@ -802,7 +803,7 @@ Let us compute the same integral as for the trapezoidal rule, only this time usi
 </section>
 </section>
 <section id="id2">
-<h2>Breakout room exercise<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<h2>In class exercise<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Again turn the Simpson rule into a function analogous to the trapezoidal one you made above.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\int 4x^3 dx = x^4\)</span> and also <span class="math notranslate nohighlight">\(\int 5x^4 dx = x^5\)</span>  Let’s check the answer of our functions trapezoidal and Simpson for the interval <span class="math notranslate nohighlight">\([0..2]\)</span> against this analytic expectation.</p></li>
@@ -890,14 +891,14 @@ Let us compute the same integral as for the trapezoidal rule, only this time usi
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-task">The Task</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trapezoidal-rule">Trapezoidal Rule</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-room-exercise">Breakout room exercise</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-class-exercise">In class exercise</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simpson-s-rule">Simpson’s Rule</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example:</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Breakout room exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">In class exercise</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exploration">Further exploration</a></li>
 </ul>
   </nav></div>

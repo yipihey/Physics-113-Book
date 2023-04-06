@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'numerical_integration/MonteCarloIntegration-Basics';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Comparing different Integration approaches to solve the Harmonic Oscillator" href="ODE-Integration-HarmonicOscillator.html" />
+    <link rel="next" title="Exercises" href="Exercises-numerical-integration.html" />
     <link rel="prev" title="Trapezoidal and Simpson’s Rule" href="numerical_integration.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -161,13 +161,19 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Get started with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/Exercise-python-basics.html">Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Monte Carlo Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
 </ul>
 
     </div>
@@ -523,7 +529,7 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dff8ca9dd770e645977e65c854baf18be2b6bf12fe9239a7f64e87531b91d279.png" src="../_images/dff8ca9dd770e645977e65c854baf18be2b6bf12fe9239a7f64e87531b91d279.png" />
+<img alt="../_images/db7575658b58067f66203f23d952ecaa0c81f7d09a5e995d23ce50df88673503.png" src="../_images/db7575658b58067f66203f23d952ecaa0c81f7d09a5e995d23ce50df88673503.png" />
 </div>
 </div>
 <p>Another way to think about what we are actually doing is that just multiply the length of the interval <span class="math notranslate nohighlight">\(b-a\)</span> times the average function value, <span class="math notranslate nohighlight">\(\langle f \rangle\)</span>:
@@ -544,7 +550,7 @@ So we can think of the value of the integral of our function as the area of the 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e417daae8c8bf188dfb504223da7d4f82ffb352aad3eb261aa0632023f3d7e47.png" src="../_images/e417daae8c8bf188dfb504223da7d4f82ffb352aad3eb261aa0632023f3d7e47.png" />
+<img alt="../_images/77fb092e6bc70d7ded23a47bf8cf490c039c8d3f9c41d7c10aa37bebe9f2b16f.png" src="../_images/77fb092e6bc70d7ded23a47bf8cf490c039c8d3f9c41d7c10aa37bebe9f2b16f.png" />
 </div>
 </div>
 <p>In your statistics lecture this is known as <a class="reference external" href="https://en.wikipedia.org/wiki/Law_of_the_unconscious_statistician">LOTUS, the law of the unconcious statistician</a> and is very useful!
@@ -598,7 +604,7 @@ We use here the uniform distribution on the unit interval and so \)</span>p(x)=1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/91711a12c40933836760893d8f616cb77b076535d48c0b3d7389040171e86ea0.png" src="../_images/91711a12c40933836760893d8f616cb77b076535d48c0b3d7389040171e86ea0.png" />
+<img alt="../_images/9c3e1721fdc50141eacd11b70f8b92a0cead47fc0e7da9c44f5a488c114ecc13.png" src="../_images/9c3e1721fdc50141eacd11b70f8b92a0cead47fc0e7da9c44f5a488c114ecc13.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -608,7 +614,7 @@ We use here the uniform distribution on the unit interval and so \)</span>p(x)=1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.55879587, 0.7975728 , 0.15003724, 0.98155113, 0.43630928])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.27436287, 0.84486841, 0.48035932, 0.22611687, 0.34843023])
 </pre></div>
 </div>
 </div>
@@ -689,7 +695,7 @@ and compare the results. Observe that the Riemann sum generally works better for
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  0.328125
-Monte Carlo:  0.5215360615018929
+Monte Carlo:  0.3450115084648818
 </pre></div>
 </div>
 </div>
@@ -716,7 +722,7 @@ $<span class="math notranslate nohighlight">\( \int_0^1 \sin^2 \left( 20 \cdot 2
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  0.5000000000000002
-Monte Carlo:  0.46933125125202513
+Monte Carlo:  0.6096780969751212
 </pre></div>
 </div>
 </div>
@@ -759,7 +765,7 @@ Monte Carlo:  0.46933125125202513
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7994baf98c9128472210704d56d97df4656ffd991f85efa9f654b65105f1e4e7.png" src="../_images/7994baf98c9128472210704d56d97df4656ffd991f85efa9f654b65105f1e4e7.png" />
+<img alt="../_images/e68770802266f7b16d31bef7d638212428fe39d727bbf1fad056c38c3d8281d4.png" src="../_images/e68770802266f7b16d31bef7d638212428fe39d727bbf1fad056c38c3d8281d4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -794,7 +800,7 @@ Monte Carlo:  0.46933125125202513
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ee30a51804bb7152d97de144dbee4981bbd4fb43f3b404f454173020aeee06dc.png" src="../_images/ee30a51804bb7152d97de144dbee4981bbd4fb43f3b404f454173020aeee06dc.png" />
+<img alt="../_images/d2d53911f2dfe81b1571b73a20b2d2868eb4cc7abe437da4c87e1f15a76081a5.png" src="../_images/d2d53911f2dfe81b1571b73a20b2d2868eb4cc7abe437da4c87e1f15a76081a5.png" />
 </div>
 </div>
 </section>
@@ -838,7 +844,7 @@ Monte Carlo:  0.46933125125202513
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8a2d7eb8058c02dd2e10615198c577b6e62e82bcbb2607efa661a8368ecd0ea9.png" src="../_images/8a2d7eb8058c02dd2e10615198c577b6e62e82bcbb2607efa661a8368ecd0ea9.png" />
+<img alt="../_images/cb422a4fa06fc9aae12f680873d6f86510ae3a341d5599c2dd81a5f85ff6b4c3.png" src="../_images/cb422a4fa06fc9aae12f680873d6f86510ae3a341d5599c2dd81a5f85ff6b4c3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -849,7 +855,7 @@ Monte Carlo:  0.46933125125202513
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/35a60cb181d552a081d6dd1ed840901b2420fd81e7da9d088104ec2fc0a796fe.png" src="../_images/35a60cb181d552a081d6dd1ed840901b2420fd81e7da9d088104ec2fc0a796fe.png" />
+<img alt="../_images/141f7bd91fdc20652132fcf69a4d94e0f3a69675aa8758b05c615bd26ab47d17.png" src="../_images/141f7bd91fdc20652132fcf69a4d94e0f3a69675aa8758b05c615bd26ab47d17.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -868,10 +874,10 @@ Monte Carlo:  0.46933125125202513
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0030534364723675406
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.005458444501311802
 </pre></div>
 </div>
-<img alt="../_images/7f849a923d095d725c846c0faffb9409a18cce2dc22e2692e898e087e40c6ef3.png" src="../_images/7f849a923d095d725c846c0faffb9409a18cce2dc22e2692e898e087e40c6ef3.png" />
+<img alt="../_images/a37f80bd76089a0430038cea1385bf15f9329bcc7b25cc54673c88ff1a8d1521.png" src="../_images/a37f80bd76089a0430038cea1385bf15f9329bcc7b25cc54673c88ff1a8d1521.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -901,7 +907,7 @@ Monte Carlo:  0.46933125125202513
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3e25af0a6262471a35d752911cfadc28e2931a2c1458153c3cb0bf1c34118068.png" src="../_images/3e25af0a6262471a35d752911cfadc28e2931a2c1458153c3cb0bf1c34118068.png" />
+<img alt="../_images/430a45197b449b2c0ae8082267e4cd72219f556071439fdd6a14df4f71be1312.png" src="../_images/430a45197b449b2c0ae8082267e4cd72219f556071439fdd6a14df4f71be1312.png" />
 </div>
 </div>
 </section>
@@ -941,7 +947,7 @@ Monte Carlo:  0.46933125125202513
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/045cbb2e3fc809bacc4b31211edad835dc24c6b6177512b567a157ffb75af8e6.png" src="../_images/045cbb2e3fc809bacc4b31211edad835dc24c6b6177512b567a157ffb75af8e6.png" />
+<img alt="../_images/78c794f34492c0b1b126d1ba567e7d86bc7edfee60c1cde8ba5b5ca054fc2cc5.png" src="../_images/78c794f34492c0b1b126d1ba567e7d86bc7edfee60c1cde8ba5b5ca054fc2cc5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1020,7 +1026,7 @@ Analytically the <a class="reference external" href="https://en.wikipedia.org/wi
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ab0a57fc5162dd9d954a305251984b2af8ba01a67e85025d939d0a5aaf4781b1.png" src="../_images/ab0a57fc5162dd9d954a305251984b2af8ba01a67e85025d939d0a5aaf4781b1.png" />
+<img alt="../_images/bd8ae43e87e62c7a404ecb6114af5b89b06e0f45861133fd7b26258810846dd2.png" src="../_images/bd8ae43e87e62c7a404ecb6114af5b89b06e0f45861133fd7b26258810846dd2.png" />
 </div>
 </div>
 </section>
@@ -1064,11 +1070,11 @@ Analytically the <a class="reference external" href="https://en.wikipedia.org/wi
       </div>
     </a>
     <a class="right-next"
-       href="ODE-Integration-HarmonicOscillator.html"
+       href="Exercises-numerical-integration.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Comparing different Integration approaches to solve the Harmonic Oscillator</p>
+        <p class="prev-next-title">Exercises</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

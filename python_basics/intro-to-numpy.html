@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_basics/intro-to-numpy';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Exercises" href="Exercise-python-basics.html" />
+    <link rel="next" title="Basic Plotting in Python using Matplotlib" href="basic-plotting.html" />
     <link rel="prev" title="Get started with Python" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -161,13 +161,19 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Get started with Python</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise-python-basics.html">Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
 </ul>
 
     </div>
@@ -606,7 +612,7 @@ y:	 [ 0.84147098  0.90929743  0.14112001 -0.7568025  -0.95892427 -0.2794155
   0.6569866   0.98935825  0.41211849 -0.54402111]
 </pre></div>
 </div>
-<img alt="../_images/7ff7f6dbdb59e640718845faa5bb99f847bd2218b217c1f52916825fee64bb7f.png" src="../_images/7ff7f6dbdb59e640718845faa5bb99f847bd2218b217c1f52916825fee64bb7f.png" />
+<img alt="../_images/b3b5b52e12a23518ae4bff42ee35796e284a3e14f975c643a586a792210bbe82.png" src="../_images/b3b5b52e12a23518ae4bff42ee35796e284a3e14f975c643a586a792210bbe82.png" />
 </div>
 </div>
 <p>With boring old Python lists, we would have to loop through <code class="docutils literal notranslate"><span class="pre">x</span></code> and calculate <span class="math notranslate nohighlight">\(y(x)\)</span> for each value, as was shown above.
@@ -637,10 +643,10 @@ Let us use some examples to make this clearer.</p>
  1.65517241 1.72413793 1.79310345 1.86206897 1.93103448 2.        ]
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x10af17c70&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x113397190&gt;]
 </pre></div>
 </div>
-<img alt="../_images/ba86c8559950df94543fc10718d1d26b5bcc5deaa180e0ace373531b525890b4.png" src="../_images/ba86c8559950df94543fc10718d1d26b5bcc5deaa180e0ace373531b525890b4.png" />
+<img alt="../_images/84420d37fb5b6345bc7557f95347005dd47806dab24b8a94759db4e291e69d5b.png" src="../_images/84420d37fb5b6345bc7557f95347005dd47806dab24b8a94759db4e291e69d5b.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">np.linspace</span></code> is useful if we for example wish to plot a function <span class="math notranslate nohighlight">\(f(x)\)</span>.
@@ -768,7 +774,7 @@ for easily saving and reading values from files.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c8e96e3c6be5b0e737a34e81a712546e36e020e8809680a71363df0a7d5dfafa.png" src="../_images/c8e96e3c6be5b0e737a34e81a712546e36e020e8809680a71363df0a7d5dfafa.png" />
+<img alt="../_images/49b1f741a7d9d0ba806a0cc3178752703bf2a907e7ef32394a4bdd209cc9b282.png" src="../_images/49b1f741a7d9d0ba806a0cc3178752703bf2a907e7ef32394a4bdd209cc9b282.png" />
 </div>
 </div>
 <section id="plotting-from-saved-data">
@@ -830,11 +836,11 @@ See the <a class="reference external" href="https://docs.scipy.org/doc/numpy">of
       </div>
     </a>
     <a class="right-next"
-       href="Exercise-python-basics.html"
+       href="basic-plotting.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Exercises</p>
+        <p class="prev-next-title">Basic Plotting in Python using Matplotlib</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

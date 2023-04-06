@@ -157,13 +157,19 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="python_basics/intro.html">Get started with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_basics/basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_basics/Exercise-python-basics.html">Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numerical_integration/ODE-Integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical_integration/Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ode/Exercises-ode.html">Exercises</a></li>
 </ul>
 
     </div>
@@ -365,12 +371,12 @@ document.write(`
 taught by Tom Abel.</p>
 <p>Spring quarter 2022/20023 academic year, April-June 2023</p>
 <p>To build the book after you added more content (or cloned the repository the first time) use</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Physics-113-Book&gt; jupyter-book build ./
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Physics-113-Book&gt;<span class="w"> </span>jupyter-book<span class="w"> </span>build<span class="w"> </span>./
 </pre></div>
 </div>
 <p>and it will be found in your local <code class="docutils literal notranslate"><span class="pre">_build/html</span></code> directory.</p>
 <p>To publish it to the website we execute in the main directory of the repository.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ghp-import -n -p -f _build/html
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ghp-import<span class="w"> </span>-n<span class="w"> </span>-p<span class="w"> </span>-f<span class="w"> </span>_build/html
 </pre></div>
 </div>
 </section>
