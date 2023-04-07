@@ -464,9 +464,7 @@ ___</section>
 </section>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h2>
-<p>We cannot determine the integral
-$<span class="math notranslate nohighlight">\( \int_0^1 \sqrt{x^5+e^{5x}} \mathrm{d}x\)</span>$
-analytically. So what do we do?</p>
+<p>We cannot determine the integral <span class="math notranslate nohighlight">\( \int_0^1 \sqrt{x^5+e^{5x}} \mathrm{d}x\)</span> analytically. So what do we do?</p>
 <p>Let’s plot the integrand <span class="math notranslate nohighlight">\(f(x)=\sqrt{x^5+e^{5x}}\)</span> for <span class="math notranslate nohighlight">\(x\in[0,1]\)</span>. First we import the necessary libraries and set some figure parameters:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -488,20 +486,21 @@ analytically. So what do we do?</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="p">))</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sqrt{x^5+e^</span><span class="si">{5x}</span><span class="s2">}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c4828570918109b26859d2c7476c1a764a9273d6685296cb18a0610da376467d.png" src="../_images/c4828570918109b26859d2c7476c1a764a9273d6685296cb18a0610da376467d.png" />
+<img alt="../_images/f51d64d82139846103a11eee74687edeaa8c46deb72c4739f682cebdc27f9e4a.png" src="../_images/f51d64d82139846103a11eee74687edeaa8c46deb72c4739f682cebdc27f9e4a.png" />
 </div>
 </div>
 <p>We know that the integral represents, in this case, the area under the graph. The area is well defined and finite.</p>
-<p>We could approximate it by a Riemann sum. For this purpose, we divide the interval <span class="math notranslate nohighlight">\([0, 1]\)</span> into <span class="math notranslate nohighlight">\(N − 1\)</span> intervals of the same
-length <span class="math notranslate nohighlight">\(h\)</span> with
-$<span class="math notranslate nohighlight">\(h = \frac{1}{N-1}.\)</span>$</p>
+<p>We could approximate it by a Riemann sum. For this purpose, we divide the interval <span class="math notranslate nohighlight">\([0, 1]\)</span> into <span class="math notranslate nohighlight">\(N − 1\)</span> intervals of the same length <span class="math notranslate nohighlight">\(h\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[h = \frac{1}{N-1}.\]</div>
 <p>The endpoints of these intervals are located at</p>
 <div class="math notranslate nohighlight">
 \[x_n = (n-1)h,\qquad \mathrm{with}\quad n=1,2,3,...,N.\]</div>
@@ -603,24 +602,30 @@ Let’s see what this looks like in the plot.</p>
 </div>
 </div>
 <p>It seems that we are making a much smaller error than before, given the same set of intervals. The error seems to increase when the curvature of the graph increases (towards the right in this plot).</p>
-<p>Let us derive a formula for the area that the trapezoids cover. Using our notation above, the area of a trapezoid is given by
-$<span class="math notranslate nohighlight">\(A_n=h\frac{f_n+f_{n+1}}{2} \)</span><span class="math notranslate nohighlight">\(
-with \)</span>f_n=f(x_n)<span class="math notranslate nohighlight">\(.
-Here, \)</span>h<span class="math notranslate nohighlight">\( is the length of each interval, and hence the length of the base of each trapezoid, and the expression
-￼\)</span><span class="math notranslate nohighlight">\(\frac{f_n + f_{n+1}}{2}\)</span>$
-represents the “average height” of the corresponding trapezoid.</p>
-<p>Adding up all the trapezoids, we obtain the total area
-$<span class="math notranslate nohighlight">\(A=A_1 +A_2 +A_3 +...+A_{N−1}\)</span><span class="math notranslate nohighlight">\(
-and so
-\)</span><span class="math notranslate nohighlight">\(A=h\frac{f_1 +f_2}{2} +h\frac{f_2 +f_3}{2} +h\frac{f_3 +f_4}{2} +...h\frac{f_{N−1} +f_N}{2}.\)</span><span class="math notranslate nohighlight">\(
-￼￼￼￼Factoring out h and rearranging terms gives
-\)</span><span class="math notranslate nohighlight">\(A=h\left(\frac{1}{2}f_1+f_2+f_3+...+f_{N−1}+\frac{1}{2}f_N\right).\)</span>$
-￼￼This formula describes the <strong>trapezoidal rule</strong> and approximates the original integral.</p>
+<p>Let us derive a formula for the area that the trapezoids cover. Using our notation above, the area of a trapezoid is given by</p>
+<div class="math notranslate nohighlight">
+\[A_n=h\frac{f_n+f_{n+1}}{2} \]</div>
+<p>with <span class="math notranslate nohighlight">\(f_n=f(x_n)\)</span>.
+Here, <span class="math notranslate nohighlight">\(h\)</span> is the length of each interval, and hence the length of the base of each trapezoid, and the expression</p>
+<p>￼$<span class="math notranslate nohighlight">\(\frac{f_n + f_{n+1}}{2}\)</span>$</p>
+<p>represents the “average height” of the corresponding trapezoid.</p>
+<p>Adding up all the trapezoids, we obtain the total area</p>
+<div class="math notranslate nohighlight">
+\[A=A_1 +A_2 +A_3 +...+A_{N−1}\]</div>
+<p>and so</p>
+<div class="math notranslate nohighlight">
+\[A=h\frac{f_1 +f_2}{2} +h\frac{f_2 +f_3}{2} +h\frac{f_3 +f_4}{2} +...h\frac{f_{N−1} +f_N}{2}.\]</div>
+<p>Factoring out h and rearranging terms gives</p>
+<div class="math notranslate nohighlight">
+\[A=h\left(\frac{1}{2}f_1+f_2+f_3+...+f_{N−1}+\frac{1}{2}f_N\right).\]</div>
+<p>This formula describes the <strong>trapezoidal rule</strong> and approximates the original integral.</p>
 <p>The factors inside the bracket are 0.5, 1, 1, …, 1, 0.5. This stems from the fact that we only use the endpoints 0 and 1 once in our calculation while all other points are involved twice in the determination of trapezoidal areas.</p>
-<p>Note that we do not need to assume an interval <span class="math notranslate nohighlight">\([0, 1]\)</span>. Instead, we can use this method for any interval <span class="math notranslate nohighlight">\([a, b]\)</span>. The definitions then change to
-$<span class="math notranslate nohighlight">\(h= \frac{b−a}{N-1}\qquad \mathrm{and} \qquad x_n =a+(n−1)h.\)</span><span class="math notranslate nohighlight">\(
-￼This way, we can approximate the integral by
-\)</span><span class="math notranslate nohighlight">\(\boxed{\int_a^b f(x) \mathrm{d}x \approx h\left(\frac{1}{2}f_1+f_2+f_3+...+f_{N−1}+\frac{1}{2}f_N\right).}\)</span>$</p>
+<p>Note that we do not need to assume an interval <span class="math notranslate nohighlight">\([0, 1]\)</span>. Instead, we can use this method for any interval <span class="math notranslate nohighlight">\([a, b]\)</span>. The definitions then change to</p>
+<div class="math notranslate nohighlight">
+\[h= \frac{b−a}{N-1}\qquad \mathrm{and} \qquad x_n =a+(n−1)h.\]</div>
+<p>￼This way, we can approximate the integral by</p>
+<div class="math notranslate nohighlight">
+\[\boxed{\int_a^b f(x) \mathrm{d}x \approx h\left(\frac{1}{2}f_1+f_2+f_3+...+f_{N−1}+\frac{1}{2}f_N\right).}\]</div>
 <p>It can be shown that this method contains an error (i.e. actual value of the definite integral vs. numerical value) that is proportional to</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\((b−a)^3\)</span>,</p></li>
@@ -682,9 +687,10 @@ over the respective interval.</p></li>
 Is there a better, i.e. more precise, method to approximate an integral? Can we do just as well with fewer intervals?</p>
 <p><strong>Answer:</strong>
 Yes, there are several methods.
-One method is called <strong>Simpson’s rule</strong>. The idea behind this method is that we do not approximate the graph locally by a straight line, as is the case for the trapezoidal method, but rather by a polynomial of order 2. This means that we approximate the function <span class="math notranslate nohighlight">\(f(x)\)</span> in each subinterval by
-$<span class="math notranslate nohighlight">\(f(x) \approx c_n x^2 + d_n x + e_n =: g_n(x).\)</span><span class="math notranslate nohighlight">\(
-The parameters \)</span>c_n<span class="math notranslate nohighlight">\(, \)</span>d_n<span class="math notranslate nohighlight">\(, \)</span>e_n<span class="math notranslate nohighlight">\( are chosen so that \)</span>f(x)<span class="math notranslate nohighlight">\( and \)</span>g_n(x)$ coincide at the endpoints of the interval and at its midpoint.</p>
+One method is called <strong>Simpson’s rule</strong>. The idea behind this method is that we do not approximate the graph locally by a straight line, as is the case for the trapezoidal method, but rather by a polynomial of order 2. This means that we approximate the function <span class="math notranslate nohighlight">\(f(x)\)</span> in each subinterval by</p>
+<div class="math notranslate nohighlight">
+\[f(x) \approx c_n x^2 + d_n x + e_n =: g_n(x).\]</div>
+<p>The parameters <span class="math notranslate nohighlight">\(c_n\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span>, <span class="math notranslate nohighlight">\(e_n\)</span> are chosen so that <span class="math notranslate nohighlight">\(f(x)\)</span> and <span class="math notranslate nohighlight">\(g_n(x)\)</span> coincide at the endpoints of the interval and at its midpoint.</p>
 <section id="id1">
 <h4>Example:<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <p>Let us plot our original function and approximate it by a second-order polynomial with the above characteristics. We get the equations</p>
@@ -726,13 +732,16 @@ e_n &amp;= f(0).
 <p>It is important to note that Simpson’s rule requires and odd number of points (<span class="math notranslate nohighlight">\(N\)</span> = 3, 5, 7, …) along the <span class="math notranslate nohighlight">\(x\)</span>-axis since we need to use three points for each interval, i.e. left endpoint, right endpoint and midpoint.</p>
 <p>At the same time, two adjacent intervals share one endpoint, i.e. the right endpoint of one interval coincides with the left endpoint of another interval (except at <span class="math notranslate nohighlight">\(x = b\)</span>).</p>
 <p>All along, we still maintain a uniform division of the original interval <span class="math notranslate nohighlight">\([a, b]\)</span> into smaller subintervals.</p>
-<p>The simplest case is using three points for the original interval, representing one interval with one midpoint:
-$<span class="math notranslate nohighlight">\(x_1 =a,\, x_2 =\frac{b-a}{2},\, x_3 =b.\)</span><span class="math notranslate nohighlight">\(
-This case is exhibited in the previous plot. In this case, it can be shown that the integral approximation reduces to
-\)</span><span class="math notranslate nohighlight">\(\int_a^b f(x) \mathrm{d}x \approx \frac{b-a}{6}\left[f(x_1)+4f(x_2)+f(x_3)\right].\)</span><span class="math notranslate nohighlight">\(
-The next case uses five points: two intervals with one midpoint each. Now, we obtain
-\)</span><span class="math notranslate nohighlight">\(\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f(x_1)+4f(x_2)+2f(x_3)+4f(x_4)+f(x_5)\right],\)</span><span class="math notranslate nohighlight">\(
-where \)</span>h<span class="math notranslate nohighlight">\( is the distance between two successive points along the \)</span>x$-axis. This scenario is plotted below.</p>
+<p>The simplest case is using three points for the original interval, representing one interval with one midpoint:</p>
+<div class="math notranslate nohighlight">
+\[x_1 =a,\, x_2 =\frac{b-a}{2},\, x_3 =b.\]</div>
+<p>This case is exhibited in the previous plot. In this case, it can be shown that the integral approximation reduces to</p>
+<div class="math notranslate nohighlight">
+\[\int_a^b f(x) \mathrm{d}x \approx \frac{b-a}{6}\left[f(x_1)+4f(x_2)+f(x_3)\right].\]</div>
+<p>The next case uses five points: two intervals with one midpoint each. Now, we obtain</p>
+<div class="math notranslate nohighlight">
+\[\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f(x_1)+4f(x_2)+2f(x_3)+4f(x_4)+f(x_5)\right],\]</div>
+<p>where <span class="math notranslate nohighlight">\(h\)</span> is the distance between two successive points along the <span class="math notranslate nohighlight">\(x\)</span>-axis. This scenario is plotted below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
@@ -754,11 +763,13 @@ where \)</span>h<span class="math notranslate nohighlight">\( is the distance be
 </div>
 <p>The case of two intervals: <span class="math notranslate nohighlight">\([0, 0.5]\)</span> and <span class="math notranslate nohighlight">\([0.5, 1]\)</span>. We have a total of 5 points along the <span class="math notranslate nohighlight">\(x\)</span>-axis, namely 3 interval endpoints <span class="math notranslate nohighlight">\((x_1 = 0,\, x_3 = 0.5,\, x_5 = 1)\)</span> and 2 midpoints
 <span class="math notranslate nohighlight">\((x_2 = 0.25,\, x_4 = 0.75)\)</span>. Simpson’s rule employs second-order polynomials in each interval.</p>
-<p>The general expression for an arbitrary number of intervals is
-$<span class="math notranslate nohighlight">\(\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f(x_1)+4f(x_2)+2f(x_3)+4f(x_4)+...2f(x_{N-2})+4f(x_{N-1})+f(x_N)\right],\)</span><span class="math notranslate nohighlight">\(
-or using our previous notation above
-\)</span><span class="math notranslate nohighlight">\(\boxed{\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f_1+4f_2+2f_3+4f_4+...+2f_{N-2}+4f_{N-1}+f_N\right].}\)</span>$
-Let us compute the same integral as for the trapezoidal rule, only this time using Simpson’s rule.</p>
+<p>The general expression for an arbitrary number of intervals is</p>
+<div class="math notranslate nohighlight">
+\[\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f(x_1)+4f(x_2)+2f(x_3)+4f(x_4)+...2f(x_{N-2})+4f(x_{N-1})+f(x_N)\right],\]</div>
+<p>or using our previous notation above</p>
+<div class="math notranslate nohighlight">
+\[\boxed{\int_a^b f(x) \mathrm{d}x \approx \frac{h}{3}\left[f_1+4f_2+2f_3+4f_4+...+2f_{N-2}+4f_{N-1}+f_N\right].}\]</div>
+<p>Let us compute the same integral as for the trapezoidal rule, only this time using Simpson’s rule.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.0</span>           <span class="c1"># defining the interval</span>
@@ -807,8 +818,9 @@ Let us compute the same integral as for the trapezoidal rule, only this time usi
 <ul class="simple">
 <li><p>Again turn the Simpson rule into a function analogous to the trapezoidal one you made above.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\int 4x^3 dx = x^4\)</span> and also <span class="math notranslate nohighlight">\(\int 5x^4 dx = x^5\)</span>  Let’s check the answer of our functions trapezoidal and Simpson for the interval <span class="math notranslate nohighlight">\([0..2]\)</span> against this analytic expectation.</p></li>
-<li><p>Now let us make a plot of the absolute of the relative error of the results of each of our integration functions as compared to the analytic expectations as a function of N (the number of intervals used in the approximation. Should be a log log plot varying N from 2 to 1024</p></li>
+<li><p>Now let us make a plot of the absolute of the relative error of the results of each of our integration functions as compared to the analytic expectations as a function of N (the number of intervals used in the approximation). Should be a log log plot as seen below.</p></li>
 </ul>
+<p><img alt="Convergence of methods" src="../_images/Convergence.png" /></p>
 </section>
 <section id="further-exploration">
 <h2>Further exploration<a class="headerlink" href="#further-exploration" title="Permalink to this headline">#</a></h2>
