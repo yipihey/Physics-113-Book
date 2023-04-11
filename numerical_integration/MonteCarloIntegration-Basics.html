@@ -431,7 +431,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-2">Application 2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus">Bonus</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-monte-carlo-integration-to-estimate-pi">Simple Monte Carlo Integration to estimate <span class="math notranslate nohighlight">\(\pi\)</span></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-room-exercises">Breakout room exercises:</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises:</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-random-regular-and-random-uniform-distributions">Quasi random, regular, and random uniform distributions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-sampling">Importance sampling</a></li>
 </ul>
@@ -450,7 +450,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="monte-carlo-integration">
 <h1>Monte Carlo Integration<a class="headerlink" href="#monte-carlo-integration" title="Permalink to this headline">#</a></h1>
-<p>Using random variables can be a very powerful way to integrate complicated functions especially in high dimensions. In this notebook we explore a few simple examples and work to build intuition on this concept. Let have a look at <a class="reference external" href="https://www.scratchapixel.com/images/upload/monte-carlo-methods/BBC-code3.mp4?">this video</a> for some quick motivation.
+<p>Using random variables can be a very powerful way to integrate complicated functions especially in high dimensions. In this notebook we explore a few simple examples and work to build intuition on this concept.
 There is a real power in averages. <em>Both for good and evil.</em> ;-)</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Monaco_Monte_Carlo_1.jpg" />
 <p><a href="https://www.numfys.net"><img class="logo" /></a></p>
@@ -474,11 +474,12 @@ This notebook will give a brief introduction to one dimensional numerical integr
 </section>
 <section id="riemann-sum">
 <h2>Riemann sum<a class="headerlink" href="#riemann-sum" title="Permalink to this headline">#</a></h2>
-<p>In the last lecture we did a midpoint Riemann sum as the simple and intuitive numerical integration scheme. We integrated a function on an interval of length <span class="math notranslate nohighlight">\(x\)</span> by dividing the interval <span class="math notranslate nohighlight">\([a..b]\)</span> into <span class="math notranslate nohighlight">\(N\)</span> sub-intervals of equal length <span class="math notranslate nohighlight">\(\Delta x = (b-a)/N\)</span>. We evaluate the function in the middle of each sub-interval and add the area of the sub-interval, <span class="math notranslate nohighlight">\(f(x_i) \Delta x\)</span>, to the total area,
-$<span class="math notranslate nohighlight">\(
+<p>In the last lecture we did a midpoint Riemann sum as the simple and intuitive numerical integration scheme. We integrated a function on an interval of length <span class="math notranslate nohighlight">\(x\)</span> by dividing the interval <span class="math notranslate nohighlight">\([a..b]\)</span> into <span class="math notranslate nohighlight">\(N\)</span> sub-intervals of equal length <span class="math notranslate nohighlight">\(\Delta x = (b-a)/N\)</span>. We evaluate the function in the middle of each sub-interval and add the area of the sub-interval, <span class="math notranslate nohighlight">\(f(x_i) \Delta x\)</span>, to the total area,</p>
+<div class="math notranslate nohighlight">
+\[
 \Delta x\sum_{i=1}^{N} f(x_i) = \frac{b-a}{N}\sum_{i=1}^{N} f(x_i).
-\)</span>$</p>
-<p>The following block of code produces a plot which visualises the Riemann sum procedure</p>
+\]</div>
+<p>The following block of code produces a plot which visualizes the Riemann sum procedure</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># These lines import the numpy library, set up matplotlib</span>
@@ -532,13 +533,13 @@ $<span class="math notranslate nohighlight">\(
 <img alt="../_images/db7575658b58067f66203f23d952ecaa0c81f7d09a5e995d23ce50df88673503.png" src="../_images/db7575658b58067f66203f23d952ecaa0c81f7d09a5e995d23ce50df88673503.png" />
 </div>
 </div>
-<p>Another way to think about what we are actually doing is that just multiply the length of the interval <span class="math notranslate nohighlight">\(b-a\)</span> times the average function value, <span class="math notranslate nohighlight">\(\langle f \rangle\)</span>:
-$<span class="math notranslate nohighlight">\(
+<p>Another way to think about what we are actually doing is that just multiply the length of the interval <span class="math notranslate nohighlight">\(b-a\)</span> times the average function value, <span class="math notranslate nohighlight">\(\langle f \rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 (b-a) \langle f(x) \rangle
-\)</span><span class="math notranslate nohighlight">\(
-I.e. \)</span>\langle f \rangle = \frac{1}{b-a}\int_a^b f(x) dx<span class="math notranslate nohighlight">\(. 
-So we can think of the value of the integral of our function as the area of the rectangle with the height of the average value of \)</span>f<span class="math notranslate nohighlight">\( in that interval, or also as the average of the areas of all rectangles formed with all values of \)</span>f<span class="math notranslate nohighlight">\( times \)</span>(b-a)$.
-<img src="https://www.scratchapixel.com/images/upload/monte-carlo-methods-practice/MCIntegration03.png?" /></p>
+\]</div>
+<p>I.e. <span class="math notranslate nohighlight">\(\langle f \rangle = \frac{1}{b-a}\int_a^b f(x) dx\)</span>.
+So we can think of the value of the integral of our function as the area of the rectangle with the height of the average value of <span class="math notranslate nohighlight">\(f\)</span> in that interval, or also as the average of the areas of all rectangles formed with all values of <span class="math notranslate nohighlight">\(\langle f \rangle\)</span> times <span class="math notranslate nohighlight">\((b-a)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
@@ -554,10 +555,14 @@ So we can think of the value of the integral of our function as the area of the 
 </div>
 </div>
 <p>In your statistics lecture this is known as <a class="reference external" href="https://en.wikipedia.org/wiki/Law_of_the_unconscious_statistician">LOTUS, the law of the unconcious statistician</a> and is very useful!
-LOTUS says:
-$<span class="math notranslate nohighlight">\(\operatorname{E}[f(X)] = \sum_x f(x) {p}_X(x), \,\)</span><span class="math notranslate nohighlight">\(
-where \)</span>{p}_X(x)<span class="math notranslate nohighlight">\( is the probability distribution function of the random variable \)</span>X<span class="math notranslate nohighlight">\(. 
-We use here the uniform distribution on the unit interval and so \)</span>p(x)=1$.  One can adapt the PDF from which one draws the random numbers to better fit the integrand. This practice is known as importance sampling and is useful to speed up Monte Carl integrations dramatically at times.</p>
+LOTUS says:</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{E}[f(X)] = \sum_x f(x) {p}_X(x), \,\]</div>
+<p>where <span class="math notranslate nohighlight">\({p}_X(x)\)</span> is the probability distribution function of the discrete random variable <span class="math notranslate nohighlight">\(X\)</span>.
+We use here the uniform distribution on the unit interval and so <span class="math notranslate nohighlight">\(p(x)=1\)</span>.  One can adapt the PDF from which one draws the random numbers to better fit the integrand. This practice is known as importance sampling and is useful to speed up Monte Carlo integrations dramatically at times.</p>
+<p>For continuous distributions this becomes:</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{E}[f(X)] = \int f(x) {p}_X(x)\, dx. \]</div>
 </section>
 <section id="monte-carlo-integration-with-uniform-sampling">
 <h2>Monte Carlo integration with uniform sampling<a class="headerlink" href="#monte-carlo-integration-with-uniform-sampling" title="Permalink to this headline">#</a></h2>
@@ -604,7 +609,7 @@ We use here the uniform distribution on the unit interval and so \)</span>p(x)=1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9c3e1721fdc50141eacd11b70f8b92a0cead47fc0e7da9c44f5a488c114ecc13.png" src="../_images/9c3e1721fdc50141eacd11b70f8b92a0cead47fc0e7da9c44f5a488c114ecc13.png" />
+<img alt="../_images/88b377e882f44d827e7ee64fdc3bd00c0c1802f94d04cea4c3b4dd296eb2a739.png" src="../_images/88b377e882f44d827e7ee64fdc3bd00c0c1802f94d04cea4c3b4dd296eb2a739.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -614,7 +619,7 @@ We use here the uniform distribution on the unit interval and so \)</span>p(x)=1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.27436287, 0.84486841, 0.48035932, 0.22611687, 0.34843023])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.5308631 , 0.74348558, 0.70961132, 0.20892122, 0.31998914])
 </pre></div>
 </div>
 </div>
@@ -695,7 +700,7 @@ and compare the results. Observe that the Riemann sum generally works better for
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  0.328125
-Monte Carlo:  0.3450115084648818
+Monte Carlo:  0.2797883575104035
 </pre></div>
 </div>
 </div>
@@ -722,7 +727,7 @@ $<span class="math notranslate nohighlight">\( \int_0^1 \sin^2 \left( 20 \cdot 2
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  0.5000000000000002
-Monte Carlo:  0.6096780969751212
+Monte Carlo:  0.4047157499955621
 </pre></div>
 </div>
 </div>
@@ -800,64 +805,13 @@ Monte Carlo:  0.6096780969751212
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d2d53911f2dfe81b1571b73a20b2d2868eb4cc7abe437da4c87e1f15a76081a5.png" src="../_images/d2d53911f2dfe81b1571b73a20b2d2868eb4cc7abe437da4c87e1f15a76081a5.png" />
+<img alt="../_images/5b7096694d63afcb40e8973e026ef3c4fd543e1f3594be91132b204af50897dd.png" src="../_images/5b7096694d63afcb40e8973e026ef3c4fd543e1f3594be91132b204af50897dd.png" />
 </div>
 </div>
 </section>
 <section id="simple-monte-carlo-integration-to-estimate-pi">
 <h2>Simple Monte Carlo Integration to estimate <span class="math notranslate nohighlight">\(\pi\)</span><a class="headerlink" href="#simple-monte-carlo-integration-to-estimate-pi" title="Permalink to this headline">#</a></h2>
 <p>One very nice feature of Monte-Carlo integration is that often complex boundaries can be accomodated easily. Especially in higher dimensions describing complex boundary conditions can be very cumbersome. For MC integration all that is usually needed is a function that gives one or zero if a point is in the domain or outside of it. Let us illustrate this on a classic example.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
-<span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
-<span class="n">err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">r</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">]))</span><span class="o">/</span><span class="n">N</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="mi">4</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
-<span class="n">err</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.008273718605781698
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">r</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">]))</span><span class="o">/</span><span class="n">N</span><span class="o">**</span><span class="mi">2</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7789
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/cb422a4fa06fc9aae12f680873d6f86510ae3a341d5599c2dd81a5f85ff6b4c3.png" src="../_images/cb422a4fa06fc9aae12f680873d6f86510ae3a341d5599c2dd81a5f85ff6b4c3.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/141f7bd91fdc20652132fcf69a4d94e0f3a69675aa8758b05c615bd26ab47d17.png" src="../_images/141f7bd91fdc20652132fcf69a4d94e0f3a69675aa8758b05c615bd26ab47d17.png" />
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mc_pi</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">plotit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -874,19 +828,10 @@ Monte Carlo:  0.6096780969751212
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.005458444501311802
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.007415422006566045
 </pre></div>
 </div>
-<img alt="../_images/a37f80bd76089a0430038cea1385bf15f9329bcc7b25cc54673c88ff1a8d1521.png" src="../_images/a37f80bd76089a0430038cea1385bf15f9329bcc7b25cc54673c88ff1a8d1521.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">circ</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">r</span><span class="o">&lt;=</span><span class="mf">1.</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
+<img alt="../_images/1e23160bdd7cd88d9d8a619f8c49e7e8442c3f7b79cd6bc2aa1d70743117eed4.png" src="../_images/1e23160bdd7cd88d9d8a619f8c49e7e8442c3f7b79cd6bc2aa1d70743117eed4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -911,8 +856,8 @@ Monte Carlo:  0.6096780969751212
 </div>
 </div>
 </section>
-<section id="breakout-room-exercises">
-<h2>Breakout room exercises:<a class="headerlink" href="#breakout-room-exercises" title="Permalink to this headline">#</a></h2>
+<section id="exercises">
+<h2>Exercises:<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
 <section id="quasi-random-regular-and-random-uniform-distributions">
 <h3>Quasi random, regular, and random uniform distributions<a class="headerlink" href="#quasi-random-regular-and-random-uniform-distributions" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
@@ -937,9 +882,9 @@ Monte Carlo:  0.6096780969751212
 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sample</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">sample</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;qmc&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">uni</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">uni</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mf">2.7</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;lattice&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sample</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">sample</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;qmc&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">uni</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">uni</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mf">2.7</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;lattice&quot;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
@@ -947,19 +892,7 @@ Monte Carlo:  0.6096780969751212
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/78c794f34492c0b1b126d1ba567e7d86bc7edfee60c1cde8ba5b5ca054fc2cc5.png" src="../_images/78c794f34492c0b1b126d1ba567e7d86bc7edfee60c1cde8ba5b5ca054fc2cc5.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(100,)
-</pre></div>
-</div>
+<img alt="../_images/62e93a16fb99c15187564d6cebfbe52271cf3c81aba63fae9ff8434931240d32.png" src="../_images/62e93a16fb99c15187564d6cebfbe52271cf3c81aba63fae9ff8434931240d32.png" />
 </div>
 </div>
 <p>We phrased the integration above as a way to find <span class="math notranslate nohighlight">\(\pi\)</span>. Alternatively let us think about this procedure looking at which fraction of points is within the ball as finding the volume of the ball and look at this for higher dimensions.
@@ -984,15 +917,14 @@ Analytically the <a class="reference external" href="https://en.wikipedia.org/wi
 <h3>Importance sampling<a class="headerlink" href="#importance-sampling" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>See whether we can implement importance sampling for a simpler example.</p></li>
-<li><p>We try to recreate <a class="reference external" href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/monte-carlo-methods-in-practice/variance-reduction-methods">this example</a> at the very end of that link. It integrates <span class="math notranslate nohighlight">\(\sin(x)\)</span> on <span class="math notranslate nohighlight">\([0..\pi/2]\)</span> using a linear PDF <img src="https://www.scratchapixel.com/images/upload/monte-carlo-methods-practice/importancesamplingexample.png?" /></p></li>
-<li><p>We want to see whether we can recreate their result <img src="https://www.scratchapixel.com/images/upload/monte-carlo-methods-practice/importancesampling04.png?" /> in this notebook here.</p></li>
+<li><p>We try to recreate <a class="reference external" href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/monte-carlo-methods-in-practice/variance-reduction-methods">this example</a> at the very end of that link. It integrates <span class="math notranslate nohighlight">\(\sin(x)\)</span> on <span class="math notranslate nohighlight">\([0..\pi/2]\)</span> using a linear PDF</p></li>
 </ul>
-</section>
-</section>
-<section id="more-information">
-<h2>More information<a class="headerlink" href="#more-information" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://people.duke.edu/~ccc14/sta-663/MonteCarlo.html">Computational Statistics with Python</a> has also a few more interesting pointers on variance reduction and some of the advantages of Monte Carlo Integration.</p>
-<p>We will encounter this again when we talk about Ising models, curve fitting, model selection, and also in many transport problems. Radiation transport, neutron transport, etc. are very successfully modeled with Monte Carlo techniques.</p>
+<img src="https://www.scratchapixel.com/images/monte-carlo-methods-practice/importancesamplingexample.png?">
+<ul class="simple">
+<li><p>We want to see whether we can recreate their result</p></li>
+</ul>
+<img src="https://www.scratchapixel.com/images/monte-carlo-methods-practice/importancesampling04.png?"> 
+<p>in this notebook here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">importanceSamp</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
@@ -1029,6 +961,12 @@ Analytically the <a class="reference external" href="https://en.wikipedia.org/wi
 <img alt="../_images/bd8ae43e87e62c7a404ecb6114af5b89b06e0f45861133fd7b26258810846dd2.png" src="../_images/bd8ae43e87e62c7a404ecb6114af5b89b06e0f45861133fd7b26258810846dd2.png" />
 </div>
 </div>
+</section>
+</section>
+<section id="more-information">
+<h2>More information<a class="headerlink" href="#more-information" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://people.duke.edu/~ccc14/sta-663/MonteCarlo.html">Computational Statistics with Python</a> has also a few more interesting pointers on variance reduction and some of the advantages of Monte Carlo Integration.</p>
+<p>We will encounter this again when we talk about Ising models, curve fitting, model selection, and also in many transport problems. Radiation transport, neutron transport, etc. are very successfully modeled with Monte Carlo techniques.</p>
 </section>
 </section>
 
@@ -1108,7 +1046,7 @@ Analytically the <a class="reference external" href="https://en.wikipedia.org/wi
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-2">Application 2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus">Bonus</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-monte-carlo-integration-to-estimate-pi">Simple Monte Carlo Integration to estimate <span class="math notranslate nohighlight">\(\pi\)</span></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-room-exercises">Breakout room exercises:</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises:</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-random-regular-and-random-uniform-distributions">Quasi random, regular, and random uniform distributions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-sampling">Importance sampling</a></li>
 </ul>
