@@ -486,7 +486,7 @@ This notebook will give a brief introduction to one dimensional numerical integr
 <span class="c1"># to be used directly in the notebook </span>
 <span class="c1"># Note that in Python 3,  1/2 = 0.5 instead of 1/2 = 0</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1">#%matplotlib inline</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># Set common figure parameters:</span>
@@ -609,7 +609,7 @@ We use here the uniform distribution on the unit interval and so <span class="ma
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/88b377e882f44d827e7ee64fdc3bd00c0c1802f94d04cea4c3b4dd296eb2a739.png" src="../_images/88b377e882f44d827e7ee64fdc3bd00c0c1802f94d04cea4c3b4dd296eb2a739.png" />
+<img alt="../_images/5cacf93f935ddd5122b8c872e6ae1a33a75d08343dc7f316f10bbb33d8d644c0.png" src="../_images/5cacf93f935ddd5122b8c872e6ae1a33a75d08343dc7f316f10bbb33d8d644c0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -619,7 +619,7 @@ We use here the uniform distribution on the unit interval and so <span class="ma
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.5308631 , 0.74348558, 0.70961132, 0.20892122, 0.31998914])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.42189438, 0.35451293, 0.98984409, 0.87830306, 0.51853889])
 </pre></div>
 </div>
 </div>
@@ -690,7 +690,7 @@ and compare the results. Observe that the Riemann sum generally works better for
 
 <span class="c1"># Define the number of points and the interval</span>
 <span class="c1">#np.random.seed(20)</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">40</span>
 <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">stop</span>  <span class="o">=</span> <span class="mi">1</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Riemann Sum: &#39;</span><span class="p">,</span> <span class="n">riemannSum</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">))</span>
@@ -699,8 +699,8 @@ and compare the results. Observe that the Riemann sum generally works better for
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  0.328125
-Monte Carlo:  0.2797883575104035
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  0.33328125
+Monte Carlo:  0.3302737724045335
 </pre></div>
 </div>
 </div>
@@ -717,7 +717,7 @@ $<span class="math notranslate nohighlight">\( \int_0^1 \sin^2 \left( 20 \cdot 2
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">20</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 
 <span class="c1"># Define the number of points and the interval</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">40</span>
 <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">stop</span>  <span class="o">=</span> <span class="mi">1</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Riemann Sum: &#39;</span><span class="p">,</span> <span class="n">riemannSum</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">))</span>
@@ -726,8 +726,8 @@ $<span class="math notranslate nohighlight">\( \int_0^1 \sin^2 \left( 20 \cdot 2
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  0.5000000000000002
-Monte Carlo:  0.4047157499955621
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  1.0
+Monte Carlo:  0.44772862463585306
 </pre></div>
 </div>
 </div>
@@ -805,7 +805,7 @@ Monte Carlo:  0.4047157499955621
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5b7096694d63afcb40e8973e026ef3c4fd543e1f3594be91132b204af50897dd.png" src="../_images/5b7096694d63afcb40e8973e026ef3c4fd543e1f3594be91132b204af50897dd.png" />
+<img alt="../_images/5f058072480b506a373efd596c1b9f1f29c6ad189878f51ac9651a9fb32b18d2.png" src="../_images/5f058072480b506a373efd596c1b9f1f29c6ad189878f51ac9651a9fb32b18d2.png" />
 </div>
 </div>
 </section>
@@ -823,15 +823,15 @@ Monte Carlo:  0.4047157499955621
         <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">,:],</span> <span class="s1">&#39;.&#39;</span><span class="p">,(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">circ</span><span class="p">]),</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">circ</span><span class="p">]),</span> <span class="s1">&#39;.&#39;</span><span class="p">);</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">circ</span><span class="p">))</span><span class="o">/</span><span class="n">N</span><span class="o">*</span><span class="mi">4</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
     <span class="k">return</span> <span class="n">err</span>
-<span class="n">mc_pi</span><span class="p">(</span><span class="mi">9000</span><span class="p">,</span><span class="n">plotit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mc_pi</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span><span class="n">plotit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.007415422006566045
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003567409160255283
 </pre></div>
 </div>
-<img alt="../_images/1e23160bdd7cd88d9d8a619f8c49e7e8442c3f7b79cd6bc2aa1d70743117eed4.png" src="../_images/1e23160bdd7cd88d9d8a619f8c49e7e8442c3f7b79cd6bc2aa1d70743117eed4.png" />
+<img alt="../_images/36eebf25a1f8f4542846adaa0dafaf3db0b79ef733ae888d9d8cd2446b3253cb.png" src="../_images/36eebf25a1f8f4542846adaa0dafaf3db0b79ef733ae888d9d8cd2446b3253cb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -871,7 +871,10 @@ Monte Carlo:  0.4047157499955621
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">qmc</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># you may need to use: </span>
+<span class="c1"># conda install scipy=1.10</span>
+<span class="c1"># to have a recent enough scipy version that contains qmc </span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">qmc</span>
 <span class="n">sampler</span> <span class="o">=</span> <span class="n">qmc</span><span class="o">.</span><span class="n">Halton</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scramble</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">Ns</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">sample</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">Ns</span><span class="p">)</span>
@@ -892,7 +895,7 @@ Monte Carlo:  0.4047157499955621
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/62e93a16fb99c15187564d6cebfbe52271cf3c81aba63fae9ff8434931240d32.png" src="../_images/62e93a16fb99c15187564d6cebfbe52271cf3c81aba63fae9ff8434931240d32.png" />
+<img alt="../_images/454b4030397ca83e8e97f87762d6df2c09b0ff45fd94500b5cf36eaa158b6272.png" src="../_images/454b4030397ca83e8e97f87762d6df2c09b0ff45fd94500b5cf36eaa158b6272.png" />
 </div>
 </div>
 <p>We phrased the integration above as a way to find <span class="math notranslate nohighlight">\(\pi\)</span>. Alternatively let us think about this procedure looking at which fraction of points is within the ball as finding the volume of the ball and look at this for higher dimensions.
