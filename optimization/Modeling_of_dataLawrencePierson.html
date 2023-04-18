@@ -1,0 +1,768 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Modeling of Data &#8212; Physics 113 - Computational Physics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'optimization/Modeling_of_dataLawrencePierson';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to Physics 113
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Get started with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/Exercise-python-basics.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="OptimizationLecture_Introduction.html">Introduction to Optimization</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/yipihey/Physics-113-Book/master?urlpath=tree/docs/optimization/Modeling_of_dataLawrencePierson.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/yipihey/Physics-113-Book/blob/master/docs/optimization/Modeling_of_dataLawrencePierson.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Foptimization/Modeling_of_dataLawrencePierson.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/optimization/Modeling_of_dataLawrencePierson.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modeling of Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-built-least-squares">Pre built least squares</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-mcmc-with-emcee">Advanced: MCMC with emcee</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modeling-of-data">
+<h1>Modeling of Data<a class="headerlink" href="#modeling-of-data" title="Permalink to this headline">#</a></h1>
+<p>In this worksheet we will explore modelling a single dataset with a variety of techniques. We will decide which model best fits the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<p>I have generated a chemical concentration vs reaction rate dataset. X values are the concentration of the chemical and y values are the measured reaction rate. The measured reaction rate y has gaussian errors with varying standard deviation (our experimental measurement apparatus is predictably unreliable).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#defining concentration dataset</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.08599334</span><span class="p">,</span> <span class="mf">0.34773751</span><span class="p">,</span> <span class="mf">0.88607836</span><span class="p">,</span> <span class="mf">0.91849768</span><span class="p">,</span> <span class="mf">1.24850685</span><span class="p">,</span>
+       <span class="mf">1.29477312</span><span class="p">,</span> <span class="mf">1.31030779</span><span class="p">,</span> <span class="mf">1.00972797</span><span class="p">,</span> <span class="mf">1.47800085</span><span class="p">,</span> <span class="mf">1.41082652</span><span class="p">,</span>
+       <span class="mf">1.29654454</span><span class="p">,</span> <span class="mf">1.92972536</span><span class="p">,</span> <span class="mf">1.36311027</span><span class="p">,</span> <span class="mf">1.55996423</span><span class="p">,</span> <span class="mf">1.9562846</span> <span class="p">,</span>
+       <span class="mf">1.40668205</span><span class="p">,</span> <span class="mf">1.53830729</span><span class="p">,</span> <span class="mf">1.72135509</span><span class="p">,</span> <span class="mf">1.95658203</span><span class="p">,</span> <span class="mf">1.72355114</span><span class="p">,</span>
+       <span class="mf">1.64280001</span><span class="p">,</span> <span class="mf">1.71091304</span><span class="p">,</span> <span class="mf">1.38315546</span><span class="p">,</span> <span class="mf">1.88707567</span><span class="p">,</span> <span class="mf">1.76155702</span><span class="p">,</span>
+       <span class="mf">1.63132042</span><span class="p">,</span> <span class="mf">1.8003272</span> <span class="p">,</span> <span class="mf">1.57813022</span><span class="p">,</span> <span class="mf">2.08194155</span><span class="p">,</span> <span class="mf">1.85366049</span><span class="p">,</span>
+       <span class="mf">1.72478809</span><span class="p">,</span> <span class="mf">1.92994659</span><span class="p">,</span> <span class="mf">1.9700196</span> <span class="p">,</span> <span class="mf">1.80047987</span><span class="p">,</span> <span class="mf">1.7949588</span> <span class="p">,</span>
+       <span class="mf">1.82631271</span><span class="p">,</span> <span class="mf">2.01301328</span><span class="p">,</span> <span class="mf">1.65549382</span><span class="p">,</span> <span class="mf">1.86843443</span><span class="p">,</span> <span class="mf">1.86195723</span><span class="p">])</span>
+
+<span class="n">stds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.06617846</span><span class="p">,</span> <span class="mf">0.06017097</span><span class="p">,</span> <span class="mf">0.27314106</span><span class="p">,</span> <span class="mf">0.12600407</span><span class="p">,</span> <span class="mf">0.11129288</span><span class="p">,</span>
+       <span class="mf">0.13515254</span><span class="p">,</span> <span class="mf">0.25454778</span><span class="p">,</span> <span class="mf">0.2588202</span> <span class="p">,</span> <span class="mf">0.18801872</span><span class="p">,</span> <span class="mf">0.15630156</span><span class="p">,</span>
+       <span class="mf">0.33308259</span><span class="p">,</span> <span class="mf">0.24854428</span><span class="p">,</span> <span class="mf">0.32115147</span><span class="p">,</span> <span class="mf">0.07929529</span><span class="p">,</span> <span class="mf">0.32302756</span><span class="p">,</span>
+       <span class="mf">0.18766907</span><span class="p">,</span> <span class="mf">0.33347931</span><span class="p">,</span> <span class="mf">0.06482006</span><span class="p">,</span> <span class="mf">0.13324023</span><span class="p">,</span> <span class="mf">0.19334424</span><span class="p">,</span>
+       <span class="mf">0.05633564</span><span class="p">,</span> <span class="mf">0.06767707</span><span class="p">,</span> <span class="mf">0.29646465</span><span class="p">,</span> <span class="mf">0.17814794</span><span class="p">,</span> <span class="mf">0.12685562</span><span class="p">,</span>
+       <span class="mf">0.2495272</span> <span class="p">,</span> <span class="mf">0.0603528</span> <span class="p">,</span> <span class="mf">0.25864364</span><span class="p">,</span> <span class="mf">0.20791319</span><span class="p">,</span> <span class="mf">0.26791844</span><span class="p">,</span>
+       <span class="mf">0.06223367</span><span class="p">,</span> <span class="mf">0.13627957</span><span class="p">,</span> <span class="mf">0.20912857</span><span class="p">,</span> <span class="mf">0.18998403</span><span class="p">,</span> <span class="mf">0.33358897</span><span class="p">,</span>
+       <span class="mf">0.29057989</span><span class="p">,</span> <span class="mf">0.23997339</span><span class="p">,</span> <span class="mf">0.10649202</span><span class="p">,</span> <span class="mf">0.00997528</span><span class="p">,</span> <span class="mf">0.28964994</span><span class="p">])</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It is always good to have a look at your dataset before attempting any fitting:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">stds</span><span class="p">,</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Concentration [moles/litre]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reaction rate [moles/litre/s]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Reaction rate [moles/litre/s]&#39;)
+</pre></div>
+</div>
+<img alt="../_images/50661d2600b0a8333b7a478626a87a3e49de7a821627a6869d7e7668dc804ffc.png" src="../_images/50661d2600b0a8333b7a478626a87a3e49de7a821627a6869d7e7668dc804ffc.png" />
+</div>
+</div>
+<p>What kind of model do we expect here? It’s likely that as concentration keeps increasing the reaction rate will asymptote, since other chemicals needed for the reaction in the solution will remain constant and thus become a limiting factor. It’s also clear that at zero concentration there will zero reaction rate.</p>
+<p>If we had no idea what the underlying model is , it could be useful to try fitting some polynomials so we can atleast interpolate between the data points.</p>
+<p>Lets start by fitting a quadratic polynomial. Remember the equation for weighted least squares (this comes from minimizing the negative log likelihood for independent data with gaussian errors).:</p>
+<div class="math notranslate nohighlight">
+\[\theta = (X^TWX)^{-1}X^TW\mathbf{y}\]</div>
+<p>For a quadratic model <span class="math notranslate nohighlight">\(y = ax^2 + bx + c\)</span>, we would have
+$<span class="math notranslate nohighlight">\(X = \begin{bmatrix}x_1^2 &amp; x_1 &amp; 1 \\ x_2^2 &amp; x_2 &amp; 1 \\ \vdots \\ x_n^2 &amp; x_n &amp; 1  \end{bmatrix} \)</span>$</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}W = \begin{bmatrix}1/\sigma_1^2 &amp; 0 &amp; \ldots &amp; 0 \\ 0 &amp; 1/\sigma_2^2 &amp; \ldots &amp; 0 \\ \vdots \\ 0 &amp; \ldots &amp; 0 &amp; 1/\sigma_n^2   \end{bmatrix} \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\theta = \begin{bmatrix}a \\ b \\ c \end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{y} = \begin{bmatrix}y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix} \end{split}\]</div>
+<p>X is an <span class="math notranslate nohighlight">\(n\times3\)</span> matrix, <span class="math notranslate nohighlight">\(\theta\)</span> is a <span class="math notranslate nohighlight">\(3\times1\)</span> vector , <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is <span class="math notranslate nohighlight">\(n\times1\)</span> vector and W is a <span class="math notranslate nohighlight">\(n\times n\)</span> matrix (the inverse of the covariance matrix between the data points).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Define X matrix</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x shape&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1">#define y vector (its already defined for us)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y shape &#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1">#define weight matrix</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">stds</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;W shape&#39;</span><span class="p">,</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1">#Now solve for polynomial coefficients a,b,c:</span>
+<span class="c1">#You can use np.linalg.inv() for matrix inverse, @ operator for matrix multiplication and .T for transpose</span>
+<span class="c1">#e.g. np.linalg.inv(A.T@A)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">_______</span> 
+<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">theta</span>
+
+<span class="c1">#your optimal quadratic model is now given by:</span>
+<span class="k">def</span> <span class="nf">quad</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">c</span> 
+
+<span class="c1">#Calculate the sum of squared residuals (i.e. the minimum negative log likelihood), </span>
+<span class="c1">#these will be useful to compare models later:</span>
+<span class="n">residuals2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">quad</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">stds</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">#Plot the results:</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">stds</span><span class="p">,</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quad</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x shape (40, 3)
+y shape  (40,)
+W shape (40, 40)
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">15</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;W shape&#39;</span><span class="p">,</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1">#Now solve for polynomial coefficients a,b,c:</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="c1">#You can use np.linalg.inv() for matrix inverse, @ operator for matrix multiplication and .T for transpose</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="c1">#e.g. np.linalg.inv(A.T@A)</span>
+<span class="ne">---&gt; </span><span class="mi">15</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">_______</span> 
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">theta</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="c1">#your optimal quadratic model is now given by:</span>
+
+<span class="ne">NameError</span>: name &#39;_______&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<p>Does the model look reasonable?</p>
+<p>Now lets try the same thing but with a quartic polynomial <span class="math notranslate nohighlight">\(y = dx^4 + ex^3 + fx^2 + gx + h\)</span>. Plot both on the same plot below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Do it yourself as above ...</span>
+<span class="n">_____</span>
+
+
+<span class="c1">#Now there are 5 parameters to fit</span>
+<span class="n">d</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">h</span> <span class="o">=</span> <span class="n">theta</span>
+
+<span class="c1">#your optimal quadratic model is now given by:</span>
+<span class="k">def</span> <span class="nf">quartic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">d</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="n">e</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">f</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">g</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span> 
+
+<span class="c1">#Calculate the sum of squared residuals (i.e. the minimum negative log likelihood), </span>
+<span class="c1">#these will be useful to compare models later:</span>
+<span class="n">residuals4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">quartic</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">stds</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">#Plot the results:</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">stds</span><span class="p">,</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quad</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quartic</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Is the quartic an improvement?</p>
+<p>In fact the model we physically expect here is the Michaelis–Menten formula:</p>
+<div class="math notranslate nohighlight">
+\[y = \frac{\beta_1x}{\beta_2 + x}\]</div>
+<p>This is a non-linear model in <span class="math notranslate nohighlight">\(\beta_2\)</span>, so the solution for <span class="math notranslate nohighlight">\(\beta_1,\beta_2\)</span> given the data cannot be arrived at analytically.
+We will need to use an optimizer like we did last class. What is the negative log-likelihood function that we want to minimize here?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">neg_log_lik</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
+    <span class="n">beta_1</span><span class="p">,</span> <span class="n">beta_2</span> <span class="o">=</span> <span class="n">beta</span>
+    <span class="k">return</span> <span class="n">______</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<p>Solve this model for <span class="math notranslate nohighlight">\(\beta_1,\beta_2\)</span> using scipy.minimize() (or the optimizer you wrote last class if you’re feeling cool) and plot it alongside the other two models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Solving here with scipy.minimize but feel free to use your optimizer from last class.</span>
+<span class="c1">#beta_1 = res[&#39;x&#39;][0] and beta_2 = res[&#39;x&#39;][1]</span>
+<span class="c1">#Sum of squared residuals (minimum of negative log likelihood) given by res[&#39;fun&#39;]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">neg_log_lik</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">beta_1</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">beta_2</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">residuals_mm</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;fun&#39;</span><span class="p">]</span>
+
+
+<span class="c1">#Plot the results:</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">stds</span><span class="p">,</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quad</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quartic</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>  <span class="n">beta_1</span><span class="o">*</span><span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="n">beta_2</span> <span class="o">+</span> <span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which is the best fit then?</p>
+<p>We can solve answer question analytically by comparing the AIC, BIC and reduced chi squared values for each fit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#defining model goodness of fit criteria</span>
+<span class="k">def</span> <span class="nf">AIC</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">sum_sq_res</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">k</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">sum_sq_res</span>
+
+<span class="k">def</span> <span class="nf">BIC</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">sum_sq_res</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">k</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">sum_sq_res</span>
+
+<span class="k">def</span> <span class="nf">reduced_chi_squared</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">sum_sq_res</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sum_sq_res</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>k is the number of fitted parameters in the model, n is the number of data points</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AIC quadratic polynomial   &quot;</span><span class="p">,</span> <span class="n">AIC</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">residuals2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AIC quartic polynomial   &quot;</span><span class="p">,</span> <span class="n">AIC</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">residuals4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AIC Michaelis–Menten   &quot;</span><span class="p">,</span> <span class="n">AIC</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">residuals_mm</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BIC quadratic polynomial   &quot;</span><span class="p">,</span><span class="n">BIC</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">residuals2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BIC quartic polynomial   &quot;</span><span class="p">,</span><span class="n">BIC</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">residuals4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BIC Michaelis–Menten   &quot;</span><span class="p">,</span><span class="n">BIC</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">residuals_mm</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reduced chi-squared quadartic polynomial   &quot;</span><span class="p">,</span><span class="n">reduced_chi_squared</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">residuals2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reduced chi-squared quartic polynomial   &quot;</span><span class="p">,</span><span class="n">reduced_chi_squared</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">residuals4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reduced chi-squared Michaelis–Menten   &quot;</span><span class="p">,</span><span class="n">reduced_chi_squared</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">residuals_mm</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which model is the best and why?</p>
+<section id="pre-built-least-squares">
+<h2>Pre built least squares<a class="headerlink" href="#pre-built-least-squares" title="Permalink to this headline">#</a></h2>
+<p>Now you understand how it works, when applying least squares in future, I recommend using np.linalg.leastsq(). The ‘statsmodels’ package is also very good for those more interested in statistics and data science.</p>
+</section>
+<section id="advanced-mcmc-with-emcee">
+<h2>Advanced: MCMC with emcee<a class="headerlink" href="#advanced-mcmc-with-emcee" title="Permalink to this headline">#</a></h2>
+<p>If we want errors on our model parameters estimates or on our predicted y we can get these analytically for the linear least squares model. However, for the non-linear M-M model there is no analytical way to get these, we need to use something like MCMC.</p>
+<p>If you’re interested in using MCMC in your project I would recommend starting with the ‘emcee’ python package. It uses a slightly juiced up metropolis hastings algorithm like we discussed in lecture and the documentation is extensive and very clear.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./optimization"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-built-least-squares">Pre built least squares</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-mcmc-with-emcee">Advanced: MCMC with emcee</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tom Abel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
