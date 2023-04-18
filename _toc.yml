@@ -19,4 +19,7 @@ parts:
     chapters:
     - file: ode/ode-integration-HarmonicOscillator
     - file: ode/Exercises-ode
+  - caption: Optimization
+    chapters:
+    - file: optimization/OptimizationLecture_Introduction
 
