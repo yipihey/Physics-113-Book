@@ -454,15 +454,19 @@ The intro material is <a class="reference download internal" download="" href=".
 </div>
 </div>
 <p>We will first try to minimize the 2D test functions below. Then we will apply our optimizer to the 40D hanging chain problem.</p>
-<p>The Booth function:
-$<span class="math notranslate nohighlight">\( f(x_1,x_2) = (x_1 + 2x_2 - 7)^2 + (2x_1 + x_2 - 5)^2\)</span>$</p>
-<p>The Rosenbrock function:
-$<span class="math notranslate nohighlight">\( f(x_1,x_2) = (a - x_1)^2 + b(x_2 - x_1^2)^2\)</span>$</p>
-<p>The Branin function:
-$<span class="math notranslate nohighlight">\( f(x_1,x_2) = a(x_2 - bx_1^2+cx_1-r)^2 + s(1-t)\cos(x_1) + s\)</span>$</p>
-<p>All these test functions have global minimum function values
-$<span class="math notranslate nohighlight">\( f(x_1^{\star},x_2^{\star}) = 0 \)</span><span class="math notranslate nohighlight">\(
-The job is to find \)</span>(x_1^{\star},x_2^{\star})$.</p>
+<p>The Booth function:</p>
+<div class="math notranslate nohighlight">
+\[ f(x_1,x_2) = (x_1 + 2x_2 - 7)^2 + (2x_1 + x_2 - 5)^2\]</div>
+<p>The Rosenbrock function:</p>
+<div class="math notranslate nohighlight">
+\[ f(x_1,x_2) = (a - x_1)^2 + b(x_2 - x_1^2)^2\]</div>
+<p>The Branin function:</p>
+<div class="math notranslate nohighlight">
+\[ f(x_1,x_2) = a(x_2 - bx_1^2+cx_1-r)^2 + s(1-t)\cos(x_1) + s\]</div>
+<p>All these test functions have global minimum function values</p>
+<div class="math notranslate nohighlight">
+\[ f(x_1^{\star},x_2^{\star}) = 0 \]</div>
+<p>The job is to find <span class="math notranslate nohighlight">\((x_1^{\star},x_2^{\star})\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Test functions</span>
