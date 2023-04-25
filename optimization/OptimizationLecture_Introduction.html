@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'optimization/OptimizationLecture_Introduction';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Modeling of Data" href="Modeling_of_data.html" />
     <link rel="prev" title="Exercises" href="../ode/Exercises-ode.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -178,6 +179,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Optimization</a></li>
 
+<li class="toctree-l1"><a class="reference internal" href="Modeling_of_data.html">Modeling of Data</a></li>
 </ul>
 
     </div>
@@ -443,7 +445,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-optimization">
 <h1>Introduction to Optimization<a class="headerlink" href="#introduction-to-optimization" title="Permalink to this headline">#</a></h1>
 <p>In this worksheet you will implement an optimizer of your choice to minimize a variety of functions.
-The intro material is <a class="reference download internal" download="" href="../_downloads/ec07d57f89462610613aa4c2b53951c0/Phys113_optimization1.pptx"><span class="xref download myst">linked here </span></a>.</p>
+The material and references are <a class="reference download internal" download="" href="../_downloads/ec07d57f89462610613aa4c2b53951c0/Phys113_optimization1.pptx"><span class="xref download myst">linked here</span></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -454,19 +456,15 @@ The intro material is <a class="reference download internal" download="" href=".
 </div>
 </div>
 <p>We will first try to minimize the 2D test functions below. Then we will apply our optimizer to the 40D hanging chain problem.</p>
-<p>The Booth function:</p>
-<div class="math notranslate nohighlight">
-\[ f(x_1,x_2) = (x_1 + 2x_2 - 7)^2 + (2x_1 + x_2 - 5)^2\]</div>
-<p>The Rosenbrock function:</p>
-<div class="math notranslate nohighlight">
-\[ f(x_1,x_2) = (a - x_1)^2 + b(x_2 - x_1^2)^2\]</div>
-<p>The Branin function:</p>
-<div class="math notranslate nohighlight">
-\[ f(x_1,x_2) = a(x_2 - bx_1^2+cx_1-r)^2 + s(1-t)\cos(x_1) + s\]</div>
-<p>All these test functions have global minimum function values</p>
-<div class="math notranslate nohighlight">
-\[ f(x_1^{\star},x_2^{\star}) = 0 \]</div>
-<p>The job is to find <span class="math notranslate nohighlight">\((x_1^{\star},x_2^{\star})\)</span>.</p>
+<p>The Booth function:
+$<span class="math notranslate nohighlight">\( f(x_1,x_2) = (x_1 + 2x_2 - 7)^2 + (2x_1 + x_2 - 5)^2\)</span>$</p>
+<p>The Rosenbrock function:
+$<span class="math notranslate nohighlight">\( f(x_1,x_2) = (a - x_1)^2 + b(x_2 - x_1^2)^2\)</span>$</p>
+<p>The Branin function:
+$<span class="math notranslate nohighlight">\( f(x_1,x_2) = a(x_2 - bx_1^2+cx_1-r)^2 + s(1-t)\cos(x_1) + s\)</span>$</p>
+<p>All these test functions have global minimum function values
+$<span class="math notranslate nohighlight">\( f(x_1^{\star},x_2^{\star}) = 0 \)</span><span class="math notranslate nohighlight">\(
+The job is to find \)</span>(x_1^{\star},x_2^{\star})$.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Test functions</span>
@@ -804,7 +802,6 @@ $<span class="math notranslate nohighlight">\(f(\{x_i,y_i\}_{i=1}^n) = \sum_{i=1
 <img alt="../_images/f8199fa5656bef090d913e531d89a3c0832c117945c302485883fb105e42d1e2.png" src="../_images/f8199fa5656bef090d913e531d89a3c0832c117945c302485883fb105e42d1e2.png" />
 </div>
 </div>
-<p>Now choose two or more methods from the <code class="docutils literal notranslate"><span class="pre">scipy.optimize.minimize</span></code> and compare how well they can solve the catenary problem? Describe your metrics and which methods you find to work best.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -843,6 +840,15 @@ $<span class="math notranslate nohighlight">\(f(\{x_i,y_i\}_{i=1}^n) = \sum_{i=1
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Exercises</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="Modeling_of_data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Modeling of Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
