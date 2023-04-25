@@ -22,4 +22,5 @@ parts:
   - caption: Optimization
     chapters:
     - file: optimization/OptimizationLecture_Introduction
+    - file: optimization/Modeling_of_data
 
