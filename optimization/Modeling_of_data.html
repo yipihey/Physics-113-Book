@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'optimization/Modeling_of_data';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Probability Distributions and Sampling from them" href="MetropolisHastings.html" />
     <link rel="prev" title="Introduction to Optimization" href="OptimizationLecture_Introduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -179,6 +180,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="OptimizationLecture_Introduction.html">Introduction to Optimization</a></li>
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Modeling of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MetropolisHastings.html">Probability Distributions and Sampling from them</a></li>
+
 </ul>
 
     </div>
@@ -444,7 +447,6 @@ document.write(`
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
 
-
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
 </div>
@@ -565,6 +567,18 @@ W shape (40, 40)
 </div>
 </div>
 <p>Does the model look reasonable?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residuals2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>120.58945598165062
+</pre></div>
+</div>
+</div>
+</div>
 <p>Now lets try the same thing but with a quartic polynomial <span class="math notranslate nohighlight">\(y = dx^4 + ex^3 + fx^2 + gx + h\)</span>. Plot both on the same plot below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -714,6 +728,15 @@ We will need to use an optimizer like we did last class. What is the negative lo
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Introduction to Optimization</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="MetropolisHastings.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Probability Distributions and Sampling from them</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
