@@ -428,7 +428,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-probability-distribution-functions">Sampling Probability Distribution Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box-muller-method-to-generate-normal-distribution">Box-Muller Method to generate Normal distribution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-algorithm">Metropolis Hastings Algorithm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-on-a-lognormal-distribution">Metropolis Hastings on a LogNormal Distribution</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-mh-to-model-fitting">Apply MH to model fitting</a></li>
@@ -459,7 +458,7 @@ document.write(`
 <h2>Probability Distribution Function Basics<a class="headerlink" href="#probability-distribution-function-basics" title="Permalink to this headline">#</a></h2>
 <p>When some stochastic process has distinct outcomes such as throwing two dice the <em>domain</em> of outcomes is just a list of all possibilities <span class="math notranslate nohighlight">\(\{2,3,4,5,6,7,8,9,10,11,12\}\)</span>. The probabilities describing what fraction of the time on average you expect these different values characterizes the system. These probabilities are <span class="math notranslate nohighlight">\(\{1/36, 2/36/3/36, 4/36, 5/36, 6/36, 5/36, 4/36, 3/36, 2/36, 1/36\}\)</span>. They are of course all positive values and the sum of all probabilities of possible outcomes equals one. I.e. something always happens.
 The probability distribution function <span class="math notranslate nohighlight">\(p(x)\)</span> is defined on the domain an records the probabilities such that <span class="math notranslate nohighlight">\(p(x) = Prob(X=x)\)</span></p>
-<p>How does this concept generalize to systems that have infinetly many outcomes? The probabilities have to be given as a function. Here it is defined for infintesimally small regions and we record it as a probability density such that the probability of the event to have <span class="math notranslate nohighlight">\(x\)</span> be between <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> is given by <span class="math notranslate nohighlight">\(Prob(a\leq X\leq b) = \int_a^b p(x)dx\)</span>.</p>
+<p>How does this concept generalize to systems that have infinitely many outcomes? The probabilities have to be given as a function. Here it is defined for infinitesimally small regions and we record it as a probability density such that the probability of the event to have <span class="math notranslate nohighlight">\(x\)</span> be between <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> is given by <span class="math notranslate nohighlight">\(Prob(a\leq X\leq b) = \int_a^b p(x)dx\)</span>.</p>
 <p>The <em>cumulative probability distribution (CDF)</em> is simply its integral</p>
 <div class="math notranslate nohighlight">
 \[
@@ -467,10 +466,14 @@ P(x)=Prob(X\leq x) = \int_{-\infty}^x p(x')dx'
 \]</div>
 <p>and</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}
-p(x) = \frac{d}{dx} P(x)
-$$.\\Also here we have \\$$\int_{x \in \mathbb{D}} p(x)dx = 1, 
-\end{aligned}\end{align} \]</div>
+\[
+p(x) = \frac{d}{dx} P(x).
+\]</div>
+<p>Also here we have</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{x \in \mathbb{D}} p(x)dx = 1, 
+\]</div>
 <p>i.e. the PDF is normalized and it is also always positive.</p>
 <p>The mean of the distribution is given by</p>
 <div class="math notranslate nohighlight">
@@ -492,14 +495,14 @@ $$.\\Also here we have \\$$\int_{x \in \mathbb{D}} p(x)dx = 1,
 <h2>Sampling Probability Distribution Functions<a class="headerlink" href="#sampling-probability-distribution-functions" title="Permalink to this headline">#</a></h2>
 <p>The velocity of atoms in a gas in thermodynamic equilibrium follow the Maxwell-Boltzmann distribution.
 It is isotropic and we have for every dimension, <span class="math notranslate nohighlight">\(i\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9accd698-129b-41b6-8c0f-7772ab40e330">
-<span class="eqno">(1)<a class="headerlink" href="#equation-9accd698-129b-41b6-8c0f-7772ab40e330" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e8678404-7ee7-4aac-923f-d4ca7e770260">
+<span class="eqno">(1)<a class="headerlink" href="#equation-e8678404-7ee7-4aac-923f-d4ca7e770260" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(v_i) = \frac{1}{\sigma\,\sqrt{2\pi}} \, \exp\left(\frac{-v_i^2}{2\sigma^2}\right) \ \ \ \ \ \ \ \  (1)
 \end{equation}\]</div>
 <p>Where <span class="math notranslate nohighlight">\(\sigma^2 = k\,T/m\)</span>.</p>
 <p>The distribution of velocities considering them in 3 dimensions is just the product of three one dimensional velocity distribution functions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-86247ef9-f913-4c5c-a50e-e4795a1209b1">
-<span class="eqno">(2)<a class="headerlink" href="#equation-86247ef9-f913-4c5c-a50e-e4795a1209b1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2a7c1b5b-5d9d-4047-84f1-f4e1bd5ece82">
+<span class="eqno">(2)<a class="headerlink" href="#equation-2a7c1b5b-5d9d-4047-84f1-f4e1bd5ece82" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f_v \left(v_x, v_y, v_z\right) = f_v (v_x)f_v (v_y)f_v (v_z) 
  = \left(\frac{1}{\sigma\,\sqrt{2\pi}}\right)^3 \, \exp\left(-\frac{v_x^2+v_y^2+v_z^2}{2\sigma^2}\right) \ \ \ \ \ \ \ \  (1)
 \end{equation}\]</div>
@@ -737,94 +740,6 @@ But clearly we do not want a uniform distribution of variables. We want a Maxwel
 </div>
 </div>
 </div>
-</section>
-<section id="metropolis-hastings-on-a-lognormal-distribution">
-<h2>Metropolis Hastings on a LogNormal Distribution<a class="headerlink" href="#metropolis-hastings-on-a-lognormal-distribution" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sdlnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">sigma</span><span class="o">=</span><span class="mf">.1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Standard log normal pdf (Probability Density Function)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="o">==</span><span class="mf">0.</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-30</span> 
-    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">mu</span>
-    <span class="k">return</span> <span class="mf">1.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="o">*</span><span class="n">z</span><span class="o">/</span><span class="mf">2.</span><span class="o">/</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">sigma</span><span class="o">/</span><span class="n">x</span>
-
-<span class="n">sigma</span> <span class="o">=</span> <span class="mf">.15</span>
-<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">10000</span>
-<span class="n">alpha</span> <span class="o">=</span> <span class="mf">.5</span>
-<span class="n">x</span> <span class="o">=</span> <span class="mf">1.1</span>
-<span class="n">vec</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">ct</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">nburn</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="k">while</span> <span class="p">(</span><span class="n">count</span><span class="o">&lt;</span><span class="n">n</span><span class="o">+</span><span class="n">nburn</span><span class="p">):</span>
-    <span class="n">old_loglik</span> <span class="o">=</span> <span class="n">sdlnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
-    <span class="n">can</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span> <span class="c1">#candidate</span>
-    <span class="n">new_loglik</span> <span class="o">=</span> <span class="n">sdlnorm</span><span class="p">(</span><span class="n">can</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
-    <span class="n">aprob</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span><span class="n">sdlnorm</span><span class="p">(</span><span class="n">can</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span><span class="o">/</span><span class="n">sdlnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">)])</span> <span class="c1">#acceptance probability</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">new_loglik</span> <span class="o">&gt;</span> <span class="n">old_loglik</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">can</span>
-        <span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">u</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">new_loglik</span> <span class="o">-</span> <span class="n">old_loglik</span><span class="p">)):</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">can</span>
-            <span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-    <span class="n">x</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">ct</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="n">vec</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="n">nburn</span><span class="p">:]</span>
-
-<span class="c1">#plotting the results:</span>
-<span class="c1">#theoretical curve</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">sdlnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
-
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">)))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Metropolis-Hastings&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">.2</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">((</span><span class="n">vec</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="n">density</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">log</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;r-&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">leg</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="s1">&#39;PDF&#39;</span><span class="p">,</span> <span class="s1">&#39;MH&#39;</span><span class="p">),</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
-<span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;calculated &#39;</span><span class="p">,</span> <span class="mf">1.</span><span class="o">*</span><span class="p">(</span><span class="n">ct</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39; random numbers for a sample of &#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">),</span> \
-       <span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="p">,</span><span class="mf">1.</span><span class="o">*</span><span class="n">ct</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="p">,</span> <span class="s1">&#39; times more operations than in ideal case&#39;</span> <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14676/3761484396.py:7: RuntimeWarning: invalid value encountered in log
-  z = np.log(x)-mu
-/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14676/3761484396.py:24: RuntimeWarning: divide by zero encountered in double_scalars
-  aprob = min([1.,sdlnorm(can,mu,sigma)/sdlnorm(x,mu,sigma)]) #acceptance probability
-/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14676/3761484396.py:58: UserWarning: Legend does not support handles for str instances.
-A proxy artist may be used instead.
-See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#controlling-the-legend-entries
-  leg = plt.legend((&#39;PDF&#39;, &#39;MH&#39;),&#39;best&#39;)
-</pre></div>
-</div>
-<img alt="../_images/bb43756e2b2e75e05a3b381d8a24aef0550dba713e641201e842b1cfd9a1d7ff.png" src="../_images/bb43756e2b2e75e05a3b381d8a24aef0550dba713e641201e842b1cfd9a1d7ff.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>calculated  12374.0  random numbers for a sample of  11376 . 
- 1.0878164556962024  times more operations than in ideal case
-</pre></div>
-</div>
-</div>
-</div>
 <p>Now try this with a probability distributions function that is not normalized …</p>
 </section>
 </section>
@@ -840,9 +755,9 @@ See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#cont
 
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-<span class="n">A_true</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">A_true</span> <span class="o">=</span> <span class="mf">1.7</span>
 <span class="n">m_true</span> <span class="o">=</span> <span class="mf">1.5</span>
-<span class="n">sigma_true</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">sigma_true</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A_true</span><span class="p">,</span> <span class="n">m_true</span><span class="p">)</span> <span class="o">+</span> <span class="n">sigma_true</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">);</span>
@@ -856,7 +771,7 @@ See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#cont
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5a124ae41295d709c093b93544bf7fd6e6f5316d397ec687256731f03b1dbcaa.png" src="../_images/5a124ae41295d709c093b93544bf7fd6e6f5316d397ec687256731f03b1dbcaa.png" />
+<img alt="../_images/0bee911d5fa8aaa3f4ef04236ebede52ab48a2734dc06ed8431cf7e2ad5c94bc.png" src="../_images/0bee911d5fa8aaa3f4ef04236ebede52ab48a2734dc06ed8431cf7e2ad5c94bc.png" />
 </div>
 </div>
 <p>We now want to see whether a model y = A + m x + normal distribution with width sigma fits our data. So we are attempting to fit 3 parameters, A, m, sigma</p>
@@ -972,29 +887,17 @@ See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#cont
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14676/2385035807.py:76: UserWarning: Legend does not support handles for str instances.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_15491/2385035807.py:76: UserWarning: Legend does not support handles for str instances.
 A proxy artist may be used instead.
 See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#controlling-the-legend-entries
   leg = plt.legend((&#39;PDF&#39;, &#39;MH&#39;),&#39;best&#39;)
 </pre></div>
 </div>
-<img alt="../_images/7514f4193fb223af442c10c0c7cf743a78a08dff4d7cfa8109062ba28928baf7.png" src="../_images/7514f4193fb223af442c10c0c7cf743a78a08dff4d7cfa8109062ba28928baf7.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Acceptance rate: 0.006
-A = 1.89 +/- 0.06
-m = 1.53 +/- 0.02
-sigma = 1.43 +/- 0.02
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(500, 3)
+<img alt="../_images/74d5cbe14f3565ad6f63455b688edfc605ebd92b14edff959e8c96e2c7dc01e9.png" src="../_images/74d5cbe14f3565ad6f63455b688edfc605ebd92b14edff959e8c96e2c7dc01e9.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Acceptance rate: 0.002
+A = 1.69 +/- 0.03
+m = 1.50 +/- 0.00
+sigma = 0.56 +/- 0.05
 </pre></div>
 </div>
 </div>
@@ -1008,9 +911,9 @@ sigma = 1.43 +/- 0.02
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A= 1.8933311426063866 +- 0.05843214765295453
-m= 1.5288952590687255 +- 0.016428946561896658
-sigma= 1.4251598352740522 +- 0.01686576448236312
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A= 1.6855822773870872 +- 0.029873054872687196
+m= 1.4990841456188206 +- 0.0010290169364167538
+sigma= 0.557909174937905 +- 0.050860937005540834
 </pre></div>
 </div>
 </div>
@@ -1029,7 +932,7 @@ sigma= 1.4251598352740522 +- 0.01686576448236312
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/925cb9b625c6a0439e190c30909bf13ba764b8c0ac244b629c21203f46b5840b.png" src="../_images/925cb9b625c6a0439e190c30909bf13ba764b8c0ac244b629c21203f46b5840b.png" />
+<img alt="../_images/d0450628a8ca687ffc854b888e50a112454e434e63104384ee7ec2e15dde9a54.png" src="../_images/d0450628a8ca687ffc854b888e50a112454e434e63104384ee7ec2e15dde9a54.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1043,9 +946,9 @@ sigma= 1.4251598352740522 +- 0.01686576448236312
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Values with 5 and 95% of the distribution
-A    = 1.8717914911204065 + 0.11052123176852535 - 0.07086755265726064
-m    = 1.5359455373371163 + 0.01500719575566234 - 0.03468490132903468
-sigma= 1.4355232447060151 + 0.0 - 0.03851938374626096
+A    = 1.6687030440532444 + 0.06974889807372953 - 0.0
+m    = 1.4996655731644228 + 0.0 - 0.0024025931636437736
+sigma= 0.5866472342677296 + 0.0 - 0.11875231128026698
 </pre></div>
 </div>
 </div>
@@ -1057,7 +960,7 @@ sigma= 1.4355232447060151 + 0.0 - 0.03851938374626096
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2e69cc83438a11b5d4686c946b28c638a6050154ae79318592a3745e27c5a988.png" src="../_images/2e69cc83438a11b5d4686c946b28c638a6050154ae79318592a3745e27c5a988.png" />
+<img alt="../_images/b524c1aaf45d39fb47d67ad93e9becf81bd234cdeec24438414c1b7cebe8d95a.png" src="../_images/b524c1aaf45d39fb47d67ad93e9becf81bd234cdeec24438414c1b7cebe8d95a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1067,7 +970,7 @@ sigma= 1.4355232447060151 + 0.0 - 0.03851938374626096
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0d5834861538e2f163e94f908eda85dc075b6562c2e79a896cd93b01f8df1cdc.png" src="../_images/0d5834861538e2f163e94f908eda85dc075b6562c2e79a896cd93b01f8df1cdc.png" />
+<img alt="../_images/f8fac2e1f00088d8e27517b052c07e206e29797e233f86cf2eb0a811138fe57b.png" src="../_images/f8fac2e1f00088d8e27517b052c07e206e29797e233f86cf2eb0a811138fe57b.png" />
 </div>
 </div>
 </section>
@@ -1129,7 +1032,6 @@ sigma= 1.4355232447060151 + 0.0 - 0.03851938374626096
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-probability-distribution-functions">Sampling Probability Distribution Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box-muller-method-to-generate-normal-distribution">Box-Muller Method to generate Normal distribution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-algorithm">Metropolis Hastings Algorithm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-on-a-lognormal-distribution">Metropolis Hastings on a LogNormal Distribution</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-mh-to-model-fitting">Apply MH to model fitting</a></li>
