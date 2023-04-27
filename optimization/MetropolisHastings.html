@@ -492,14 +492,14 @@ $$.\\Also here we have \\$$\int_{x \in \mathbb{D}} p(x)dx = 1,
 <h2>Sampling Probability Distribution Functions<a class="headerlink" href="#sampling-probability-distribution-functions" title="Permalink to this headline">#</a></h2>
 <p>The velocity of atoms in a gas in thermodynamic equilibrium follow the Maxwell-Boltzmann distribution.
 It is isotropic and we have for every dimension, <span class="math notranslate nohighlight">\(i\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f65f607d-1bf7-4981-b12f-8146ade32260">
-<span class="eqno">(1)<a class="headerlink" href="#equation-f65f607d-1bf7-4981-b12f-8146ade32260" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9accd698-129b-41b6-8c0f-7772ab40e330">
+<span class="eqno">(1)<a class="headerlink" href="#equation-9accd698-129b-41b6-8c0f-7772ab40e330" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(v_i) = \frac{1}{\sigma\,\sqrt{2\pi}} \, \exp\left(\frac{-v_i^2}{2\sigma^2}\right) \ \ \ \ \ \ \ \  (1)
 \end{equation}\]</div>
 <p>Where <span class="math notranslate nohighlight">\(\sigma^2 = k\,T/m\)</span>.</p>
 <p>The distribution of velocities considering them in 3 dimensions is just the product of three one dimensional velocity distribution functions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-de2d1fe7-9556-4ec6-ba1d-1fbb5dfba542">
-<span class="eqno">(2)<a class="headerlink" href="#equation-de2d1fe7-9556-4ec6-ba1d-1fbb5dfba542" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-86247ef9-f913-4c5c-a50e-e4795a1209b1">
+<span class="eqno">(2)<a class="headerlink" href="#equation-86247ef9-f913-4c5c-a50e-e4795a1209b1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f_v \left(v_x, v_y, v_z\right) = f_v (v_x)f_v (v_y)f_v (v_z) 
  = \left(\frac{1}{\sigma\,\sqrt{2\pi}}\right)^3 \, \exp\left(-\frac{v_x^2+v_y^2+v_z^2}{2\sigma^2}\right) \ \ \ \ \ \ \ \  (1)
 \end{equation}\]</div>
@@ -808,11 +808,11 @@ But clearly we do not want a uniform distribution of variables. We want a Maxwel
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14478/3761484396.py:7: RuntimeWarning: invalid value encountered in log
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14676/3761484396.py:7: RuntimeWarning: invalid value encountered in log
   z = np.log(x)-mu
-/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14478/3761484396.py:24: RuntimeWarning: divide by zero encountered in double_scalars
+/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14676/3761484396.py:24: RuntimeWarning: divide by zero encountered in double_scalars
   aprob = min([1.,sdlnorm(can,mu,sigma)/sdlnorm(x,mu,sigma)]) #acceptance probability
-/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14478/3761484396.py:58: UserWarning: Legend does not support handles for str instances.
+/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14676/3761484396.py:58: UserWarning: Legend does not support handles for str instances.
 A proxy artist may be used instead.
 See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#controlling-the-legend-entries
   leg = plt.legend((&#39;PDF&#39;, &#39;MH&#39;),&#39;best&#39;)
@@ -972,7 +972,7 @@ See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#cont
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14478/2385035807.py:76: UserWarning: Legend does not support handles for str instances.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_14676/2385035807.py:76: UserWarning: Legend does not support handles for str instances.
 A proxy artist may be used instead.
 See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#controlling-the-legend-entries
   leg = plt.legend((&#39;PDF&#39;, &#39;MH&#39;),&#39;best&#39;)
@@ -1043,9 +1043,7 @@ sigma= 1.4251598352740522 +- 0.01686576448236312
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Values with 5 and 95% of the distribution
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A    = 1.8717914911204065 + 0.11052123176852535 - 0.07086755265726064
+A    = 1.8717914911204065 + 0.11052123176852535 - 0.07086755265726064
 m    = 1.5359455373371163 + 0.01500719575566234 - 0.03468490132903468
 sigma= 1.4355232447060151 + 0.0 - 0.03851938374626096
 </pre></div>

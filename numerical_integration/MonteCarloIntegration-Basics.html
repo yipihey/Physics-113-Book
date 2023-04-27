@@ -179,6 +179,9 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../optimization/OptimizationLecture_Introduction.html">Introduction to Optimization</a></li>
 
+<li class="toctree-l1"><a class="reference internal" href="../optimization/Modeling_of_data.html">Modeling of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/MetropolisHastings.html">Probability Distributions and Sampling from them</a></li>
+
 </ul>
 
     </div>
@@ -614,7 +617,7 @@ We use here the uniform distribution on the unit interval and so <span class="ma
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4f98c00a7fe7cdf059522109fcd55a8174ac502d110f8e17cc692bc2144535c9.png" src="../_images/4f98c00a7fe7cdf059522109fcd55a8174ac502d110f8e17cc692bc2144535c9.png" />
+<img alt="../_images/8e090f74aaec209aff056eef8c66943a0392bb4c25fa9384d43778b8479b14d8.png" src="../_images/8e090f74aaec209aff056eef8c66943a0392bb4c25fa9384d43778b8479b14d8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -624,7 +627,7 @@ We use here the uniform distribution on the unit interval and so <span class="ma
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.85063108, 0.39645439, 0.79071858, 0.48893406, 0.96774229])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.16613298, 0.90674969, 0.45832091, 0.81598787, 0.45714567])
 </pre></div>
 </div>
 </div>
@@ -705,7 +708,7 @@ and compare the results. Observe that the Riemann sum generally works better for
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  0.33328125
-Monte Carlo:  0.366435405300773
+Monte Carlo:  0.29040285696347173
 </pre></div>
 </div>
 </div>
@@ -732,7 +735,7 @@ $<span class="math notranslate nohighlight">\( \int_0^1 \sin^2 \left( 20 \cdot 2
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Riemann Sum:  1.0
-Monte Carlo:  0.4329462967984128
+Monte Carlo:  0.43965930643028184
 </pre></div>
 </div>
 </div>
@@ -810,7 +813,7 @@ Monte Carlo:  0.4329462967984128
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/23d8f16485928389939db05a32347969e78a0bb13e4a9d5ec78dc7c78eee4d82.png" src="../_images/23d8f16485928389939db05a32347969e78a0bb13e4a9d5ec78dc7c78eee4d82.png" />
+<img alt="../_images/8d31d17d0dbd0b940d940ead8ab1e7ada8851871e7b8ab17ac9f6170747c6d5b.png" src="../_images/8d31d17d0dbd0b940d940ead8ab1e7ada8851871e7b8ab17ac9f6170747c6d5b.png" />
 </div>
 </div>
 </section>
@@ -833,10 +836,10 @@ Monte Carlo:  0.4329462967984128
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0030534364723675406
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0002569863439438007
 </pre></div>
 </div>
-<img alt="../_images/f663ba9c8c4a27dc6fa8186c5a325daffc8075568f334a467d11ef752223cc40.png" src="../_images/f663ba9c8c4a27dc6fa8186c5a325daffc8075568f334a467d11ef752223cc40.png" />
+<img alt="../_images/e31e538e9df6c23a9dd9b1f344bdb0093271480bdeec36b4901a7ee03448768c.png" src="../_images/e31e538e9df6c23a9dd9b1f344bdb0093271480bdeec36b4901a7ee03448768c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -900,7 +903,7 @@ Monte Carlo:  0.4329462967984128
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f69cd8cce3bb24d13de5cd47019a2b558bf6bb679fde7c80eabf281aca3dfe99.png" src="../_images/f69cd8cce3bb24d13de5cd47019a2b558bf6bb679fde7c80eabf281aca3dfe99.png" />
+<img alt="../_images/ce8eaca93cac0394c26286c48b0ac4004d04e37e66728a9e9d7918aa0801b892.png" src="../_images/ce8eaca93cac0394c26286c48b0ac4004d04e37e66728a9e9d7918aa0801b892.png" />
 </div>
 </div>
 <p>We phrased the integration above as a way to find <span class="math notranslate nohighlight">\(\pi\)</span>. Alternatively let us think about this procedure looking at which fraction of points is within the ball as finding the volume of the ball and look at this for higher dimensions.

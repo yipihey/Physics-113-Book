@@ -1,7 +1,7 @@
 Traceback (most recent call last):
   File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1304, in execute
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
   File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/jupyter_core/utils/__init__.py", line 166, in wrapped
     return loop.run_until_complete(inner)
@@ -9,7 +9,7 @@ Traceback (most recent call last):
     return future.result()
   File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1020, in async_execute_cell
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1058, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
   File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
@@ -18,6 +18,7 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 x_star, f_star, history = Optimizer(rosen, grad_rosen, np.array([-4,-5]))
 print("final x: ", x_star, "final f:", f_star)
 ------------------
+
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
@@ -34,5 +35,4 @@ Cell [0;32mIn[6], line 9[0m, in [0;36mOptimizer[0;34m(f, grad_f, x)[0m
 [1;32m     13[0m     [38;5;66;03m#insert step direction[39;00m
 
 [0;31mNameError[0m: name '______' is not defined
-NameError: name '______' is not defined
 
