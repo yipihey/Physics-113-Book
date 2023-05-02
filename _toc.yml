@@ -24,4 +24,7 @@ parts:
     - file: optimization/OptimizationLecture_Introduction
     - file: optimization/Modeling_of_data
     - file: optimization/MetropolisHastings
+  - caption: Fast Fourier Transforms
+    chapters:
+    - file: fft/discrete_fast_fourier_transform
 
