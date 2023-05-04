@@ -4,6 +4,9 @@
 format: jb-book
 root: intro
 parts:
+  - caption: "Final Project"
+    chapters:
+    - file: final_project
   - caption: "Python Basics"
     chapters:
     - file: python_basics/intro
@@ -27,4 +30,5 @@ parts:
   - caption: Fast Fourier Transforms
     chapters:
     - file: fft/discrete_fast_fourier_transform
+    - file: fft/solve_heatequation_FFT
 
