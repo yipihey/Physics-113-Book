@@ -33,8 +33,11 @@ Here is a preview of the cell contents:
 x = rnd.rand(8192)
 # Time the loop time for DFT, CooleyTukeyRadix2FFT, numpy.fft, and scipy.fftpack.fft .
 %timeit y = DFT(x)
+
 %timeit y = CooleyTukeyRadix2FFT(x)
+
 %timeit y = np.fft.fft(x)
+
 %timeit y = fft.fft(x) 
 -------------------
 

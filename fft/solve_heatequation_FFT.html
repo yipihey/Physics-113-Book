@@ -1,0 +1,790 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>In class exercise &#8212; Physics 113 - Computational Physics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'fft/solve_heatequation_FFT';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Discrete Fourier Transform and Fast Fourier Transform" href="discrete_fast_fourier_transform.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to Physics 113
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Final Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../final_project.html">Final project scope and ideas</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Get started with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/Exercise-python-basics.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimization/OptimizationLecture_Introduction.html">Introduction to Optimization</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../optimization/Modeling_of_data.html">Modeling of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/MetropolisHastings.html">Probability Distributions and Sampling from them</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fast Fourier Transforms</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="discrete_fast_fourier_transform.html">Discrete Fourier Transform and Fast Fourier Transform</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">In class exercise</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/yipihey/Physics-113-Book/master?urlpath=tree/docs/fft/solve_heatequation_FFT.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/yipihey/Physics-113-Book/blob/master/docs/fft/solve_heatequation_FFT.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Ffft/solve_heatequation_FFT.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/fft/solve_heatequation_FFT.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>In class exercise</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">odeint</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">axes3d</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We want to solve the <a class="reference external" href="https://en.wikipedia.org/wiki/Heat_equation">heat equation</a></p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial u}{\partial t} = \dot{u} = u_{t} = a^2 u_{xx} = a^2 \frac{\partial^2 u}{\partial x^2} = a^2 \triangle u = a^2 \nabla^2 u
+\]</div>
+<p>So we think of having a 1-dimensional function <span class="math notranslate nohighlight">\(u(x)\)</span>.
+Its Fourier transform we denote as <span class="math notranslate nohighlight">\(\hat{u}(\kappa)\)</span>.</p>
+<p>To remind myself what happens at integration or differentiation I think of terms proportional to
+$<span class="math notranslate nohighlight">\(
+e^{\kappa x}
+\)</span>$</p>
+<p>So, the second derivative with respect to position, <span class="math notranslate nohighlight">\(x\)</span>, brings down two times the factor <span class="math notranslate nohighlight">\(i\kappa\)</span>, so <span class="math notranslate nohighlight">\((i\kappa)^2=-\kappa^2\)</span>.
+Consequently if we apply the Fourier transform to both sides of our equation we arrive at</p>
+<div class="math notranslate nohighlight">
+\[
+{d\hat{u}(\kappa) \over dt} =  - a^2 \kappa^2 \hat{u}(\kappa).
+\]</div>
+<p>Wow. This says that the Fourier coefficients all just decay with <span class="math notranslate nohighlight">\(a^2\kappa^2\)</span> exponentially.
+This is exactly why Fourier worked on this and how he managed to solve this equation.
+So in principle we would not have to do this numerically but we use this as our first example to demonstrate how this solution strategy is implemented in code.
+Once we know this we can “graduate” to use a similar strategy for more complex equations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.02</span>    <span class="c1"># Thermal diffusivity constant</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Length of domain</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span> <span class="c1"># Number of discretization points</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">N</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
+
+<span class="c1"># Define discrete wavenumbers</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Initial condition</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">u0</span><span class="p">[</span><span class="nb">int</span><span class="p">((</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">L</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="n">dx</span><span class="p">):</span><span class="nb">int</span><span class="p">((</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">L</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="n">dx</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">u0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span>
+
+<span class="c1"># SciPy&#39;s odeint function doesn&#39;t play well with complex numbers, so we recast </span>
+<span class="c1"># the state u0hat from an N-element complex vector to a 2N-element real vector</span>
+<span class="n">u0hat_ri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">u0hat</span><span class="o">.</span><span class="n">real</span><span class="p">,</span><span class="n">u0hat</span><span class="o">.</span><span class="n">imag</span><span class="p">))</span>
+
+<span class="c1"># Simulate in Fourier frequency domain</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">.1</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">dt</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">rhsHeat</span><span class="p">(</span><span class="n">uhat_ri</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">uhat_ri</span><span class="p">[:</span><span class="n">N</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">uhat_ri</span><span class="p">[</span><span class="n">N</span><span class="p">:]</span>
+    <span class="n">d_uhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">kappa</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">uhat</span>
+    <span class="n">d_uhat_ri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">d_uhat</span><span class="o">.</span><span class="n">real</span><span class="p">,</span><span class="n">d_uhat</span><span class="o">.</span><span class="n">imag</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d_uhat_ri</span>
+
+<span class="n">uhat_ri</span> <span class="o">=</span> <span class="n">odeint</span><span class="p">(</span><span class="n">rhsHeat</span><span class="p">,</span> <span class="n">u0hat_ri</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+
+<span class="n">uhat</span> <span class="o">=</span> <span class="n">uhat_ri</span><span class="p">[:,:</span><span class="n">N</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">uhat_ri</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">uhat</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">uhat</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">real</span>    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Waterfall plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="n">u_plot</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">,:]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">u_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">)</span>
+    
+<span class="c1"># Image plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bc66978eabe280920c685c1e4b232700e3b4d788fb9f8d45d06d4e5ec0889515.png" src="../_images/bc66978eabe280920c685c1e4b232700e3b4d788fb9f8d45d06d4e5ec0889515.png" />
+<img alt="../_images/a4561f44701cd1f377e62ccd623889e4575ea50fd9509a9e1f44c60db05af6e3.png" src="../_images/a4561f44701cd1f377e62ccd623889e4575ea50fd9509a9e1f44c60db05af6e3.png" />
+</div>
+</div>
+<p>Now let’s try a propagating wave equation:</p>
+<div class="math notranslate nohighlight">
+\[
+u_t - c u_x = 0
+\]</div>
+<p>which looks like</p>
+<div class="math notranslate nohighlight">
+\[
+{d \hat{u}(\kappa) \over dt} = c {du(x) \over dx} = - i\kappa\, c\, \hat{u}(\kappa)
+\]</div>
+<p>after Fourier transform.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="mi">2</span>    <span class="c1"># Wave speed</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1"># Length of domain</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span> <span class="c1"># Number of discretization points</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">N</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
+
+<span class="c1"># Define discrete wavenumbers</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Initial condition</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">u0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span>
+
+<span class="c1"># SciPy&#39;s odeint function doesn&#39;t play well with complex numbers, so we recast </span>
+<span class="c1"># the state u0hat from an N-element complex vector to a 2N-element real vector</span>
+<span class="n">u0hat_ri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">u0hat</span><span class="o">.</span><span class="n">real</span><span class="p">,</span><span class="n">u0hat</span><span class="o">.</span><span class="n">imag</span><span class="p">))</span>
+
+<span class="c1"># Simulate in Fourier frequency domain</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="o">*</span><span class="n">dt</span><span class="p">,</span><span class="n">dt</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">rhsWave</span><span class="p">(</span><span class="n">uhat_ri</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">uhat_ri</span><span class="p">[:</span><span class="n">N</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">uhat_ri</span><span class="p">[</span><span class="n">N</span><span class="p">:]</span>
+    <span class="n">d_uhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">d_uhat_ri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">d_uhat</span><span class="o">.</span><span class="n">real</span><span class="p">,</span><span class="n">d_uhat</span><span class="o">.</span><span class="n">imag</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d_uhat_ri</span>
+
+<span class="n">uhat_ri</span> <span class="o">=</span> <span class="n">odeint</span><span class="p">(</span><span class="n">rhsWave</span><span class="p">,</span> <span class="n">u0hat_ri</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+<span class="n">uhat</span> <span class="o">=</span> <span class="n">uhat_ri</span><span class="p">[:,:</span><span class="n">N</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">uhat_ri</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]</span>
+
+<span class="c1"># Alternatively, simulate in spatial domain</span>
+<span class="k">def</span> <span class="nf">rhsWaveSpatial</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">d_uhat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+    <span class="n">du_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">d_u</span>
+    <span class="k">return</span> <span class="n">du_dt</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">odeint</span><span class="p">(</span><span class="n">rhsWaveSpatial</span><span class="p">,</span><span class="n">u0</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+
+<span class="c1"># Inverse FFT to bring back to spatial domain</span>
+<span class="c1">#u = np.zeros_like(uhat)</span>
+
+<span class="c1">#for k in range(len(t)):</span>
+<span class="c1">#    u[k,:] = np.fft.ifft(uhat[k,:])</span>
+
+<span class="c1">#u = u.real   </span>
+
+<span class="c1"># Waterfall plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="n">u_plot</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,:]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">u_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+    
+<span class="c1"># Image plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e1bb931d5ecb4cb2e0a029bf6c1ba38a830f8475d75de0d1380023fa114125e0.png" src="../_images/e1bb931d5ecb4cb2e0a029bf6c1ba38a830f8475d75de0d1380023fa114125e0.png" />
+<img alt="../_images/aaea0f108ef27e21e3259ec21815bbcc81669ce744d243ef14317dee9973250b.png" src="../_images/aaea0f108ef27e21e3259ec21815bbcc81669ce744d243ef14317dee9973250b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="mi">2</span>    <span class="c1"># Wave speed</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1"># Length of domain</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span> <span class="c1"># Number of discretization points</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">N</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
+
+<span class="c1"># Define discrete wavenumbers</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Initial condition</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">u0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span>
+
+<span class="c1"># SciPy&#39;s odeint function doesn&#39;t play well with complex numbers, so we recast </span>
+<span class="c1"># the state u0hat from an N-element complex vector to a 2N-element real vector</span>
+<span class="n">u0hat_ri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">u0hat</span><span class="o">.</span><span class="n">real</span><span class="p">,</span><span class="n">u0hat</span><span class="o">.</span><span class="n">imag</span><span class="p">))</span>
+
+<span class="c1"># Simulate in Fourier frequency domain</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">101</span><span class="o">*</span><span class="n">dt</span><span class="p">,</span><span class="n">dt</span><span class="p">)</span>
+
+<span class="c1"># Alternatively, simulate in spatial domain</span>
+<span class="k">def</span> <span class="nf">rhsWaveSpatial</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">d_uhat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+    <span class="n">du_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">d_u</span>
+    <span class="k">return</span> <span class="n">du_dt</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">N</span><span class="p">))</span>
+<span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">u0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+<span class="c1">#u = odeint(rhsWaveSpatial,u0,t,args=(kappa,c)) </span>
+    <span class="n">u_old</span> <span class="o">=</span> <span class="n">u</span> <span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span> 
+    <span class="n">u_new</span> <span class="o">=</span> <span class="n">u_old</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">Ns</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Ns</span><span class="p">):</span> <span class="c1"># substepping</span>
+        <span class="n">uint</span> <span class="o">=</span> <span class="n">u_old</span> <span class="o">+</span> <span class="n">dt</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">Ns</span><span class="o">*</span><span class="n">rhsWaveSpatial</span><span class="p">(</span><span class="n">u_old</span><span class="p">,</span><span class="n">t</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">u_new</span> <span class="o">=</span> <span class="n">u_old</span> <span class="o">+</span> <span class="n">dt</span><span class="o">/</span><span class="n">Ns</span><span class="o">*</span><span class="n">rhsWaveSpatial</span><span class="p">(</span><span class="n">uint</span><span class="p">,</span><span class="n">t</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">u_old</span> <span class="o">=</span> <span class="n">u_new</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">u_new</span>
+<span class="c1"># Inverse FFT to bring back to spatial domain</span>
+<span class="c1">#u = np.zeros_like(uhat)</span>
+
+<span class="c1">#for k in range(len(t)):</span>
+<span class="c1">#    u[k,:] = np.fft.ifft(uhat[k,:])</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">real</span>   
+
+<span class="c1"># Waterfall plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="n">u_plot</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,:]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">u_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+
+<span class="n">fig2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:],</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;final&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/75c457bbc1349a4ae9f7a2993040c1ead521f58f5311b562977fb29f2d74a968.png" src="../_images/75c457bbc1349a4ae9f7a2993040c1ead521f58f5311b562977fb29f2d74a968.png" />
+<img alt="../_images/22892de5fa859f3780b1f108ec3006e6fee5df4aae2a6b8df0fd4304b59eb233.png" src="../_images/22892de5fa859f3780b1f108ec3006e6fee5df4aae2a6b8df0fd4304b59eb233.png" />
+</div>
+</div>
+<section id="in-class-exercise">
+<h1>In class exercise<a class="headerlink" href="#in-class-exercise" title="Permalink to this headline">#</a></h1>
+<p>Let’s replace the scipy odeint with the newer <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html#scipy.integrate.solve_ivp">solve_ivp</a> integrator.
+It supports complex variable integration and hence we should be able to simplify the the calls in our examples above and feed in directly the complex values.</p>
+<p>Redo the solution of the heat equation above.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./fft"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="discrete_fast_fourier_transform.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Discrete Fourier Transform and Fast Fourier Transform</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tom Abel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
