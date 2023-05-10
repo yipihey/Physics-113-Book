@@ -30,5 +30,5 @@ parts:
   - caption: Fast Fourier Transforms
     chapters:
     - file: fft/discrete_fast_fourier_transform
-    - file: fft/solve_heatequation_FFT
+    - file: fft/solve_heatequation_FFT_new
 
