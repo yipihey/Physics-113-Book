@@ -65,7 +65,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'fft/solve_heatequation_FFT';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Discrete Fourier Transform and Fast Fourier Transform" href="discrete_fast_fourier_transform.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -187,9 +186,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fast Fourier Transforms</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="discrete_fast_fourier_transform.html">Discrete Fourier Transform and Fast Fourier Transform</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Solving the heat diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solve_heatequation_FFT_new.html">Solving the heat diffusion equation</a></li>
+
 </ul>
 
     </div>
@@ -467,7 +467,7 @@ document.write(`
 Its Fourier transform we denote as <span class="math notranslate nohighlight">\(\hat{u}(\kappa)\)</span>.</p>
 <p>To remind myself what happens at integration or differentiation I think of terms proportional to
 $<span class="math notranslate nohighlight">\(
-e^{\kappa x}
+e^{i\kappa x}
 \)</span>$</p>
 <p>So, the second derivative with respect to position, <span class="math notranslate nohighlight">\(x\)</span>, brings down two times the factor <span class="math notranslate nohighlight">\(i\kappa\)</span>, so <span class="math notranslate nohighlight">\((i\kappa)^2=-\kappa^2\)</span>.
 Consequently if we apply the Fourier transform to both sides of our equation we arrive at</p>
@@ -515,8 +515,8 @@ Once we know this we can “graduate” to use a similar strategy for more compl
 
 <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">uhat</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
-    <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">uhat</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span>
+<span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">ct</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">uhat</span><span class="p">[</span><span class="n">ct</span><span class="p">,:])</span>
 
 <span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">real</span>    
 </pre></div>
@@ -712,6 +712,121 @@ u_t - c u_x = 0
 <p>Let’s replace the scipy odeint with the newer <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html#scipy.integrate.solve_ivp">solve_ivp</a> integrator.
 It supports complex variable integration and hence we should be able to simplify the the calls in our examples above and feed in directly the complex values.</p>
 <p>Redo the solution of the heat equation above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.02</span>    <span class="c1"># Thermal diffusivity constant</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Length of domain</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span> <span class="c1"># Number of discretization points</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">N</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
+
+<span class="c1"># Define discrete wavenumbers</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Initial condition</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">u0</span><span class="p">[</span><span class="nb">int</span><span class="p">((</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">L</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="n">dx</span><span class="p">):</span><span class="nb">int</span><span class="p">((</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">L</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="n">dx</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">u0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span>
+
+<span class="c1"># Simulate in Fourier frequency domain</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">dt</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">rhsHeat</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">uhat</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">d_uhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">kappa</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">uhat</span>
+    <span class="k">return</span> <span class="n">d_uhat</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhsHeat</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">u0hat</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">a</span><span class="p">),</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+    <span class="n">u</span><span class="p">[:,</span><span class="n">ct</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span><span class="n">ct</span><span class="p">])</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">real</span>    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_plot</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(99, 1024)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Waterfall plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="c1">#u_plot = u[0:-1:10,:]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">u_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">)</span>
+    
+<span class="c1"># Image plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">u</span><span class="p">),</span><span class="n">aspect</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/229082a0f293167e5fc9a320bd066e5585f1c55af27295a59eb2bcee1ce51336.png" src="../_images/229082a0f293167e5fc9a320bd066e5585f1c55af27295a59eb2bcee1ce51336.png" />
+<img alt="../_images/4d23cd788313a36b3e2eea0c804f7b51f822f3dfc4539bb331ee8d6cb8662896.png" src="../_images/4d23cd788313a36b3e2eea0c804f7b51f822f3dfc4539bb331ee8d6cb8662896.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">ys</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">u_plot</span><span class="p">[</span><span class="mi">10</span><span class="p">,:]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((1024,), (1024,), (1024,))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1024,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -743,15 +858,6 @@ It supports complex variable integration and hence we should be able to simplify
                 <footer class="bd-footer-article">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="discrete_fast_fourier_transform.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Discrete Fourier Transform and Fast Fourier Transform</p>
-      </div>
-    </a>
 </div>
                 </footer>
               
