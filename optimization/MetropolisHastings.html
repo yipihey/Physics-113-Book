@@ -191,7 +191,11 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fft/discrete_fast_fourier_transform.html">Discrete Fourier Transform and Fast Fourier Transform</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fft/solve_heatequation_FFT_new.html">Solving the heat diffusion equation</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="../fft/solve_propagating_wave_FFT.html">Propagating wave equation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Helpful libraries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../etc/pyqtgraph_example.html">Graphical User Interface (GUI) programming</a></li>
 </ul>
 
     </div>
@@ -506,14 +510,14 @@ p(x) = \frac{d}{dx} P(x).
 <h2>Sampling Probability Distribution Functions<a class="headerlink" href="#sampling-probability-distribution-functions" title="Permalink to this headline">#</a></h2>
 <p>The velocity of atoms in a gas in thermodynamic equilibrium follow the Maxwell-Boltzmann distribution.
 It is isotropic and we have for every dimension, <span class="math notranslate nohighlight">\(i\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57d2e2d6-5b04-4739-8c79-56a6177dae80">
-<span class="eqno">(1)<a class="headerlink" href="#equation-57d2e2d6-5b04-4739-8c79-56a6177dae80" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-61e3bff8-a8be-4f16-9462-472853041a39">
+<span class="eqno">(1)<a class="headerlink" href="#equation-61e3bff8-a8be-4f16-9462-472853041a39" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(v_i) = \frac{1}{\sigma\,\sqrt{2\pi}} \, \exp\left(\frac{-v_i^2}{2\sigma^2}\right) \ \ \ \ \ \ \ \  (1)
 \end{equation}\]</div>
 <p>Where <span class="math notranslate nohighlight">\(\sigma^2 = k\,T/m\)</span>.</p>
 <p>The distribution of velocities considering them in 3 dimensions is just the product of three one dimensional velocity distribution functions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-58ba409b-ea15-489c-b38f-1ceae2647f27">
-<span class="eqno">(2)<a class="headerlink" href="#equation-58ba409b-ea15-489c-b38f-1ceae2647f27" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3ae01c73-5e0a-4f84-86e9-8c95319e135e">
+<span class="eqno">(2)<a class="headerlink" href="#equation-3ae01c73-5e0a-4f84-86e9-8c95319e135e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f_v \left(v_x, v_y, v_z\right) = f_v (v_x)f_v (v_y)f_v (v_z) 
  = \left(\frac{1}{\sigma\,\sqrt{2\pi}}\right)^3 \, \exp\left(-\frac{v_x^2+v_y^2+v_z^2}{2\sigma^2}\right) \ \ \ \ \ \ \ \  (1)
 \end{equation}\]</div>
@@ -898,7 +902,7 @@ But clearly we do not want a uniform distribution of variables. We want a Maxwel
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_50774/2385035807.py:76: UserWarning: Legend does not support handles for str instances.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_79761/2385035807.py:76: UserWarning: Legend does not support handles for str instances.
 A proxy artist may be used instead.
 See: https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html#controlling-the-legend-entries
   leg = plt.legend((&#39;PDF&#39;, &#39;MH&#39;),&#39;best&#39;)
