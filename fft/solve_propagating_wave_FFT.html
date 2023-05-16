@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'fft/solve_propagating_wave_FFT';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Graphical User Interface (GUI) programming" href="../etc/pyqtgraph_example.html" />
+    <link rel="next" title="Burgers’ equation" href="solve_burgers_equation_FFT_2023.html" />
     <link rel="prev" title="Solving the heat diffusion equation" href="solve_heatequation_FFT_new.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -192,6 +192,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="discrete_fast_fourier_transform.html">Discrete Fourier Transform and Fast Fourier Transform</a></li>
 <li class="toctree-l1"><a class="reference internal" href="solve_heatequation_FFT_new.html">Solving the heat diffusion equation</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Propagating wave equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solve_burgers_equation_FFT_2023.html">Burgers’ equation</a></li>
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Helpful libraries</span></p>
 <ul class="nav bd-sidenav">
@@ -603,67 +605,6 @@ u_t - c u_x = 0
 <img alt="../_images/96f93fadd0628ec49a07c96c941b8d257b92c511c2a98eb2242583b5de345101.png" src="../_images/96f93fadd0628ec49a07c96c941b8d257b92c511c2a98eb2242583b5de345101.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">solution_def</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;f4&quot;</span><span class="p">),(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span><span class="s2">&quot;f4&quot;</span><span class="p">),(</span><span class="s2">&quot;u&quot;</span><span class="p">,</span><span class="s2">&quot;f8&quot;</span><span class="p">)]</span>
-<span class="n">solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">solution_def</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">solution</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-<span class="n">solution</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-<span class="n">solution</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">gui</span> qt
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="kn">import</span> <span class="nn">pyqtgraph</span> <span class="k">as</span> <span class="nn">pg</span>
-
-<span class="n">pg</span><span class="o">.</span><span class="n">mkQApp</span><span class="p">()</span>
-
-<span class="n">spw</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">ScatterPlotWidget</span><span class="p">()</span>
-
-<span class="n">spw</span><span class="o">.</span><span class="n">setFields</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;units&#39;</span><span class="p">:</span> <span class="s1">&#39;m&#39;</span><span class="p">}),</span>
-    <span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;units&#39;</span><span class="p">:</span> <span class="s1">&#39;s&#39;</span><span class="p">}),</span>
-    <span class="p">(</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="p">{})])</span>
-
-<span class="n">spw</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
-<span class="n">spw</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">pg</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/pyqtgraph/__init__.py:299,</span> in <span class="ni">cleanup</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">290</span> <span class="c1">##############################################################</span>
-<span class="g g-Whitespace">    </span><span class="mi">291</span> <span class="c1">## PyQt and PySide both are prone to crashing on exit.</span>
-<span class="g g-Whitespace">    </span><span class="mi">292</span> <span class="c1">## There are two general approaches to dealing with this:</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">295</span> <span class="c1">##  2. Terminate the process before python starts tearing down</span>
-<span class="g g-Whitespace">    </span><span class="mi">296</span> <span class="c1">##     This is potentially dangerous</span>
-<span class="g g-Whitespace">    </span><span class="mi">298</span> <span class="n">_cleanupCalled</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="ne">--&gt; </span><span class="mi">299</span> <span class="k">def</span> <span class="nf">cleanup</span><span class="p">():</span>
-<span class="g g-Whitespace">    </span><span class="mi">300</span>     <span class="k">global</span> <span class="n">_cleanupCalled</span>
-<span class="g g-Whitespace">    </span><span class="mi">301</span>     <span class="k">if</span> <span class="n">_cleanupCalled</span><span class="p">:</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -704,11 +645,11 @@ u_t - c u_x = 0
       </div>
     </a>
     <a class="right-next"
-       href="../etc/pyqtgraph_example.html"
+       href="solve_burgers_equation_FFT_2023.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Graphical User Interface (GUI) programming</p>
+        <p class="prev-next-title">Burgers’ equation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

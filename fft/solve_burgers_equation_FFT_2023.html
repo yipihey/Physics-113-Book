@@ -1,0 +1,958 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Burgers’ equation &#8212; Physics 113 - Computational Physics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'fft/solve_burgers_equation_FFT_2023';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Graphical User Interface (GUI) programming" href="../etc/pyqtgraph_example.html" />
+    <link rel="prev" title="Propagating wave equation" href="solve_propagating_wave_FFT.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to Physics 113
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Final Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../final_project.html">Final project scope and ideas</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Get started with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/Exercise-python-basics.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimization/OptimizationLecture_Introduction.html">Introduction to Optimization</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../optimization/Modeling_of_data.html">Modeling of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/MetropolisHastings.html">Probability Distributions and Sampling from them</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fast Fourier Transforms</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="discrete_fast_fourier_transform.html">Discrete Fourier Transform and Fast Fourier Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solve_heatequation_FFT_new.html">Solving the heat diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solve_propagating_wave_FFT.html">Propagating wave equation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Burgers’ equation</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Helpful libraries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../etc/pyqtgraph_example.html">Graphical User Interface (GUI) programming</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/yipihey/Physics-113-Book/master?urlpath=tree/docs/fft/solve_burgers_equation_FFT_2023.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/yipihey/Physics-113-Book/blob/master/docs/fft/solve_burgers_equation_FFT_2023.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Ffft/solve_burgers_equation_FFT_2023.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/fft/solve_burgers_equation_FFT_2023.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Burgers’ equation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Burgers’ equation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">axes3d</span>
+<span class="c1"># patch start [https://stackoverflow.com/questions/16488182/removing-axes-margins-in-3d-plot]</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d.axis3d</span> <span class="kn">import</span> <span class="n">Axis</span>
+<span class="k">def</span> <span class="nf">_get_coord_info_new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renderer</span><span class="p">):</span>
+    <span class="n">mins</span><span class="p">,</span> <span class="n">maxs</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">deltas</span><span class="p">,</span> <span class="n">tc</span><span class="p">,</span> <span class="n">highs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_coord_info_old</span><span class="p">(</span><span class="n">renderer</span><span class="p">)</span>
+    <span class="n">correction</span> <span class="o">=</span> <span class="n">deltas</span> <span class="o">*</span> <span class="p">[</span><span class="mf">1.0</span><span class="o">/</span><span class="mi">4</span> <span class="o">+</span> <span class="mf">6.0</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span>
+                           <span class="mf">1.0</span><span class="o">/</span><span class="mi">4</span> <span class="o">+</span> <span class="mf">6.0</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span>
+                           <span class="mf">1.0</span><span class="o">/</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">mins</span> <span class="o">+=</span> <span class="n">correction</span>
+    <span class="n">maxs</span> <span class="o">-=</span> <span class="n">correction</span>
+    <span class="k">return</span> <span class="n">mins</span><span class="p">,</span> <span class="n">maxs</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">deltas</span><span class="p">,</span> <span class="n">tc</span><span class="p">,</span> <span class="n">highs</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Axis</span><span class="p">,</span> <span class="s2">&quot;_get_coord_info_old&quot;</span><span class="p">):</span>
+    <span class="n">Axis</span><span class="o">.</span><span class="n">_get_coord_info_old</span> <span class="o">=</span> <span class="n">Axis</span><span class="o">.</span><span class="n">_get_coord_info</span>  
+<span class="n">Axis</span><span class="o">.</span><span class="n">_get_coord_info</span> <span class="o">=</span> <span class="n">_get_coord_info_new</span>
+<span class="c1">#patch end</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="burgers-equation">
+<h1><a class="reference external" href="https://en.wikipedia.org/wiki/Burgers%27_equation">Burgers’ equation</a><a class="headerlink" href="#burgers-equation" title="Permalink to this headline">#</a></h1>
+<p>The viscous Burgers’ equation is a <a class="reference external" href="https://en.wikipedia.org/wiki/Conservation_law">conservation law|conservation equation</a>, more generally a first order quasilinear <a class="reference external" href="https://en.wikipedia.org/wiki/Hyperbolic_partial_differential_equation">hyperbolic equation</a>.
+$<span class="math notranslate nohighlight">\(
+u_t + u u_x = \nu u_{xx}
+\)</span><span class="math notranslate nohighlight">\(
+It is made of terms we have seen before. The right hand side is the same term we have seen in the heat equation \)</span>\nu u_{xx}<span class="math notranslate nohighlight">\( which acted to diffuse high frequency modes. The \)</span>u u_x<span class="math notranslate nohighlight">\( term is just like the term in the linear wave equation \)</span>u_t + c u_x =0<span class="math notranslate nohighlight">\( which made everything advect at speed c. However, here now that speed at which \)</span>u<span class="math notranslate nohighlight">\( is advected across the grid itself is given by \)</span>u<span class="math notranslate nohighlight">\(. This means regions with larger \)</span>u<span class="math notranslate nohighlight">\( will want to move faster than regions with lower \)</span>u$.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nu</span> <span class="o">=</span> <span class="mf">0.009</span>    <span class="c1"># Viscosity parameter</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1"># Length of domain</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">512</span> <span class="c1"># Number of discretization points</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">N</span>
+<span class="n">Tfinal</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
+<span class="n">pulse</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="c1"># Define discrete wave-numbers</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Initial condition</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="mi">20</span><span class="p">))</span>
+
+<span class="c1"># Simulate in real space but using fourier derivatives</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Tfinal</span><span class="p">,</span> <span class="n">Nt</span><span class="p">)</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">Tfinal</span><span class="o">/</span><span class="n">Nt</span>
+
+<span class="k">def</span> <span class="nf">rhsBurgers</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">):</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">d_uhat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">dd_uhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">kappa</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span>
+    <span class="n">dd_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">dd_uhat</span><span class="p">)</span>
+    <span class="n">du_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">d_u</span> <span class="o">+</span> <span class="n">nu</span><span class="o">*</span><span class="n">dd_u</span>
+    <span class="k">return</span> <span class="n">du_dt</span><span class="o">.</span><span class="n">real</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhsBurgers</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">u0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">),</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span> <span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Waterfall plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">u_plot</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,:]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">u_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+    
+<span class="c1"># Image plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="c1"># Plot the surface</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;3d&quot;</span><span class="p">})</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span>  <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">cstride</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ef6e82f1de15d83eecab23b4a24fd09c515bddd4f9d378f5c1aefc0fbce9d887.png" src="../_images/ef6e82f1de15d83eecab23b4a24fd09c515bddd4f9d378f5c1aefc0fbce9d887.png" />
+<img alt="../_images/caa4f6785139ad0c3cf3dfdc29c8cecf80d6f66069dcd7a5bb348caa8ed085e2.png" src="../_images/caa4f6785139ad0c3cf3dfdc29c8cecf80d6f66069dcd7a5bb348caa8ed085e2.png" />
+<img alt="../_images/523c703b7a6fb1ffa5e4179e79226a44914bce92cf6637aea351c1da981bbcd7.png" src="../_images/523c703b7a6fb1ffa5e4179e79226a44914bce92cf6637aea351c1da981bbcd7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(20, 512)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="conservation-equations">
+<h1>Conservation equations<a class="headerlink" href="#conservation-equations" title="Permalink to this headline">#</a></h1>
+<p>The Burgers’ equation we studied above is indeed the correct equation for the rate of change of the velocity neglecting pressure forces and external forces (such as gravity). Imagine a fluid moving in a one-dimensional system (think the center of a long pipe) we can now ask how does the density of the material change given this velocity. We have to specify what the density looks like at the initial time, <span class="math notranslate nohighlight">\(\rho(x,t=0)\)</span>, and need an evolution equation of how it changes over time. This is provided by the continuity equation
+$<span class="math notranslate nohighlight">\(
+\rho_t + \nabla \cdot (\rho \, u) = 0
+\)</span><span class="math notranslate nohighlight">\( 
+which in 1 dimension is
+\)</span><span class="math notranslate nohighlight">\(
+\rho_t + (\rho \, u)_x = \rho_t + \rho \, u_x + \rho_x \, u = 0
+\)</span>$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nu</span> <span class="o">=</span> <span class="mf">0.009</span>    <span class="c1"># Viscosity parameter</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1"># Length of domain</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">512</span> <span class="c1"># Number of discretization points</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">N</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
+
+<span class="c1"># Define discrete wavenumbers</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Initial condition</span>
+<span class="c1">#u0 = 1/np.cosh(x/(L/20))</span>
+<span class="c1">#u0hat = np.fft.fft(u0)</span>
+
+<span class="n">rho0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># uniform density = 1 initially</span>
+<span class="n">U0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">rho0</span><span class="p">,</span><span class="n">u0</span><span class="p">))</span> <span class="c1"># state vector: first half is the density and second is the velocity</span>
+
+<span class="k">def</span> <span class="nf">rhsBurgersAdv</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">):</span>
+    <span class="n">N2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">U</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">]</span>
+    <span class="n">u</span>   <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">N</span><span class="p">:]</span>
+    <span class="n">urho</span> <span class="o">=</span> <span class="n">u</span><span class="o">*</span><span class="n">rho</span>
+    <span class="c1"># derivatives of rho</span>
+    <span class="n">urhohat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">urho</span><span class="p">)</span>
+    <span class="n">d_urhohat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">urhohat</span>
+    <span class="n">d_urho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">d_urhohat</span><span class="p">)</span>
+    <span class="c1">#derivatives of u</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">d_uhat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">dd_uhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">kappa</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span>
+    <span class="n">dd_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">dd_uhat</span><span class="p">)</span>
+    <span class="c1"># now assemble the time derivatives</span>
+    <span class="n">du_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">d_u</span> <span class="o">+</span> <span class="n">nu</span><span class="o">*</span><span class="n">dd_u</span>
+    <span class="n">drho_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">d_urho</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">drho_dt</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">du_dt</span><span class="o">.</span><span class="n">real</span><span class="p">))</span>
+
+<span class="c1">#U_adv = odeint(rhsBurgersAdv,U0,t,args=(kappa,nu))</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhsBurgersAdv</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">U0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">),</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-7</span> <span class="p">)</span>
+<span class="n">U_adv</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">U</span> <span class="o">=</span> <span class="n">U_adv</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;binary&#39;</span>
+<span class="c1"># Waterfall plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">)</span>
+<span class="n">u_plot</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="n">N</span><span class="p">:]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">dt</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">u_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:],</span><span class="n">alpha</span><span class="o">=</span><span class="mf">.7</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    
+<span class="c1"># Waterfall plot rho</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\rho$&quot;</span><span class="p">)</span>
+<span class="n">rho_plot</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rho_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">rho_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">rho_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:],</span><span class="n">alpha</span><span class="o">=</span><span class="mf">.7</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Image plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">rp</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]),</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">rp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">rp</span><span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">U</span><span class="p">[:,:</span><span class="n">N</span><span class="p">])),</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">rp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7124ee7f8ae781f402a44196f00090b329d4703a59f50eef836aa1d36edd8b8b.png" src="../_images/7124ee7f8ae781f402a44196f00090b329d4703a59f50eef836aa1d36edd8b8b.png" />
+<img alt="../_images/495e2951c36e26dad158c39caa0dd483c89b75cf2a56851fce60c2b97975cd6f.png" src="../_images/495e2951c36e26dad158c39caa0dd483c89b75cf2a56851fce60c2b97975cd6f.png" />
+</div>
+</div>
+<p>Before we start using the density, <span class="math notranslate nohighlight">\(\rho\)</span>, to make things more non-linear allow me to show you something very cool. The Hopf-Cole transform was only found in the 50ies but it has allowed important mathematical and physical insights into turbulence and related fields. A <a class="reference external" href="https://www.uni-muenster.de/imperia/md/content/physik_tp/lectures/ss2017/numerische_Methoden_fuer_komplexe_Systeme_II/burgers.pdf">very nice set of lectures</a> describe more details than what we will do here. And another nice write up is full of fascinating details on also the historical <a class="reference external" href="https://web.math.sinica.edu.tw/bulletin_ns/20171/2017103.pdf">impact of the Hopf-Cole transform</a>.</p>
+<p>The claim is that we can rewrite Burgers equation in a different variable <span class="math notranslate nohighlight">\(\psi\)</span> such that our original equation
+$<span class="math notranslate nohighlight">\(
+u_t + u u_x = \nu u_{xx}
+\)</span><span class="math notranslate nohighlight">\(
+simply becomes the one with which we started all these investigations and what Fourier was obsessed about, the linear heat equation
+\)</span><span class="math notranslate nohighlight">\(
+\psi_t = \nu \psi_{xx}.
+\)</span>$</p>
+<p>Isn’t that curious? our advective term somehow goes away? But that is what models inertia? Can we understand the physics behinds this mathematical amazingness?</p>
+<p>We start with the Ansatz:
+$<span class="math notranslate nohighlight">\(
+\psi({\mathbf x}, t) = e^{h({\mathbf x}, t)/2\nu}
+\)</span><span class="math notranslate nohighlight">\(
+and derive that
+\)</span><span class="math notranslate nohighlight">\(
+\psi_{xx} = {1\over 2\nu}\left[h_{xx}  + {1\over 2\nu} h_x^2\right] e^{h/2\nu}
+\)</span><span class="math notranslate nohighlight">\(
+leading to
+\)</span><span class="math notranslate nohighlight">\(
+h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
+\)</span><span class="math notranslate nohighlight">\(
+This closely related to another famous and well studied equation known as the [Kardar–Parisi–Zhang equation](https://en.wikipedia.org/wiki/Kardar–Parisi–Zhang_equation). It was introduced in 1986 to model the change of a height-field in time. While the KPZ equation has an additional stochastic term it is well known that it is equal to the Burger's equation in one dimension with the substitution \)</span>u = - h_x<span class="math notranslate nohighlight">\( in one dimension but also works in higher dimensions with \)</span>{\mathbf u} = - \nabla {\mathbf h}$.</p>
+<p>One interesting fact you find on the wikipedia page above is that Martin Hairer received the Fields Medal in 2014 for his breakthrough in solving the KPZ equation using Feynman diagrams. So many different fields of physics and mathematics are connected it is wonderful.</p>
+<p>The complete transform
+$<span class="math notranslate nohighlight">\(
+{\mathbf u}({\mathbf x}, t) = - {1\over 2\nu} \nabla \ln \psi({\mathbf x},t)
+\)</span>$
+is what achieves the remarkable feat to turn the non-linear Burger’s equation in to the linear(!) heat equation we had started with.</p>
+<p>So e.g. if we want to express initial conditions <span class="math notranslate nohighlight">\(u(x,t=0)\)</span>, we used in the codes above in variable <code class="docutils literal notranslate"><span class="pre">u0</span></code>, we first integrate it in space to be able to define <span class="math notranslate nohighlight">\(\psi(x,t=0)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># analytic integral of our input pulseshape</span>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">z</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">xd</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;z l xd n&#39;</span><span class="p">)</span>
+<span class="n">integrate</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="n">cosh</span><span class="p">(</span><span class="n">z</span><span class="o">/</span><span class="n">l</span><span class="o">*</span><span class="mi">20</span><span class="p">),(</span><span class="n">z</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">xd</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle - \frac{l \operatorname{atan}{\left(\tanh{\left(\frac{10}{l} \right)} \right)}}{20 n} - \frac{l \operatorname{atan}{\left(\tanh{\left(\frac{10 xd}{l} \right)} \right)}}{20 n}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial condition for psi derived from u0 analytically</span>
+<span class="n">psi0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="mi">10</span><span class="o">/</span><span class="n">L</span><span class="p">))</span><span class="o">/</span><span class="mi">20</span><span class="o">/</span><span class="n">nu</span> <span class="o">-</span> <span class="n">L</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="n">L</span><span class="p">))</span><span class="o">/</span><span class="mi">20</span><span class="o">/</span><span class="n">nu</span> <span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">512</span> <span class="c1"># Number of discretization points</span>
+<span class="c1"># Define discrete wavenumbers</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Simulate in </span>
+
+<span class="k">def</span> <span class="nf">rhsBurgers</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">):</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">d_uhat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">dd_uhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">kappa</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">uhat</span>
+    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span>
+    <span class="n">dd_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">dd_uhat</span><span class="p">)</span>
+    <span class="n">du_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">d_u</span> <span class="o">+</span> <span class="n">nu</span><span class="o">*</span><span class="n">dd_u</span>
+    <span class="n">du_dt</span><span class="p">[</span><span class="n">N</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># keep zero</span>
+    <span class="k">return</span> <span class="n">du_dt</span><span class="o">.</span><span class="n">real</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhsBurgers</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">u0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">),</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span> <span class="p">)</span>
+<span class="n">u_b</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="k">def</span> <span class="nf">rhsHopfColeBurgers</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">):</span> <span class="c1"># spectral approach did not work yet  even with zero-padding</span>
+    <span class="n">psihat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+    <span class="n">dd_psihat</span> <span class="o">=</span> <span class="o">-</span><span class="n">kappa</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">psihat</span>
+    <span class="n">dd_psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">dd_psihat</span><span class="p">)</span>
+    <span class="n">dpsi_dt</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">dd_psi</span>
+    <span class="k">return</span> <span class="n">dpsi_dt</span><span class="o">.</span><span class="n">real</span>
+
+
+<span class="k">def</span> <span class="nf">rhsHopfColeBurgersFD</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">psi</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">):</span>
+    <span class="n">dd_psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span><span class="n">dx</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="n">dx</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dpsi_dt</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">dd_psi</span>
+    <span class="k">return</span> <span class="n">dpsi_dt</span>
+
+<span class="c1">#sol = solve_ivp(rhsBurgersAdv, (t[0],t[-1]), U0, args=(kappa,nu), t_eval=t )</span>
+
+<span class="c1">## Integrate in real space the analytic solution </span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhsHopfColeBurgersFD</span><span class="p">,(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">psi0</span> <span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">),</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;DOP853&#39;</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="mf">1e-6</span> <span class="p">)</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">u_hc</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">nu</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">psi</span><span class="p">),</span> <span class="n">dx</span><span class="p">,</span>  <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">flip_double_1d</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">[:],</span><span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="c1"># analytic solution</span>
+<span class="k">def</span> <span class="nf">heat_analytic_fourier</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">ct</span><span class="p">):</span>
+    <span class="n">Ne</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
+    <span class="n">lkappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Ne</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+    <span class="n">twice_psi0</span> <span class="o">=</span> <span class="n">flip_double_1d</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span> <span class="c1"># make a twice as big periodic function</span>
+    <span class="n">twice_psi0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">twice_psi0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span> <span class="n">lkappa</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="o">**</span><span class="mi">1</span> <span class="o">*</span> <span class="n">ct</span><span class="p">))</span>
+    <span class="n">twice_psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">twice_psi0hat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">twice_psi</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Ne</span><span class="p">]</span>
+
+<span class="n">uhca</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+<span class="n">psihat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">Nt</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+
+<span class="c1"># Fourier transform the solution back to configuration space </span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ct</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">cpsi</span> <span class="o">=</span> <span class="n">heat_analytic_fourier</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">ct</span><span class="p">)</span>
+<span class="c1">#    print(ct)</span>
+    <span class="n">uhca</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">nu</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">cpsi</span><span class="p">),</span> <span class="n">dx</span><span class="p">,</span>  <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_10641/3631842172.py:63: ComplexWarning: Casting complex values to real discards the imaginary part
+  uhca[i,:] = -2*nu * np.gradient(np.log(cpsi), dx,  axis=0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">uhca</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">uhca</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">uhca</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.08</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">uhca</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x12e5e4e20&gt;]
+</pre></div>
+</div>
+<img alt="../_images/9f23c357ea5c88390a04534d78a1097887e85c2deeb3cb86b10f7f831751f26d.png" src="../_images/9f23c357ea5c88390a04534d78a1097887e85c2deeb3cb86b10f7f831751f26d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_plot</span> <span class="o">=</span> <span class="n">u_hc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,:]</span>
+<span class="n">ub_plot</span> <span class="o">=</span> <span class="n">u_b</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,:]</span>
+<span class="n">uhca_plot</span> <span class="o">=</span> <span class="n">uhca</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,:]</span>
+
+<span class="c1"># Waterfall plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">u_plot</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">u_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+<span class="c1">#    ax.plot(x,ys,ub_plot[j,:] ,&#39;--&#39;)  # </span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ys</span><span class="p">,</span><span class="n">uhca_plot</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span> <span class="p">,</span><span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># </span>
+
+<span class="c1"># Image plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">u_hc</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">shrink</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/936b8775a2e071f5b3fb0177674c06bb4d79bf29874af3b09ef74e8bf9d30b34.png" src="../_images/936b8775a2e071f5b3fb0177674c06bb4d79bf29874af3b09ef74e8bf9d30b34.png" />
+<img alt="../_images/075003e650eff69588f3b7d567be03493b58378dd5f35fc411f0f4d10782c67e.png" src="../_images/075003e650eff69588f3b7d567be03493b58378dd5f35fc411f0f4d10782c67e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    
+<span class="c1"># evolution of psi plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi0</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">.4</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;initial&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">.04</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:],</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">.4</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;final&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\psi$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5654fc59713c2232e786355960724c49a162d8f0ffb1c60070a38815d3ac7ef4.png" src="../_images/5654fc59713c2232e786355960724c49a162d8f0ffb1c60070a38815d3ac7ef4.png" />
+</div>
+</div>
+<p>Wow. This works great. We solved the non-linear Burgers’ equation as a simple linear heat equation using the Cole-Hopf transformation.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./fft"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="solve_propagating_wave_FFT.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Propagating wave equation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../etc/pyqtgraph_example.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Graphical User Interface (GUI) programming</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Burgers’ equation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tom Abel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
