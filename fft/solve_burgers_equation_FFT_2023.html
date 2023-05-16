@@ -482,11 +482,12 @@ document.write(`
 </div>
 <section id="burgers-equation">
 <h1><a class="reference external" href="https://en.wikipedia.org/wiki/Burgers%27_equation">Burgers’ equation</a><a class="headerlink" href="#burgers-equation" title="Permalink to this headline">#</a></h1>
-<p>The viscous Burgers’ equation is a <a class="reference external" href="https://en.wikipedia.org/wiki/Conservation_law">conservation law|conservation equation</a>, more generally a first order quasilinear <a class="reference external" href="https://en.wikipedia.org/wiki/Hyperbolic_partial_differential_equation">hyperbolic equation</a>.
-$<span class="math notranslate nohighlight">\(
+<p>The viscous Burgers’ equation is a <a class="reference external" href="https://en.wikipedia.org/wiki/Conservation_law">conservation law|conservation equation</a>, more generally a first order quasilinear <a class="reference external" href="https://en.wikipedia.org/wiki/Hyperbolic_partial_differential_equation">hyperbolic equation</a>.</p>
+<div class="math notranslate nohighlight">
+\[
 u_t + u u_x = \nu u_{xx}
-\)</span><span class="math notranslate nohighlight">\(
-It is made of terms we have seen before. The right hand side is the same term we have seen in the heat equation \)</span>\nu u_{xx}<span class="math notranslate nohighlight">\( which acted to diffuse high frequency modes. The \)</span>u u_x<span class="math notranslate nohighlight">\( term is just like the term in the linear wave equation \)</span>u_t + c u_x =0<span class="math notranslate nohighlight">\( which made everything advect at speed c. However, here now that speed at which \)</span>u<span class="math notranslate nohighlight">\( is advected across the grid itself is given by \)</span>u<span class="math notranslate nohighlight">\(. This means regions with larger \)</span>u<span class="math notranslate nohighlight">\( will want to move faster than regions with lower \)</span>u$.</p>
+\]</div>
+<p>It is made of terms we have seen before. The right hand side is the same term we have seen in the heat equation <span class="math notranslate nohighlight">\(\nu u_{xx}\)</span> which acted to diffuse high frequency modes. The <span class="math notranslate nohighlight">\(u u_x\)</span> term is just like the term in the linear wave equation <span class="math notranslate nohighlight">\(u_t + c u_x =0\)</span> which made everything advect at speed c. However, here now that speed at which <span class="math notranslate nohighlight">\(u\)</span> is advected across the grid itself is given by <span class="math notranslate nohighlight">\(u\)</span>. This means regions with larger <span class="math notranslate nohighlight">\(u\)</span> will want to move faster than regions with lower <span class="math notranslate nohighlight">\(u\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nu</span> <span class="o">=</span> <span class="mf">0.009</span>    <span class="c1"># Viscosity parameter</span>
@@ -565,14 +566,16 @@ It is made of terms we have seen before. The right hand side is the same term we
 </section>
 <section id="conservation-equations">
 <h1>Conservation equations<a class="headerlink" href="#conservation-equations" title="Permalink to this headline">#</a></h1>
-<p>The Burgers’ equation we studied above is indeed the correct equation for the rate of change of the velocity neglecting pressure forces and external forces (such as gravity). Imagine a fluid moving in a one-dimensional system (think the center of a long pipe) we can now ask how does the density of the material change given this velocity. We have to specify what the density looks like at the initial time, <span class="math notranslate nohighlight">\(\rho(x,t=0)\)</span>, and need an evolution equation of how it changes over time. This is provided by the continuity equation
-$<span class="math notranslate nohighlight">\(
+<p>The Burgers’ equation we studied above is indeed the correct equation for the rate of change of the velocity neglecting pressure forces and external forces (such as gravity). Imagine a fluid moving in a one-dimensional system (think the center of a long pipe) we can now ask how does the density of the material change given this velocity. We have to specify what the density looks like at the initial time, <span class="math notranslate nohighlight">\(\rho(x,t=0)\)</span>, and need an evolution equation of how it changes over time. This is provided by the continuity equation</p>
+<div class="math notranslate nohighlight">
+\[
 \rho_t + \nabla \cdot (\rho \, u) = 0
-\)</span><span class="math notranslate nohighlight">\( 
-which in 1 dimension is
-\)</span><span class="math notranslate nohighlight">\(
+\]</div>
+<p>which in 1 dimension is</p>
+<div class="math notranslate nohighlight">
+\[
 \rho_t + (\rho \, u)_x = \rho_t + \rho \, u_x + \rho_x \, u = 0
-\)</span>$</p>
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nu</span> <span class="o">=</span> <span class="mf">0.009</span>    <span class="c1"># Viscosity parameter</span>
@@ -658,34 +661,40 @@ which in 1 dimension is
 </div>
 </div>
 <p>Before we start using the density, <span class="math notranslate nohighlight">\(\rho\)</span>, to make things more non-linear allow me to show you something very cool. The Hopf-Cole transform was only found in the 50ies but it has allowed important mathematical and physical insights into turbulence and related fields. A <a class="reference external" href="https://www.uni-muenster.de/imperia/md/content/physik_tp/lectures/ss2017/numerische_Methoden_fuer_komplexe_Systeme_II/burgers.pdf">very nice set of lectures</a> describe more details than what we will do here. And another nice write up is full of fascinating details on also the historical <a class="reference external" href="https://web.math.sinica.edu.tw/bulletin_ns/20171/2017103.pdf">impact of the Hopf-Cole transform</a>.</p>
-<p>The claim is that we can rewrite Burgers equation in a different variable <span class="math notranslate nohighlight">\(\psi\)</span> such that our original equation
-$<span class="math notranslate nohighlight">\(
+<p>The claim is that we can rewrite Burgers equation in a different variable <span class="math notranslate nohighlight">\(\psi\)</span> such that our original equation</p>
+<div class="math notranslate nohighlight">
+\[
 u_t + u u_x = \nu u_{xx}
-\)</span><span class="math notranslate nohighlight">\(
-simply becomes the one with which we started all these investigations and what Fourier was obsessed about, the linear heat equation
-\)</span><span class="math notranslate nohighlight">\(
+\]</div>
+<p>simply becomes the one with which we started all these investigations and what Fourier was obsessed about, the linear heat equation</p>
+<div class="math notranslate nohighlight">
+\[
 \psi_t = \nu \psi_{xx}.
-\)</span>$</p>
+\]</div>
 <p>Isn’t that curious? our advective term somehow goes away? But that is what models inertia? Can we understand the physics behinds this mathematical amazingness?</p>
-<p>We start with the Ansatz:
-$<span class="math notranslate nohighlight">\(
+<p>We start with the Ansatz:</p>
+<div class="math notranslate nohighlight">
+\[
 \psi({\mathbf x}, t) = e^{h({\mathbf x}, t)/2\nu}
-\)</span><span class="math notranslate nohighlight">\(
-and derive that
-\)</span><span class="math notranslate nohighlight">\(
+\]</div>
+<p>and derive that</p>
+<div class="math notranslate nohighlight">
+\[
 \psi_{xx} = {1\over 2\nu}\left[h_{xx}  + {1\over 2\nu} h_x^2\right] e^{h/2\nu}
-\)</span><span class="math notranslate nohighlight">\(
-leading to
-\)</span><span class="math notranslate nohighlight">\(
+\]</div>
+<p>leading to</p>
+<div class="math notranslate nohighlight">
+\[
 h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
-\)</span><span class="math notranslate nohighlight">\(
-This closely related to another famous and well studied equation known as the [Kardar–Parisi–Zhang equation](https://en.wikipedia.org/wiki/Kardar–Parisi–Zhang_equation). It was introduced in 1986 to model the change of a height-field in time. While the KPZ equation has an additional stochastic term it is well known that it is equal to the Burger's equation in one dimension with the substitution \)</span>u = - h_x<span class="math notranslate nohighlight">\( in one dimension but also works in higher dimensions with \)</span>{\mathbf u} = - \nabla {\mathbf h}$.</p>
+\]</div>
+<p>This closely related to another famous and well studied equation known as the <a class="reference external" href="https://en.wikipedia.org/wiki/Kardar%E2%80%93Parisi%E2%80%93Zhang_equation">Kardar–Parisi–Zhang equation</a>. It was introduced in 1986 to model the change of a height-field in time. While the KPZ equation has an additional stochastic term it is well known that it is equal to the Burger’s equation in one dimension with the substitution <span class="math notranslate nohighlight">\(u = - h_x\)</span> in one dimension but also works in higher dimensions with <span class="math notranslate nohighlight">\({\mathbf u} = - \nabla {\mathbf h}\)</span>.</p>
 <p>One interesting fact you find on the wikipedia page above is that Martin Hairer received the Fields Medal in 2014 for his breakthrough in solving the KPZ equation using Feynman diagrams. So many different fields of physics and mathematics are connected it is wonderful.</p>
-<p>The complete transform
-$<span class="math notranslate nohighlight">\(
+<p>The complete transform</p>
+<div class="math notranslate nohighlight">
+\[
 {\mathbf u}({\mathbf x}, t) = - {1\over 2\nu} \nabla \ln \psi({\mathbf x},t)
-\)</span>$
-is what achieves the remarkable feat to turn the non-linear Burger’s equation in to the linear(!) heat equation we had started with.</p>
+\]</div>
+<p>is what achieves the remarkable feat to turn the non-linear Burger’s equation in to the linear(!) heat equation we had started with.</p>
 <p>So e.g. if we want to express initial conditions <span class="math notranslate nohighlight">\(u(x,t=0)\)</span>, we used in the codes above in variable <code class="docutils literal notranslate"><span class="pre">u0</span></code>, we first integrate it in space to be able to define <span class="math notranslate nohighlight">\(\psi(x,t=0)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -770,7 +779,7 @@ is what achieves the remarkable feat to turn the non-linear Burger’s equation 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_10641/3631842172.py:63: ComplexWarning: Casting complex values to real discards the imaginary part
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_15438/3631842172.py:63: ComplexWarning: Casting complex values to real discards the imaginary part
   uhca[i,:] = -2*nu * np.gradient(np.log(cpsi), dx,  axis=0)
 </pre></div>
 </div>
@@ -786,7 +795,7 @@ is what achieves the remarkable feat to turn the non-linear Burger’s equation 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x12e5e4e20&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x130a338e0&gt;]
 </pre></div>
 </div>
 <img alt="../_images/9f23c357ea5c88390a04534d78a1097887e85c2deeb3cb86b10f7f831751f26d.png" src="../_images/9f23c357ea5c88390a04534d78a1097887e85c2deeb3cb86b10f7f831751f26d.png" />
