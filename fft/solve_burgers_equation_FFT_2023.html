@@ -441,7 +441,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Burgers’ equation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-class-exercise">In class exercise:</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -778,7 +781,7 @@ h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_28438/1525065834.py:63: ComplexWarning: Casting complex values to real discards the imaginary part
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_30260/1525065834.py:63: ComplexWarning: Casting complex values to real discards the imaginary part
   uhca[i,:] = -2*nu * np.gradient(np.log(cpsi), dx,  axis=0)
 </pre></div>
 </div>
@@ -854,6 +857,33 @@ h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
 </div>
 </div>
 <p>Wow. This works great. We solved the non-linear Burgers’ equation as a simple linear heat equation using the Cole-Hopf transformation.</p>
+<section id="in-class-exercise">
+<h2>In class exercise:<a class="headerlink" href="#in-class-exercise" title="Permalink to this headline">#</a></h2>
+<p>To better study this and individually go over each aspect let us redo the above evolution of a pulse for a slightly different pulse shape.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial condition</span>
+<span class="n">u10</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="mi">10</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">u00</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">u10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;new pulse shape&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">u00</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;above example&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8a2b590d9963af2cec8c7ea20b8824c28e2fba6632d73395d93f0377df529e0c.png" src="../_images/8a2b590d9963af2cec8c7ea20b8824c28e2fba6632d73395d93f0377df529e0c.png" />
+</div>
+</div>
+<p>Integrate the Burger’s equation as above for the same viscosity <span class="math notranslate nohighlight">\(\nu=0.009\)</span> and until <span class="math notranslate nohighlight">\(t_{final}=0.25\)</span>.
+Compare the final solution of the two pulse shapes.</p>
+<p><strong>Momentum conservation:</strong></p>
+<p>Solve for the both a initially uniform density and the pulse velocity shape simultaneously (as above).
+Integrate <span class="math notranslate nohighlight">\(\rho \times u\)</span> over the whole volume and plot the resulting value as a function of time for your solution.
+Discuss your results.</p>
+<p><strong>Use the Hopf-Cole transform to get the evolution of your pulse shape</strong></p>
+<p>Same as above just for the new pulse shape. Reuse the <code class="docutils literal notranslate"><span class="pre">pysym</span></code> code above to integrate the initial pulse.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -918,7 +948,10 @@ h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Burgers’ equation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-class-exercise">In class exercise:</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>
