@@ -192,6 +192,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="discrete_fast_fourier_transform.html">Discrete Fourier Transform and Fast Fourier Transform</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Solving the heat diffusion equation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="solve_propagating_wave_FFT.html">Propagating wave equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solve_burgers_equation_FFT_2023.html">Burgers’ equation</a></li>
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Helpful libraries</span></p>
 <ul class="nav bd-sidenav">
@@ -541,6 +543,7 @@ Once we know this we can “graduate” to use a similar strategy for more compl
 </div>
 </div>
 </div>
+<p>Let’s implement a routine that uses the analytic solution in Fourier space and returns us the solution in configuration space by inverse Fourier transform:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">heat_analytic_fourier</span><span class="p">(</span><span class="n">u0hat</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>

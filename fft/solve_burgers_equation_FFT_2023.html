@@ -194,6 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="solve_propagating_wave_FFT.html">Propagating wave equation</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Burgers’ equation</a></li>
 
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Helpful libraries</span></p>
 <ul class="nav bd-sidenav">
@@ -441,7 +442,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Burgers’ equation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hopf-cole-transform">The Hopf-Cole transform</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-class-exercise">In class exercise:</a></li>
 </ul>
 </li>
@@ -662,7 +664,11 @@ u_t + u u_x = \nu u_{xx}.
 <img alt="../_images/495e2951c36e26dad158c39caa0dd483c89b75cf2a56851fce60c2b97975cd6f.png" src="../_images/495e2951c36e26dad158c39caa0dd483c89b75cf2a56851fce60c2b97975cd6f.png" />
 </div>
 </div>
-<p>Before we start using the density, <span class="math notranslate nohighlight">\(\rho\)</span>, to make things more non-linear allow me to show you something very cool. The Hopf-Cole transform was only found in the 50ies but it has allowed important mathematical and physical insights into turbulence and related fields. A <a class="reference external" href="https://www.uni-muenster.de/imperia/md/content/physik_tp/lectures/ss2017/numerische_Methoden_fuer_komplexe_Systeme_II/burgers.pdf">very nice set of lectures</a> describe more details than what we will do here. And another nice write up is full of fascinating details on also the historical <a class="reference external" href="https://web.math.sinica.edu.tw/bulletin_ns/20171/2017103.pdf">impact of the Hopf-Cole transform</a>.</p>
+<p>Before we start using the density, <span class="math notranslate nohighlight">\(\rho\)</span>, to make things more non-linear allow me to show you something very cool.</p>
+</section>
+<section id="the-hopf-cole-transform">
+<h1>The Hopf-Cole transform<a class="headerlink" href="#the-hopf-cole-transform" title="Permalink to this headline">#</a></h1>
+<p>This transform was only found in the 50ies but it has allowed important mathematical and physical insights into turbulence and related fields. A <a class="reference external" href="https://www.uni-muenster.de/imperia/md/content/physik_tp/lectures/ss2017/numerische_Methoden_fuer_komplexe_Systeme_II/burgers.pdf">very nice set of lectures</a> describe more details than what we will do here. And another nice write up is full of fascinating details on also the historical <a class="reference external" href="https://web.math.sinica.edu.tw/bulletin_ns/20171/2017103.pdf">impact of the Hopf-Cole transform</a>.</p>
 <p>The claim is that we can rewrite Burgers equation in a different variable <span class="math notranslate nohighlight">\(\psi\)</span> such that our original equation</p>
 <div class="math notranslate nohighlight">
 \[
@@ -781,7 +787,7 @@ h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_30260/1525065834.py:63: ComplexWarning: Casting complex values to real discards the imaginary part
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_33243/1525065834.py:63: ComplexWarning: Casting complex values to real discards the imaginary part
   uhca[i,:] = -2*nu * np.gradient(np.log(cpsi), dx,  axis=0)
 </pre></div>
 </div>
@@ -948,7 +954,8 @@ Discuss your results.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Burgers’ equation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-equations">Conservation equations</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hopf-cole-transform">The Hopf-Cole transform</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-class-exercise">In class exercise:</a></li>
 </ul>
 </li>
