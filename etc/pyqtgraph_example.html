@@ -570,6 +570,83 @@ document.write(`
 </div>
 </div>
 <p>Now let’s create a visualization of one of our FFt based solvers</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Demonstrate use of GLLinePlotItem to draw cross-sections of a surface.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">pyqtgraph</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">import</span> <span class="nn">pyqtgraph.opengl</span> <span class="k">as</span> <span class="nn">gl</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.5</span>    <span class="c1"># Thermal diffusivity constant</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>     <span class="c1"># Length of domain</span>
+<span class="n">Tfinal</span> <span class="o">=</span> <span class="mf">2.</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span> <span class="c1"># Number of spatial discretization points</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">200</span> <span class="c1"># Number of time outputs</span>
+
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">N</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
+
+<span class="c1"># Define discrete wave-numbers</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Initial condition</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># same shape as spatial grid</span>
+<span class="n">u0</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&lt;=</span><span class="mf">0.25</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># square shape pulse </span>
+<span class="n">u0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span>   <span class="c1"># ICs in Fourier space</span>
+
+<span class="c1"># Simulate in Fourier frequency domain</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Tfinal</span><span class="p">,</span> <span class="n">Nt</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">heat_analytic_fourier</span><span class="p">(</span><span class="n">u0hat</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span>  <span class="n">u0hat</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">kappa</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span>
+
+<span class="n">ua</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">Nt</span><span class="p">))</span>
+<span class="n">uahat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+<span class="c1"># Fourier transform the solution back to configuration space </span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ct</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">uahat</span> <span class="o">=</span> <span class="n">heat_analytic_fourier</span><span class="p">(</span><span class="n">u0hat</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">ct</span><span class="p">)</span>
+    <span class="n">ua</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">uahat</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">mkQApp</span><span class="p">(</span><span class="s2">&quot;GLLinePlotItem Example&quot;</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">GLViewWidget</span><span class="p">()</span>
+<span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;pyqtgraph example: GLLinePlotItem&#39;</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">setCameraPosition</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">gx</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">GLGridItem</span><span class="p">()</span>
+<span class="n">gx</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">gx</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">gx</span><span class="p">)</span>
+<span class="n">gy</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">GLGridItem</span><span class="p">()</span>
+<span class="n">gy</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">gy</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">gy</span><span class="p">)</span>
+<span class="n">gz</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">GLGridItem</span><span class="p">()</span>
+<span class="n">gz</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">gz</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nt</span><span class="p">):</span>
+    <span class="n">yi</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">ua</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yi</span><span class="p">),</span> <span class="n">z</span><span class="p">])</span>
+<span class="c1">#    plt = gl.GLLinePlotItem(pos=pts, color=pg.mkColor((Nt/2-i,Nt*1.3)), width=4, antialias=True)</span>
+    <span class="n">plt</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">GLLinePlotItem</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">pg</span><span class="o">.</span><span class="n">mkColor</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">150</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">antialias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">pg</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
