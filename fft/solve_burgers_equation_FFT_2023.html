@@ -164,6 +164,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Get started with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/environments.html">Working with Python Virtual Environments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_basics/Exercise-python-basics.html">Exercises</a></li>
@@ -495,16 +496,16 @@ u_t + u u_x = \nu u_{xx}.
 <p>It is made of terms we have seen before. The right hand side is the same term we have seen in the heat equation <span class="math notranslate nohighlight">\(\nu u_{xx}\)</span> which acted to diffuse high frequency modes. The <span class="math notranslate nohighlight">\(u u_x\)</span> term is just like the term in the linear wave equation <span class="math notranslate nohighlight">\(u_t + c u_x =0\)</span> which made everything advect at speed c. However, here now that speed at which <span class="math notranslate nohighlight">\(u\)</span> is advected across the grid itself is given by <span class="math notranslate nohighlight">\(u\)</span>. This means regions with larger <span class="math notranslate nohighlight">\(u\)</span> will want to move faster than regions with lower <span class="math notranslate nohighlight">\(u\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nu</span> <span class="o">=</span> <span class="mf">0.009</span>    <span class="c1"># Viscosity parameter</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nu</span> <span class="o">=</span> <span class="mf">0.001</span>    <span class="c1"># Viscosity parameter</span>
 <span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1"># Length of domain</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">512</span> <span class="c1"># Number of discretization points</span>
 <span class="n">Nt</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">N</span>
-<span class="n">Tfinal</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">Tfinal</span> <span class="o">=</span> <span class="mf">0.45</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
 <span class="n">pulse</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="c1"># Define discrete wave-numbers</span>
-<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
 
 <span class="c1"># Initial condition</span>
 <span class="n">u0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="mi">20</span><span class="p">))</span>
@@ -514,11 +515,11 @@ u_t + u u_x = \nu u_{xx}.
 <span class="n">dt</span> <span class="o">=</span> <span class="n">Tfinal</span><span class="o">/</span><span class="n">Nt</span>
 
 <span class="k">def</span> <span class="nf">rhsBurgers</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">kappa</span><span class="p">,</span><span class="n">nu</span><span class="p">):</span>
-    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
     <span class="n">d_uhat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">uhat</span>
     <span class="n">dd_uhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">kappa</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">uhat</span>
-    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span>
-    <span class="n">dd_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">dd_uhat</span><span class="p">)</span>
+    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span>
+    <span class="n">dd_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">dd_uhat</span><span class="p">)</span>
     <span class="n">du_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">d_u</span> <span class="o">+</span> <span class="n">nu</span><span class="o">*</span><span class="n">dd_u</span>
     <span class="k">return</span> <span class="n">du_dt</span><span class="o">.</span><span class="n">real</span>
 
@@ -551,9 +552,9 @@ u_t + u u_x = \nu u_{xx}.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ef6e82f1de15d83eecab23b4a24fd09c515bddd4f9d378f5c1aefc0fbce9d887.png" src="../_images/ef6e82f1de15d83eecab23b4a24fd09c515bddd4f9d378f5c1aefc0fbce9d887.png" />
-<img alt="../_images/caa4f6785139ad0c3cf3dfdc29c8cecf80d6f66069dcd7a5bb348caa8ed085e2.png" src="../_images/caa4f6785139ad0c3cf3dfdc29c8cecf80d6f66069dcd7a5bb348caa8ed085e2.png" />
-<img alt="../_images/523c703b7a6fb1ffa5e4179e79226a44914bce92cf6637aea351c1da981bbcd7.png" src="../_images/523c703b7a6fb1ffa5e4179e79226a44914bce92cf6637aea351c1da981bbcd7.png" />
+<img alt="../_images/4300329d67ab62b8f7b8ab2bf910c9f2d1b3873594e01d6e149a2a1790836d1c.png" src="../_images/4300329d67ab62b8f7b8ab2bf910c9f2d1b3873594e01d6e149a2a1790836d1c.png" />
+<img alt="../_images/716b5a8452e1ece3d86f246a904bcacaf302ca937cf7f2e513fcb06879e8da80.png" src="../_images/716b5a8452e1ece3d86f246a904bcacaf302ca937cf7f2e513fcb06879e8da80.png" />
+<img alt="../_images/ae7a11613814a290af6bf3764c0f53745f788ae08ae7de877827ab28a8170e61.png" src="../_images/ae7a11613814a290af6bf3764c0f53745f788ae08ae7de877827ab28a8170e61.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -579,7 +580,7 @@ u_t + u u_x = \nu u_{xx}.
 <p>which in 1 dimension is</p>
 <div class="math notranslate nohighlight">
 \[
-\rho_t + (\rho \, u)_x = \rho_t + \rho \, u_x + \rho_x \, u = 0
+\rho_t + (\rho \, u)_x = \rho_t + u \, \rho_x  + \rho \, u_x = 0
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -590,7 +591,7 @@ u_t + u u_x = \nu u_{xx}.
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span> <span class="c1"># Define x domain</span>
 
 <span class="c1"># Define discrete wavenumbers</span>
-<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
 
 <span class="c1"># Initial condition</span>
 <span class="c1">#u0 = 1/np.cosh(x/(L/20))</span>
@@ -605,15 +606,15 @@ u_t + u u_x = \nu u_{xx}.
     <span class="n">u</span>   <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">N</span><span class="p">:]</span>
     <span class="n">urho</span> <span class="o">=</span> <span class="n">u</span><span class="o">*</span><span class="n">rho</span>
     <span class="c1"># derivatives of rho</span>
-    <span class="n">urhohat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">urho</span><span class="p">)</span>
+    <span class="n">urhohat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">urho</span><span class="p">)</span>
     <span class="n">d_urhohat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">urhohat</span>
-    <span class="n">d_urho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">d_urhohat</span><span class="p">)</span>
+    <span class="n">d_urho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">d_urhohat</span><span class="p">)</span>
     <span class="c1">#derivatives of u</span>
-    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">uhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
     <span class="n">d_uhat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">kappa</span><span class="o">*</span><span class="n">uhat</span>
     <span class="n">dd_uhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">kappa</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">uhat</span>
-    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span>
-    <span class="n">dd_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">dd_uhat</span><span class="p">)</span>
+    <span class="n">d_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">d_uhat</span><span class="p">)</span>
+    <span class="n">dd_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">dd_uhat</span><span class="p">)</span>
     <span class="c1"># now assemble the time derivatives</span>
     <span class="n">du_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">d_u</span> <span class="o">+</span> <span class="n">nu</span><span class="o">*</span><span class="n">dd_u</span>
     <span class="n">drho_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">d_urho</span>
@@ -660,8 +661,8 @@ u_t + u u_x = \nu u_{xx}.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7124ee7f8ae781f402a44196f00090b329d4703a59f50eef836aa1d36edd8b8b.png" src="../_images/7124ee7f8ae781f402a44196f00090b329d4703a59f50eef836aa1d36edd8b8b.png" />
-<img alt="../_images/495e2951c36e26dad158c39caa0dd483c89b75cf2a56851fce60c2b97975cd6f.png" src="../_images/495e2951c36e26dad158c39caa0dd483c89b75cf2a56851fce60c2b97975cd6f.png" />
+<img alt="../_images/3a8d1537f9f8013c8b15ac097b2cc6f55c8b4f5894617cf5594673522d4fe89f.png" src="../_images/3a8d1537f9f8013c8b15ac097b2cc6f55c8b4f5894617cf5594673522d4fe89f.png" />
+<img alt="../_images/7e4d5d195be92f1c784b96c3dffa175c997a6124c9a89b608c7cd9547c899d46.png" src="../_images/7e4d5d195be92f1c784b96c3dffa175c997a6124c9a89b608c7cd9547c899d46.png" />
 </div>
 </div>
 <p>Before we start using the density, <span class="math notranslate nohighlight">\(\rho\)</span>, to make things more non-linear allow me to show you something very cool.</p>
@@ -767,28 +768,27 @@ h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">[:],</span><span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 
 <span class="c1"># analytic solution</span>
-<span class="k">def</span> <span class="nf">heat_analytic_fourier</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">ct</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">heat_analytic_fourier_double</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">ct</span><span class="p">):</span>
     <span class="n">Ne</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
     <span class="n">lkappa</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Ne</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
     <span class="n">twice_psi0</span> <span class="o">=</span> <span class="n">flip_double_1d</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span> <span class="c1"># make a twice as big periodic function</span>
     <span class="n">twice_psi0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">twice_psi0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span> <span class="n">lkappa</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="o">**</span><span class="mi">1</span> <span class="o">*</span> <span class="n">ct</span><span class="p">))</span>
     <span class="n">twice_psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">twice_psi0hat</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">twice_psi</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Ne</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">twice_psi</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Ne</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+
+<span class="c1"># analytic solution</span>
+<span class="k">def</span> <span class="nf">heat_analytic_fourier</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">ct</span><span class="p">):</span>
+    <span class="n">psi0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span> <span class="n">kappa</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">ct</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">psi0hat</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+
 
 <span class="n">uhca</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
-<span class="n">psihat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">Nt</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
 
 <span class="c1"># Fourier transform the solution back to configuration space </span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ct</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="n">cpsi</span> <span class="o">=</span> <span class="n">heat_analytic_fourier</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">ct</span><span class="p">)</span>
+    <span class="n">cpsi</span> <span class="o">=</span> <span class="n">heat_analytic_fourier_double</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">ct</span><span class="p">)</span>
 <span class="c1">#    print(ct)</span>
     <span class="n">uhca</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">nu</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">cpsi</span><span class="p">),</span> <span class="n">dx</span><span class="p">,</span>  <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8h/csrqy1dd1x1d93qvzyh33kn40000gn/T/ipykernel_33243/1525065834.py:63: ComplexWarning: Casting complex values to real discards the imaginary part
-  uhca[i,:] = -2*nu * np.gradient(np.log(cpsi), dx,  axis=0)
 </pre></div>
 </div>
 </div>
@@ -801,15 +801,12 @@ h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">uhca</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;final&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;u&#39;)
-</pre></div>
-</div>
-<img alt="../_images/daab691cde9efd9071111876ff459243657aad7d48c766fed05a3e35755d73b6.png" src="../_images/daab691cde9efd9071111876ff459243657aad7d48c766fed05a3e35755d73b6.png" />
+<img alt="../_images/212fc6ed0c8da5a4e83de69b2554184dda9f8497c244bc9a2fad779e26a99f19.png" src="../_images/212fc6ed0c8da5a4e83de69b2554184dda9f8497c244bc9a2fad779e26a99f19.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -838,8 +835,8 @@ h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/936b8775a2e071f5b3fb0177674c06bb4d79bf29874af3b09ef74e8bf9d30b34.png" src="../_images/936b8775a2e071f5b3fb0177674c06bb4d79bf29874af3b09ef74e8bf9d30b34.png" />
-<img alt="../_images/075003e650eff69588f3b7d567be03493b58378dd5f35fc411f0f4d10782c67e.png" src="../_images/075003e650eff69588f3b7d567be03493b58378dd5f35fc411f0f4d10782c67e.png" />
+<img alt="../_images/0679d0aceee5b35a1587d565e841f6b05a7f7f6479854a4bb8d1d3485b747451.png" src="../_images/0679d0aceee5b35a1587d565e841f6b05a7f7f6479854a4bb8d1d3485b747451.png" />
+<img alt="../_images/a3f5a505dd54e7386dcba2ba60064fa147888d4f539ef61f998a8670821ca5e5.png" src="../_images/a3f5a505dd54e7386dcba2ba60064fa147888d4f539ef61f998a8670821ca5e5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -859,7 +856,7 @@ h_t - \left({1\over 2} h_x \right)^2 = \nu h_{xx}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5654fc59713c2232e786355960724c49a162d8f0ffb1c60070a38815d3ac7ef4.png" src="../_images/5654fc59713c2232e786355960724c49a162d8f0ffb1c60070a38815d3ac7ef4.png" />
+<img alt="../_images/5ee0b61a448b3c6b716fd619a7dcad4a88da82e8172a4f8d88066f81af504571.png" src="../_images/5ee0b61a448b3c6b716fd619a7dcad4a88da82e8172a4f8d88066f81af504571.png" />
 </div>
 </div>
 <p>Wow. This works great. We solved the non-linear Burgers’ equation as a simple linear heat equation using the Cole-Hopf transformation.</p>
