@@ -1,0 +1,78 @@
+Traceback (most recent call last):
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/jupyter_core/utils/__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/tabel/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+%pylab inline
+import time as systime
+#from scitools.std import as sci
+from scipy.optimize import brentq 
+
+def accGradP(dr,m,c):
+    diff = c**2* (m/fabs(dr))
+    return -1./m*dr*(diff-np.roll(diff,1))/(0.5*fabs(dr+np.roll(dr,1)))
+
+N = 100
+r = (0.+np.arange(N))/N
+va = .1
+rho0 = 1.
+c = 1.
+v = va*sin(4.*np.pi*r)
+c0 = np.ones(N)
+c0[:] = c
+m = 1./N
+
+mass = lambda x,off: rho0*(x+va/c*(cos(4.*np.pi*x)-1)/4/np.pi)-off
+for i in range(len(r)):
+    r[i] = brentq(mass,0,1,args=(r[i]))
+dr = np.roll(r,-1)-r
+
+    
+Courantfactor = 0.1
+dt = Courantfactor * 1./N
+
+tfinal = 0.6
+time = [0.]
+vmax = [max(v)]
+count=0
+while (time[-1]<tfinal and count < 500000):
+    r += dt/2 * v
+    r[r>1] -= 1.
+    r[r<0] += 1.
+    dr = np.roll(r,-1)-r
+    ind = where(fabs(dr)>0.5)
+    dr[ind] = fabs(1.+dr[ind])
+    acc = accGradP(dr,m,c0) 
+    v += dt * acc
+#    print accGradP(r,m,c0)
+    r += dt/2 * v
+    dt = Courantfactor*min(dr)/max((max(c0),max(v)))
+    time.append((time[-1]+dt))
+    count += 1
+    vmax.append(max(v))
+    
+print count, ' time steps to time: ', time[-1]
+plot(r,v,'.',label="velocity")
+xlabel("position")
+legend();
+------------------
+
+
+[0;36m  Cell [0;32mIn[1], line 49[0;36m[0m
+[0;31m    print count, ' time steps to time: ', time[-1][0m
+[0m          ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m Missing parentheses in call to 'print'. Did you mean print(count, ' time steps to time: ', time[-1])?
+
+

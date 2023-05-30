@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'pde/integrate-1D-poissonEquation';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Graphical User Interface (GUI) programming" href="../etc/pyqtgraph_example.html" />
+    <link rel="next" title="Lagrangian Hydrodynamics" href="lagrangian-hydrodynamics.html" />
     <link rel="prev" title="Burgers’ equation" href="../fft/solve_burgers_equation_FFT_2023.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -178,6 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/3body-gravity.html">Planetary Motion - Three Body Problem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
@@ -200,6 +201,8 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Partial Differential Equations</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Solving the Poisson equation <span class="math notranslate nohighlight">\(\Delta\Phi=C\rho\)</span></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="lagrangian-hydrodynamics.html">Lagrangian Hydrodynamics</a></li>
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Helpful libraries</span></p>
@@ -556,7 +559,7 @@ F(0) = -\int_0^1 \int_0^1 D(\tilde{x})d\tilde{x}
  
     <span class="k">return</span> <span class="n">d</span>
 
-<span class="n">N</span><span class="o">=</span><span class="mi">60</span>
+<span class="n">N</span><span class="o">=</span><span class="mi">100</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span> <span class="c1"># uniform grid </span>
 <span class="c1">#x = np.insert(np.insert(sort(np.random.rand(N-2)),0,0),N-1,1) # non-uniform grid</span>
 <span class="n">d</span> <span class="o">=</span> <span class="n">density</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -581,10 +584,10 @@ F(0) = -\int_0^1 \int_0^1 D(\tilde{x})d\tilde{x}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>F(x=0) =  -0.07065623122762656
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>F(x=0) =  -0.0708257400807185
 </pre></div>
 </div>
-<img alt="../_images/361e70d2886344f8aee3833543f354de1614da9d694a63326601d8af1e5553c0.png" src="../_images/361e70d2886344f8aee3833543f354de1614da9d694a63326601d8af1e5553c0.png" />
+<img alt="../_images/2f1ed4645cfff4ac77c76978aa8630556339a8d434f607a1060135e4cf7e14cb.png" src="../_images/2f1ed4645cfff4ac77c76978aa8630556339a8d434f607a1060135e4cf7e14cb.png" />
 </div>
 </div>
 <section id="in-class-exercise">
@@ -595,6 +598,50 @@ F(0) = -\int_0^1 \int_0^1 D(\tilde{x})d\tilde{x}
 - Plot it for the grid resolution 60 and 240
 - Discuss the solution
 </pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mydensity</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="c1">#    phase = 1.1</span>
+<span class="c1">#    od = np.cos(k * 2 * math.pi * x + phase) # set up a periodic density</span>
+    <span class="n">od</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="mi">20</span>
+    <span class="n">od</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mf">0.025</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">od</span>
+<span class="c1">#    dmean = integrate.simps(od,x)/1.   # mean density </span>
+<span class="c1">#    d = od - dmean # for periodic forces the mean of the right hand side needs to be zero</span>
+ 
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="n">N</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span> <span class="c1"># uniform grid </span>
+<span class="c1">#x = np.insert(np.insert(sort(np.random.rand(N-2)),0,0),N-1,1) # non-uniform grid</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">mydensity</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">mF</span> <span class="o">=</span> <span class="o">-</span><span class="n">integrate</span><span class="o">.</span><span class="n">cumtrapz</span><span class="p">(</span><span class="n">c</span><span class="o">*</span><span class="n">md</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mF0</span> <span class="o">=</span> <span class="o">-</span><span class="n">integrate</span><span class="o">.</span><span class="n">simps</span><span class="p">(</span><span class="n">mF</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">)</span> <span class="c1"># fix the force constant to keep momentum change=0</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;F(x=0) = &#39;</span><span class="p">,</span> <span class="n">mF0</span><span class="p">)</span>
+<span class="n">mF</span> <span class="o">=</span> <span class="n">mF</span> <span class="o">+</span> <span class="n">mF0</span>
+
+<span class="n">mPhi</span> <span class="o">=</span> <span class="o">-</span><span class="n">integrate</span><span class="o">.</span><span class="n">cumtrapz</span><span class="p">(</span><span class="n">mF</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mPhi</span> <span class="o">=</span> <span class="n">mPhi</span> <span class="o">-</span> <span class="n">integrate</span><span class="o">.</span><span class="n">simps</span><span class="p">(</span><span class="n">mPhi</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="mf">1.</span>    <span class="c1"># set potential to mean</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">md</span><span class="o">/</span><span class="n">N</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\delta$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mF</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Force&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mPhi</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\Phi$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;position&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Solution to the 1D Poisson equation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>F(x=0) =  0.6019793898581776
+</pre></div>
+</div>
+<img alt="../_images/109155cca1fd1c8b3a6355197ceb8f04ec1895c5568242f542afee57feecdbbb.png" src="../_images/109155cca1fd1c8b3a6355197ceb8f04ec1895c5568242f542afee57feecdbbb.png" />
+</div>
 </div>
 </section>
 <section id="using-relaxation">
@@ -614,10 +661,11 @@ F(0) = -\int_0^1 \int_0^1 D(\tilde{x})d\tilde{x}
 <p>The overdensity <span class="math notranslate nohighlight">\(D(x)\)</span> will be defined at cell centers and similarly <span class="math notranslate nohighlight">\(\Phi\)</span> is recorded at the same positions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rx</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">N</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span> 
+<span class="n">rx</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">N</span>
 <span class="n">rd</span> <span class="o">=</span> <span class="n">density</span><span class="p">(</span><span class="n">rx</span><span class="p">)</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
-<span class="n">Niter</span> <span class="o">=</span> <span class="mi">1498</span>
+<span class="n">Niter</span> <span class="o">=</span> <span class="mi">140</span>
 <span class="n">ip1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># define arrays that are the indeces i+1 and i-1</span>
 <span class="n">ip1</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">im1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -640,7 +688,7 @@ F(0) = -\int_0^1 \int_0^1 D(\tilde{x})d\tilde{x}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0a590649b8d57ea6bbb556a4558b1c786186c418d9e799862503da877e6e43b3.png" src="../_images/0a590649b8d57ea6bbb556a4558b1c786186c418d9e799862503da877e6e43b3.png" />
+<img alt="../_images/8bd02371e3d7da5dfd5ebe909ed88fe7246140060bc4d9ccd6933775aff18336.png" src="../_images/8bd02371e3d7da5dfd5ebe909ed88fe7246140060bc4d9ccd6933775aff18336.png" />
 </div>
 </div>
 <p>Wow. That takes an enormous amount of iterations to converge. In particular if the solution has long wavelength components. This method is known an <b>Jacobi’s iterative method</b>.</p>
@@ -650,7 +698,7 @@ F(0) = -\int_0^1 \int_0^1 D(\tilde{x})d\tilde{x}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rx</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">N</span>
 <span class="n">rd</span> <span class="o">=</span> <span class="n">density</span><span class="p">(</span><span class="n">rx</span><span class="p">)</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
-<span class="n">Niter</span> <span class="o">=</span> <span class="mi">1498</span>
+<span class="n">Niter</span> <span class="o">=</span> <span class="mi">199</span>
 <span class="n">ip1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># define arrays that are the indeces i+1 and i-1</span>
 <span class="n">ip1</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">im1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -676,7 +724,7 @@ F(0) = -\int_0^1 \int_0^1 D(\tilde{x})d\tilde{x}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/adeaac4570c10dace66fd3f29ff4fb7d885b048b69e2b3e2754937592282ddb0.png" src="../_images/adeaac4570c10dace66fd3f29ff4fb7d885b048b69e2b3e2754937592282ddb0.png" />
+<img alt="../_images/6d431bc32a896d8c63ba97092104a607357404cc46281b6cb793c26080d782e2.png" src="../_images/6d431bc32a896d8c63ba97092104a607357404cc46281b6cb793c26080d782e2.png" />
 </div>
 </div>
 <p>That is indeed somewhat of an improvement. It is called the <b>Gauss Seidel</b> iteration.</p>
@@ -693,7 +741,7 @@ first for \)</span>i=0,2,4,\cdots<span class="math notranslate nohighlight">\( a
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">srx</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">N</span>
 <span class="n">srd</span> <span class="o">=</span> <span class="n">density</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
-<span class="n">Niter</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">Niter</span> <span class="o">=</span> <span class="mi">80</span>
 <span class="n">ip1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># define arrays that are the indeces i+1 and i-1</span>
 <span class="n">ip1</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">im1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -722,7 +770,7 @@ first for \)</span>i=0,2,4,\cdots<span class="math notranslate nohighlight">\( a
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f22909ff29529364806ab5139339f48b790288a8f741c008430feee7878aa5b8.png" src="../_images/f22909ff29529364806ab5139339f48b790288a8f741c008430feee7878aa5b8.png" />
+<img alt="../_images/91cfea173b7e6df9bba3245a116b76c34f3f41a101b5b72a854f11abac39cae9.png" src="../_images/91cfea173b7e6df9bba3245a116b76c34f3f41a101b5b72a854f11abac39cae9.png" />
 </div>
 </div>
 <p>Ok. This is better!  It, however, added another parameter which is left to the user to choose. It is only convergent in <span class="math notranslate nohighlight">\( 0 &lt; w &lt; 2 \)</span>.</p>
@@ -739,7 +787,7 @@ first for \)</span>i=0,2,4,\cdots<span class="math notranslate nohighlight">\( a
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">srx</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">N</span>
 <span class="n">srd</span> <span class="o">=</span> <span class="n">density</span><span class="p">(</span><span class="n">srx</span><span class="p">)</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
-<span class="n">Niter</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">Niter</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">ip1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># define arrays that are the indeces i+1 and i-1</span>
 <span class="n">ip1</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">im1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -771,7 +819,7 @@ first for \)</span>i=0,2,4,\cdots<span class="math notranslate nohighlight">\( a
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/255dc66c8da0207f9c3cfbc9cab215190ae671311eb88ecc5f07091a4b9d93c7.png" src="../_images/255dc66c8da0207f9c3cfbc9cab215190ae671311eb88ecc5f07091a4b9d93c7.png" />
+<img alt="../_images/fa387aa04714b82fad202e768aa516c4625a4110469a676e15036b3cd9c27369.png" src="../_images/fa387aa04714b82fad202e768aa516c4625a4110469a676e15036b3cd9c27369.png" />
 </div>
 </div>
 <p>This is indeed a further improvement.</p>
@@ -832,7 +880,7 @@ D_n
  [ 0.  0.  0. ... -2.  1.  0.]
  [ 0.  0.  0. ...  1. -2.  1.]
  [ 1.  0.  0. ...  0.  1. -2.]]
-Determinant of A is: 6.661338147751009e-14
+Determinant of A is: 1.1102230246251716e-13
 </pre></div>
 </div>
 </div>
@@ -846,13 +894,13 @@ Determinant of A is: 6.661338147751009e-14
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.   , -0.125, -0.125, ...,  0.125, -0.125,  0.   ],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.   , -0.125, -0.125, ...,  0.   ,  0.   ,  0.   ],
        [ 0.   ,  0.875,  0.   , ...,  0.125, -0.125,  0.   ],
-       [ 0.   , -0.25 ,  1.   , ...,  0.125, -0.125,  0.   ],
+       [ 0.125, -0.125,  0.75 , ...,  0.125, -0.125,  0.   ],
        ...,
-       [ 0.   ,  0.   , -0.375, ...,  1.125, -0.125, -0.25 ],
-       [ 0.   ,  0.   , -0.25 , ...,  0.125,  0.875, -0.25 ],
-       [ 0.   , -0.25 ,  0.   , ...,  0.125, -0.125,  0.75 ]])
+       [ 0.   , -0.125, -0.125, ...,  1.   ,  0.125,  0.   ],
+       [-0.125,  0.125, -0.25 , ...,  0.   ,  1.125,  0.   ],
+       [ 0.   , -0.25 ,  0.   , ...,  0.   ,  0.125,  1.   ]])
 </pre></div>
 </div>
 </div>
@@ -954,7 +1002,7 @@ D_n \\\\
 Determinant of the input matrix is : 8100.0000000000355
 </pre></div>
 </div>
-<img alt="../_images/825c4b372f5a39032774800f54cc0c2e34a9174b43c67848b5e7f4e66f569669.png" src="../_images/825c4b372f5a39032774800f54cc0c2e34a9174b43c67848b5e7f4e66f569669.png" />
+<img alt="../_images/9aa58f930cfe8440a49a6c943852cd466b9881daa62d3297bdf93b32620af37e.png" src="../_images/9aa58f930cfe8440a49a6c943852cd466b9881daa62d3297bdf93b32620af37e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -976,7 +1024,7 @@ Determinant of the input matrix is : 8100.0000000000355
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x12f7f9c10&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x12e3c09a0&gt;]
 </pre></div>
 </div>
 <img alt="../_images/f8e64037bdf4573672394c028063bd105e4fb4a13cc1c6df04a9c75544672bc0.png" src="../_images/f8e64037bdf4573672394c028063bd105e4fb4a13cc1c6df04a9c75544672bc0.png" />
@@ -1047,7 +1095,7 @@ See the <A href="http://docs.scipy.org/doc/numpy/reference/routines.fft.html#mod
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/50aa7de147e120b48dcd5d421cef2f6504e1c8fd46977fec885391ffae808986.png" src="../_images/50aa7de147e120b48dcd5d421cef2f6504e1c8fd46977fec885391ffae808986.png" />
+<img alt="../_images/6b431ce8e0fc6cd4ddee977cee48f5b4fd21a9782cb9b409c9660b5522c28aa4.png" src="../_images/6b431ce8e0fc6cd4ddee977cee48f5b4fd21a9782cb9b409c9660b5522c28aa4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1065,23 +1113,26 @@ See the <A href="http://docs.scipy.org/doc/numpy/reference/routines.fft.html#mod
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="the-conjugate-gradient-method-img-src-http-upload-wikimedia-org-wikipedia-commons-b-bf-conjugate-gradient-illustration-svg-width-300-align-right">
 <h1>The Conjugate Gradient Method <img src="http://upload.wikimedia.org/wikipedia/commons/b/bf/Conjugate_gradient_illustration.svg" width="300" align="right"><a class="headerlink" href="#the-conjugate-gradient-method-img-src-http-upload-wikimedia-org-wikipedia-commons-b-bf-conjugate-gradient-illustration-svg-width-300-align-right" title="Permalink to this headline">#</a></h1>
-<p>The <a href="http://en.wikipedia.org/wiki/Conjugate_gradient_method">conjugate gradient method</a> is typically employed as an iterative approach to solving the linear equation
-$<span class="math notranslate nohighlight">\(
+<p>The <a href="http://en.wikipedia.org/wiki/Conjugate_gradient_method">conjugate gradient method</a> is typically employed as an iterative approach to solving the linear equation</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{A}\,\mathbf{x}=\mathbf{b}
-\)</span>$
-where <b>A</b> is a matrix and <b>x</b> and <b>b</b> are vectors.</p>
+\]</div>
+<p>where <b>A</b> is a matrix and <b>x</b> and <b>b</b> are vectors.</p>
 <p>So we want to find a good approximate solution <span class="math notranslate nohighlight">\(\mathbf{x}_F\)</span>.
 We will want to start with a guess for <span class="math notranslate nohighlight">\(x_0\)</span> and go through a number of iterations that we stop at <span class="math notranslate nohighlight">\(\mathbf{x}_F\)</span> and call the intermediate results <span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>.</p>
-<p>For any guess <span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span> we can measure how far off from the correct solution we are
-$<span class="math notranslate nohighlight">\(
+<p>For any guess <span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span> we can measure how far off from the correct solution we are</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{r} = \mathbf{b} - \mathbf{A}\,\mathbf{x}.
-\)</span><span class="math notranslate nohighlight">\( 
-\)</span>\mathbf{r}<span class="math notranslate nohighlight">\( is called the &lt;b&gt;residual&lt;/b&gt; (or residue) at the \)</span>k$-th step.</p>
-<p>If we now think of this quadratic equation:
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p><span class="math notranslate nohighlight">\(\mathbf{r}\)</span> is called the <b>residual</b> (or residue) at the <span class="math notranslate nohighlight">\(k\)</span>-th step.</p>
+<p>If we now think of this quadratic equation:</p>
+<div class="math notranslate nohighlight">
+\[
 f(\mathbf{x}) = \frac12 \mathbf{x}^\mathrm{T} \mathbf{A}\mathbf{x} - \mathbf{x}^\mathrm{T} \mathbf{b} , \quad \mathbf{x}\in\mathbf{R}^n. 
-\)</span><span class="math notranslate nohighlight">\(
-we can see that \)</span>-\mathbf{r}<span class="math notranslate nohighlight">\( is the gradient of \)</span>f<span class="math notranslate nohighlight">\( at \)</span>\mathbf{x}_k<span class="math notranslate nohighlight">\(. So to find an \)</span>\mathbf{x}_F<span class="math notranslate nohighlight">\( for which \)</span>\mathbf{r}\approx 0<span class="math notranslate nohighlight">\( is equivalent to finding the minimum of \)</span>f<span class="math notranslate nohighlight">\(. There are methods which follow the steepest decent i.e. move along \)</span>\mathbf{r}<span class="math notranslate nohighlight">\( to get towards the minimum. The trick in the conjugant gradient method is that it takes steps in orthogonal vectors to converge towards the minimum. The remarkable aspect of this algorithm is that it converges in at most \)</span>n<span class="math notranslate nohighlight">\( steps where \)</span>\mathbf{A}<span class="math notranslate nohighlight">\( is a \)</span>n\times n$ matrix.</p>
+\]</div>
+<p>we can see that <span class="math notranslate nohighlight">\(-\mathbf{r}\)</span> is the gradient of <span class="math notranslate nohighlight">\(f\)</span> at <span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>. So to find an <span class="math notranslate nohighlight">\(\mathbf{x}_F\)</span> for which <span class="math notranslate nohighlight">\(\mathbf{r}\approx 0\)</span> is equivalent to finding the minimum of <span class="math notranslate nohighlight">\(f\)</span>. There are methods which follow the steepest decent i.e. move along <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> to get towards the minimum. The trick in the conjugant gradient method is that it takes steps in orthogonal vectors to converge towards the minimum. The remarkable aspect of this algorithm is that it converges in at most <span class="math notranslate nohighlight">\(n\)</span> steps where <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a <span class="math notranslate nohighlight">\(n\times n\)</span> matrix.</p>
 <p>So the key is to learn how to pick the search directions <span class="math notranslate nohighlight">\(\mathbf{p}_k\)</span>. The most common choice here is to find vectors ortho-normal to the last residue so our quantities only depend on the last step taken and not say on a large number of previous steps.</p>
 <p>For the first step we pick <span class="math notranslate nohighlight">\(\mathbf{p}_0=\mathbf{r}_0=\mathbf{b}-\mathbf{A\,x}_0\)</span> as the search direction.</p>
 <p>Let us pick</p>
@@ -1091,7 +1142,8 @@ we can see that \)</span>-\mathbf{r}<span class="math notranslate nohighlight">\
 \]</div>
 <p>and</p>
 <div class="math notranslate nohighlight">
-\[\mathbf{p}_{k+1} = \mathbf{r}_{k+1} + \beta_k \, \mathbf{p}_k, \ \ \ \ \beta = \frac{\mathbf{r}_{k+1}^T\, \mathbf{r}_{k+1}}{ \mathbf{r}_{k}^T \, \mathbf{r}_{k}}
+\[
+\mathbf{p}_{k+1} = \mathbf{r}_{k+1} + \beta_k \, \mathbf{p}_k, \ \ \ \ \beta = \frac{\mathbf{r}_{k+1}^T\, \mathbf{r}_{k+1}}{ \mathbf{r}_{k}^T \, \mathbf{r}_{k}}
 \]</div>
 <p>i.e. a combination of the current residual and the previous search direction, for the next search direction. Different conjugate gradient methods differ typically in their choice of <span class="math notranslate nohighlight">\(\beta\)</span> and of how many previous search directions are considered. Please also have a look at <a href="http://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf">Jonathan Shewchuk’s fantastic detailed description</a> of this method.</p>
 <div class="cell docutils container">
@@ -1291,8 +1343,8 @@ iterated  65  times to get to tolerance= 1e-07
 <h2>The Laplace operator in spherical coordinates<a class="headerlink" href="#the-laplace-operator-in-spherical-coordinates" title="Permalink to this headline">#</a></h2>
 <p>The Laplace operator in spherical coordinates is:
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ba284287-289b-4097-902e-c7f4ab4798f9">
-<span class="eqno">(3)<a class="headerlink" href="#equation-ba284287-289b-4097-902e-c7f4ab4798f9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-924f2ce8-46a3-4c76-aec4-bdb2a550677d">
+<span class="eqno">(3)<a class="headerlink" href="#equation-924f2ce8-46a3-4c76-aec4-bdb2a550677d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla^2 f &amp;=&amp; {1 \over r^2}{\partial \over \partial r}\!\left(r^2 {\partial f \over \partial r}\right)
   \!+\!{1 \over r^2\!\sin\theta}{\partial \over \partial \theta}\!\left(\sin\theta {\partial f \over \partial \theta}\right)
   \!+\!{1 \over r^2\!\sin^2\theta}{\partial^2 f \over \partial \varphi^2} 
@@ -1350,11 +1402,11 @@ and also make note of the gradient in radial direction:
       </div>
     </a>
     <a class="right-next"
-       href="../etc/pyqtgraph_example.html"
+       href="lagrangian-hydrodynamics.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Graphical User Interface (GUI) programming</p>
+        <p class="prev-next-title">Lagrangian Hydrodynamics</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -1,0 +1,1015 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Lagrangian Hydrodynamics &#8212; Physics 113 - Computational Physics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'pde/lagrangian-hydrodynamics';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Graphical User Interface (GUI) programming" href="../etc/pyqtgraph_example.html" />
+    <link rel="prev" title="Solving the Poisson equation \(\Delta\Phi=C\rho\)" href="integrate-1D-poissonEquation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to Physics 113
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Final Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../final_project.html">Final project scope and ideas</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro.html">Get started with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/environments.html">Working with Python Virtual Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/intro-to-numpy.html">Introduction to NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/basic-plotting.html">Basic Plotting in Python using Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_basics/Exercise-python-basics.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Numerical Integration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/numerical_integration.html">Trapezoidal and Simpson’s Rule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/MonteCarloIntegration-Basics.html">Monte Carlo Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../numerical_integration/Exercises-numerical-integration.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Integrating ODEs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ode/ode-integration-HarmonicOscillator.html">Comparing different Integration approaches to solve the Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/3body-gravity.html">Planetary Motion - Three Body Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ode/Exercises-ode.html">Exercises</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimization/OptimizationLecture_Introduction.html">Introduction to Optimization</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../optimization/Modeling_of_data.html">Modeling of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/MetropolisHastings.html">Probability Distributions and Sampling from them</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fast Fourier Transforms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fft/discrete_fast_fourier_transform.html">Discrete Fourier Transform and Fast Fourier Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fft/solve_heatequation_FFT_new.html">Solving the heat diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fft/solve_propagating_wave_FFT.html">Propagating wave equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fft/solve_burgers_equation_FFT_2023.html">Burgers’ equation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Partial Differential Equations</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="integrate-1D-poissonEquation.html">Solving the Poisson equation <span class="math notranslate nohighlight">\(\Delta\Phi=C\rho\)</span></a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lagrangian Hydrodynamics</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Helpful libraries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../etc/pyqtgraph_example.html">Graphical User Interface (GUI) programming</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/yipihey/Physics-113-Book/master?urlpath=tree/docs/pde/lagrangian-hydrodynamics.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/yipihey/Physics-113-Book/blob/master/docs/pde/lagrangian-hydrodynamics.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/yipihey/Physics-113-Book/issues/new?title=Issue%20on%20page%20%2Fpde/lagrangian-hydrodynamics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/pde/lagrangian-hydrodynamics.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lagrangian Hydrodynamics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lagrangian Hydrodynamics</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-steepening">Wave steepening</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="lagrangian-hydrodynamics">
+<h1>Lagrangian Hydrodynamics<a class="headerlink" href="#lagrangian-hydrodynamics" title="Permalink to this headline">#</a></h1>
+<h3>INTRODUCTION</h3>
+An inviscid fluid flow is described through the following conservation equations collectively known as the <b>Euler equations</b>.
+<p>Conservation of mass (continuity equation):
+$<span class="math notranslate nohighlight">\(
+\dot{\rho} + \nabla(\rho\,\mathbf{v}) = 0, \ \ \text{or} \ \ \ \ \left( \frac{\partial }{\partial t} + \mathbf{v} \nabla\right) \rho = - \rho \nabla\mathbf{v}
+\)</span>$</p>
+<p>Conservation of momentum: (Navier Stokes equation)
+$<span class="math notranslate nohighlight">\(
+\rho \left( \frac{\partial }{\partial t} + \mathbf{v} \cdot \nabla  \right) \mathbf{v}= -\nabla p + \rho \nu \nabla^2 \mathbf{v},
+\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\nu$ is the kinematic viscosity.</p>
+<p>Conservation of energy:
+$<span class="math notranslate nohighlight">\(
+\frac{\partial e}{\partial t} + \nabla\cdot(e\,\mathbf{v}) + p\nabla\cdot\mathbf{v} = 0
+\)</span>$</p>
+<p>In certain situations the pressure can sometimes be expressed as a function of <span class="math notranslate nohighlight">\(\rho\)</span> only. Such as in the isothermal equation of state <span class="math notranslate nohighlight">\(p=c_0^2\,\rho\)</span>, where <span class="math notranslate nohighlight">\(c_0\)</span> is the speed of sound. In this case the behavior is given only from the continuity equation and the momentum equation. Because <span class="math notranslate nohighlight">\(\nabla p=c_0^2 \nabla\rho\)</span> and that is all we need for the momentum equation.</p>
+<p>In this case for a Lagrangian description this boils down to solving this single equation:
+$<span class="math notranslate nohighlight">\(
+\frac{D\mathbf{v}}{Dt} = -\frac{1}{\rho}\nabla p
+\)</span>$</p>
+<p>So we have a second-order differential equation for the positions of our mass grid.</p>
+<p>So imagine we discretized the total mass <span class="math notranslate nohighlight">\(M\)</span> with <span class="math notranslate nohighlight">\(N\)</span> shells of mass, <span class="math notranslate nohighlight">\(\triangle m\)</span> , with edges of <span class="math notranslate nohighlight">\(r_i\)</span> with <span class="math notranslate nohighlight">\(0&lt;i&lt;N\)</span> in the domain <span class="math notranslate nohighlight">\([0,1]\)</span>. Call the initial pressure distribution at time zero <span class="math notranslate nohighlight">\(p_0\)</span> and realize that the density, <span class="math notranslate nohighlight">\(\rho_i\)</span> in our grid zones is always just simply given by <span class="math notranslate nohighlight">\(\rho_i = \triangle m/|r_{i+1}-r_{i}|\)</span>. So if we can describe our fluid purely with an equation of state described by <span class="math notranslate nohighlight">\(p = c_0^2\rho\)</span> we only need to store the initial value of <span class="math notranslate nohighlight">\(c_0\)</span> which may be a different in differenct parcels of the gas.</p>
+<p>We will first use a simple leap frog integrator to solve this. This operates in two parts. First we update the positions by half a time step <span class="math notranslate nohighlight">\(r_i = r_i + (dt/2)\,v_i\)</span> then using these positions to calculate the accelerations</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e5bf5964-866d-4b50-8848-4adc4616de11">
+<span class="eqno">(4)<a class="headerlink" href="#equation-e5bf5964-866d-4b50-8848-4adc4616de11" title="Permalink to this equation">#</a></span>\[\begin{equation}
+-\frac{1}{\rho}\nabla p = - \frac{|r_{i+1}-r_i|}{\triangle m} 
+ \nabla \left(\frac{\triangle m c_{0,i}^2}{|r_{i+1}-r_i|}\right)=-\frac{1}{\triangle m} \triangle r_i \nabla\frac{\triangle m c_{0,i}^2}{\triangle r_i},
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\triangle r_i = |r_{i+1}-r_i|\)</span>. Then we do the remaining part of the kick of the positions <span class="math notranslate nohighlight">\(r_i = r_i + (dt/2)\,v_i\)</span>. The two kicks can be combined one we keep them separate here so that at outputs we have positions and velocities at the same time. In the case where all shells have the same mass we could even eliminate <span class="math notranslate nohighlight">\(\triangle m\)</span> in the accelerations. This may not in general be the case, however, so we keep it.</p>
+<p>
+For the special case where pressure is only a function of density these are the only equations we would need. More gnerally we also have to consider an energy (or entropy) equation in order to account for the possibility that the internal energy could be different for different densities. However, in the Lagrangian case we know right away that the energy change is just the work done on the cell. I.e.
+$$
+\frac{Du}{dt} = - p \frac{dV}{dt},
+$$ 
+where $dV$ is the rate of change of the fluid element volume we are considering. 
+<h3>Sound waves</h3>
+<p>Linearizing the continuity and momentum equation above for small perturbations <span class="math notranslate nohighlight">\(\rho_1\)</span> and <span class="math notranslate nohighlight">\(v_1\)</span> (i.e. assume <span class="math notranslate nohighlight">\(\rho = \rho_0 + \rho_1\)</span> and <span class="math notranslate nohighlight">\(v = 0+v_1\)</span>) and differentiating the momentum equation one more time in time we can obtain the wave solutions with the linear dispersion relation <span class="math notranslate nohighlight">\(\omega=ck\)</span>
+$<span class="math notranslate nohighlight">\(
+v = v_{a} \exp[i(kx+\omega t)] = v_{a}\exp[ik(x + c t)] , \ \ \ \rho = \rho_0 \left(1-\frac{v_1}{c}\right).
+\)</span><span class="math notranslate nohighlight">\(
+The mass coordinate is 
+\)</span><span class="math notranslate nohighlight">\(
+m(x) = \int_0^1 \rho dx = \rho_0\left[x+\frac{v_a}{2\pi\,c_0}(\cos(2\pi\,x)-1)\right]
+\)</span>$
+so to set up a simple test we can choose equidistant points in mass and derive the positions by finding the roots of this last equation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pylab</span> inline
+<span class="kn">import</span> <span class="nn">time</span> <span class="k">as</span> <span class="nn">systime</span>
+<span class="c1">#from scitools.std import as sci</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">brentq</span> 
+
+<span class="k">def</span> <span class="nf">accGradP</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span> <span class="p">(</span><span class="n">m</span><span class="o">/</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">))</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">1.</span><span class="o">/</span><span class="n">m</span><span class="o">*</span><span class="n">dr</span><span class="o">*</span><span class="p">(</span><span class="n">diff</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">N</span>
+<span class="n">va</span> <span class="o">=</span> <span class="mf">.1</span>
+<span class="n">rho0</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">va</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+<span class="n">c0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">c0</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">c</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
+
+<span class="n">mass</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">off</span><span class="p">:</span> <span class="n">rho0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">va</span><span class="o">/</span><span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">-</span><span class="n">off</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)):</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span>
+
+    
+<span class="n">Courantfactor</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">Courantfactor</span> <span class="o">*</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
+
+<span class="n">tfinal</span> <span class="o">=</span> <span class="mf">0.6</span>
+<span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="n">tfinal</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">500000</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">r</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">1.</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">r</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">fabs</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accGradP</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">c0</span><span class="p">)</span> 
+    <span class="n">v</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">acc</span>
+<span class="c1">#    print accGradP(r,m,c0)</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">Courantfactor</span><span class="o">*</span><span class="nb">min</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">/</span><span class="nb">max</span><span class="p">((</span><span class="nb">max</span><span class="p">(</span><span class="n">c0</span><span class="p">),</span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">dt</span><span class="p">))</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">vmax</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+    
+<span class="nb">print</span> <span class="n">count</span><span class="p">,</span> <span class="s1">&#39; time steps to time: &#39;</span><span class="p">,</span> <span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">49</span>
+    <span class="nb">print</span> <span class="n">count</span><span class="p">,</span> <span class="s1">&#39; time steps to time: &#39;</span><span class="p">,</span> <span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+          <span class="o">^</span>
+<span class="ne">SyntaxError</span>: Missing parentheses in call to &#39;print&#39;. Did you mean print(count, &#39; time steps to time: &#39;, time[-1])?
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">m</span><span class="o">/</span><span class="n">dr</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;density&quot;</span><span class="p">);</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;position&#39;</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4830cb0566ca7373a0defabebeab6a13d5bef931c3a43fdc1bd25bb71dc1e015.png" src="../_images/4830cb0566ca7373a0defabebeab6a13d5bef931c3a43fdc1bd25bb71dc1e015.png" />
+</div>
+</div>
+<h4>Oh no!!!</h4>
+<p>Did we screw up our approach to solving the equations?
+What happened to our wave?</p>
+</section>
+<section id="wave-steepening">
+<h1>Wave steepening<a class="headerlink" href="#wave-steepening" title="Permalink to this headline">#</a></h1>
+<p>Essentially all non-linear wave steepen! The ones that do not are arranged such that their dispersion just cancels the steepening. These are called <i>solitary wave</i> or <a href="http://en.wikipedia.org/wiki/Soliton" target="_blank"><i>solitons</i></a>. This is actually quite easy to understand. The sound speed of a gas is given by <span class="math notranslate nohighlight">\(c^2 = \partial p/\partial \rho\)</span></p>
+<h3>Artificial Viscosity</h3>
+<p><a href="http://jap.aip.org/resource/1/japiau/v21/i3/p232_s1">A Method for the Numerical Calculation of Hydrodynamic Shocks</a>
+1950 by J. VonNeumann and R. D. Richtmyer layed out how to study shock waves by inroducing a so called artificial viscosity into the method. Let us explore this and see whether we can make it work.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">accVisc</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">dx_smear</span><span class="o">=</span><span class="mf">.01</span><span class="p">):</span>
+    <span class="n">dv</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">v</span><span class="p">)</span><span class="o">/</span><span class="n">dr</span>
+    <span class="n">dif</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx_smear</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span><span class="n">dv</span><span class="o">*</span><span class="n">fabs</span><span class="p">(</span><span class="n">dv</span><span class="p">)</span>  <span class="o">*</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">/</span><span class="n">m</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">1.</span><span class="o">/</span><span class="n">m</span><span class="o">*</span><span class="n">dr</span><span class="o">*</span><span class="p">(</span><span class="n">dif</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dif</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+
+<span class="k">def</span> <span class="nf">accGradP</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">dif</span> <span class="o">=</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span> <span class="p">(</span><span class="n">m</span><span class="o">/</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">))</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">1.</span><span class="o">/</span><span class="n">m</span><span class="o">*</span><span class="n">dr</span><span class="o">*</span><span class="p">(</span><span class="n">dif</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dif</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">160</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">N</span>
+<span class="n">xL</span> <span class="o">=</span> <span class="n">r</span><span class="o">+</span><span class="mf">.5</span><span class="o">/</span><span class="n">N</span>
+<span class="n">va</span> <span class="o">=</span> <span class="mf">.1</span>
+<span class="n">rho0</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">va</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+<span class="n">c0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">c0</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">c</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
+
+<span class="n">mass</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">off</span><span class="p">:</span> <span class="n">rho0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">va</span><span class="o">/</span><span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">-</span><span class="n">off</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)):</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span>
+
+<span class="n">Courantfactor</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">Courantfactor</span> <span class="o">*</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="n">tfinal</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="n">tfinal</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">500000</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">r</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">1.</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">r</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">fabs</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accGradP</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">c0</span><span class="p">)</span> <span class="o">+</span> <span class="n">accVisc</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">dx_smear</span><span class="o">=</span><span class="mf">.02</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">acc</span>
+<span class="c1">#    print accGradP(r,m,c0)</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">Courantfactor</span><span class="o">*</span><span class="nb">min</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">/</span><span class="nb">max</span><span class="p">((</span><span class="nb">max</span><span class="p">(</span><span class="n">c0</span><span class="p">),</span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">dt</span><span class="p">))</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">vmax</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+    
+<span class="nb">print</span> <span class="n">count</span><span class="p">,</span> <span class="s1">&#39; time steps to time: &#39;</span><span class="p">,</span> <span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1326  time steps to time:  1.50089796648
+</pre></div>
+</div>
+<img alt="../_images/55ce5c4b3d5d40a32a9a5920c2be601ce8beb5f5afce72db37376e853229859f.png" src="../_images/55ce5c4b3d5d40a32a9a5920c2be601ce8beb5f5afce72db37376e853229859f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">accGradP</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">c0</span><span class="p">),</span> <span class="n">r</span><span class="p">,</span> <span class="mf">.01</span><span class="o">*</span><span class="n">accVisc</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">dx_smear</span><span class="o">=</span><span class="mf">.5</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/567fe9f70dcfb48d02a959c7d863145aa6690b657b15d9366a31f5a7b1537e6e.png" src="../_images/567fe9f70dcfb48d02a959c7d863145aa6690b657b15d9366a31f5a7b1537e6e.png" />
+</div>
+</div>
+<p>Clean up the code a bit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">av</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+<span class="k">def</span> <span class="nf">eos_u</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">p</span>
+    <span class="k">return</span> <span class="n">u</span>
+    
+<span class="k">class</span> <span class="nc">EquationOfState</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gammain</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">gammain</span>
+    <span class="k">def</span> <span class="nf">u</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span><span class="o">/</span><span class="n">rho</span>
+    <span class="k">def</span> <span class="nf">cs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">u</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">u</span>
+
+<span class="k">def</span> <span class="nf">VNR_q</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">dm</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">kdx</span><span class="o">=</span><span class="mf">.1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;return VanNeumann Richtmyer viscosity&#39;&#39;&#39;</span>
+    <span class="n">dv</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">dr</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="o">-</span><span class="n">kdx</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span><span class="n">dv</span><span class="o">*</span><span class="n">fabs</span><span class="p">(</span><span class="n">dv</span><span class="p">)</span>  <span class="o">*</span><span class="n">dr</span><span class="o">/</span><span class="n">dm</span>
+    <span class="k">return</span> <span class="n">q</span>
+
+<span class="k">def</span> <span class="nf">accGradP</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">m</span><span class="o">/</span><span class="n">dr</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">1.</span><span class="o">/</span><span class="n">rho</span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+
+<span class="n">gasgamma</span> <span class="o">=</span> <span class="mf">1.001</span>
+<span class="n">eos</span> <span class="o">=</span> <span class="n">EquationOfState</span><span class="p">(</span><span class="n">gasgamma</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">LagrangeHydro</span><span class="p">(</span><span class="n">tfinal</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dm</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="n">Courantfactor</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span> <span class="c1"># cell volumes. </span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">fabs</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+    <span class="n">drold</span> <span class="o">=</span> <span class="n">dr</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">dm</span><span class="o">/</span><span class="n">dr</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">eos</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">eos</span><span class="o">.</span><span class="n">cs</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">Courantfactor</span> <span class="o">*</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span><span class="o">/</span><span class="nb">max</span><span class="p">((</span><span class="nb">max</span><span class="p">(</span><span class="n">cs</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+    <span class="n">kvnr</span> <span class="o">=</span> <span class="mf">4.</span>
+    <span class="n">dxvnr</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
+
+    <span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">time</span><span class="o">&lt;</span><span class="n">tfinal</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">500000</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span>
+        <span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">fabs</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">VNR_q</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">dm</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">kdx</span><span class="o">=</span><span class="n">kvnr</span><span class="o">*</span><span class="n">dxvnr</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">eos</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">dm</span><span class="o">/</span><span class="n">dr</span><span class="p">,</span><span class="n">u</span><span class="p">)</span>
+        
+        <span class="n">acc</span> <span class="o">=</span> <span class="n">accGradP</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">p</span><span class="o">+</span><span class="n">q</span><span class="p">)</span> 
+        <span class="n">v</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">acc</span>
+    <span class="c1">#    print accGradP(r,m,c0)</span>
+        <span class="n">r</span> <span class="o">+=</span> <span class="n">dt</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span>
+        <span class="n">r</span><span class="p">[</span><span class="n">r</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">1.</span>
+        <span class="n">r</span><span class="p">[</span><span class="n">r</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.</span>
+
+        <span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span> <span class="c1"># cell volumes. </span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">fabs</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+        
+        <span class="n">dV</span> <span class="o">=</span> <span class="n">dr</span><span class="o">-</span><span class="n">drold</span>
+        <span class="n">u</span> <span class="o">-=</span> <span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="n">q</span><span class="p">)</span><span class="o">*</span><span class="n">dV</span><span class="o">/</span><span class="n">dm</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">dm</span><span class="o">/</span><span class="n">dr</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">eos</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span><span class="n">u</span><span class="p">)</span>
+        
+        <span class="n">drold</span> <span class="o">=</span> <span class="n">dr</span>
+        <span class="n">time</span> <span class="o">+=</span> <span class="n">dt</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">Courantfactor</span><span class="o">*</span><span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">dr</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">eos</span><span class="o">.</span><span class="n">cs</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span><span class="n">p</span><span class="o">+</span><span class="n">q</span><span class="p">)</span><span class="o">+</span><span class="nb">abs</span><span class="p">((</span><span class="n">v</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">)))</span> <span class="c1"># new time step</span>
+
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">u</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">160</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">N</span>
+<span class="n">xL</span> <span class="o">=</span> <span class="n">r</span><span class="o">+</span><span class="mf">.5</span><span class="o">/</span><span class="n">N</span>
+<span class="n">va</span> <span class="o">=</span> <span class="mf">.1</span>
+<span class="n">rho0</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">va</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+<span class="n">c0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">c0</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">c</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">N</span>
+
+<span class="n">mass</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">off</span><span class="p">:</span> <span class="n">rho0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">va</span><span class="o">/</span><span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">-</span><span class="n">off</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)):</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">fabs</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">dr</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">m</span><span class="o">/</span><span class="n">dr</span>
+
+<span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">den</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">LagrangeHydro</span><span class="p">(</span><span class="mf">.1</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">JSAnimation</span>
+<span class="kn">from</span> <span class="nn">JSAnimation</span> <span class="kn">import</span> <span class="n">IPython_display</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">animation</span>
+
+<span class="k">def</span> <span class="nf">HydroMovie</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tfinal</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">w0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(</span><span class="n">tfinal</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w0</span><span class="p">,</span> <span class="n">phase</span><span class="p">)</span>
+    
+    <span class="n">skiprate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">skiprate</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">skiprate</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[::</span><span class="n">skiprate</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[::</span><span class="n">skiprate</span><span class="p">]</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[::</span><span class="n">skiprate</span><span class="p">]</span>
+    <span class="c1"># create a simple animation</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">([],</span> <span class="p">[])</span>
+        <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+    
+    <span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">v</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+    
+    <span class="k">return</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate</span><span class="p">,</span> <span class="n">init_func</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
+                            <span class="n">frames</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">interval</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mass</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">off</span><span class="p">:</span> <span class="n">rho0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">va</span><span class="o">/</span><span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">-</span><span class="n">off</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)):</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x109a5d590&gt;]
+</pre></div>
+</div>
+<img alt="../_images/3e7bb24687434a9065986f884de8a8cbf1d9418cdd5a965c9f2eaf49732517e7.png" src="../_images/3e7bb24687434a9065986f884de8a8cbf1d9418cdd5a965c9f2eaf49732517e7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">r</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.00698341,  0.00706192,  0.0071363 ,  0.00720572,  0.00726939,
+        0.00732676,  0.00737728,  0.00741957,  0.00745207,  0.00747435,
+        0.0074859 ,  0.00748623,  0.00747528,  0.00745284,  0.00741937,
+        0.00737537,  0.00732124,  0.00725829,  0.00718708,  0.00710909,
+        0.00702527,  0.00693694,  0.0068452 ,  0.00675134,  0.00665609,
+        0.00656097,  0.00646619,  0.00637302,  0.00628199,  0.00619343,
+        0.006108  ,  0.0060261 ,  0.00594791,  0.00587364,  0.0058035 ,
+        0.00573763,  0.00567612,  0.00561904,  0.00556641,  0.00551825,
+        0.00547449,  0.00543507,  0.00540004,  0.00536937,  0.00534296,
+        0.00532082,  0.00530305,  0.00528985,  0.00528111,  0.00527655,
+        0.0052763 ,  0.00528057,  0.00528899,  0.00530164,  0.00531879,
+        0.00533992,  0.00536548,  0.0053952 ,  0.00542903,  0.00546717,
+        0.00550922,  0.00555554,  0.00560565,  0.00565988,  0.00571775,
+        0.00577951,  0.00584474,  0.00591343,  0.00598547,  0.00606038,
+        0.00613821,  0.00621859,  0.00630104,  0.00638532,  0.00647107,
+        0.00655777,  0.00664482,  0.0067316 ,  0.00681745,  0.00690165,
+        0.00698341,  0.00706192,  0.0071363 ,  0.00720572,  0.00726939,
+        0.00732676,  0.00737728,  0.00741957,  0.00745207,  0.00747435,
+        0.0074859 ,  0.00748623,  0.00747528,  0.00745284,  0.00741937,
+        0.00737537,  0.00732124,  0.00725829,  0.00718708,  0.00710909,
+        0.00702527,  0.00693694,  0.0068452 ,  0.00675134,  0.00665609,
+        0.00656097,  0.00646619,  0.00637302,  0.00628199,  0.00619343,
+        0.006108  ,  0.0060261 ,  0.00594791,  0.00587364,  0.0058035 ,
+        0.00573763,  0.00567612,  0.00561904,  0.00556641,  0.00551825,
+        0.00547449,  0.00543507,  0.00540004,  0.00536937,  0.00534296,
+        0.00532082,  0.00530305,  0.00528985,  0.00528111,  0.00527655,
+        0.0052763 ,  0.00528057,  0.00528899,  0.00530164,  0.00531879,
+        0.00533992,  0.00536548,  0.0053952 ,  0.00542903,  0.00546717,
+        0.00550922,  0.00555554,  0.00560565,  0.00565988,  0.00571775,
+        0.00577951,  0.00584474,  0.00591343,  0.00598547,  0.00606038,
+        0.00613821,  0.00621859,  0.00630104,  0.00638532,  0.00647107,
+        0.00655777,  0.00664482,  0.0067316 ,  0.00681745, -0.99309835])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python2",
+            path: "./pde"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python2'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="integrate-1D-poissonEquation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Solving the Poisson equation <span class="math notranslate nohighlight">\(\Delta\Phi=C\rho\)</span></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../etc/pyqtgraph_example.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Graphical User Interface (GUI) programming</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lagrangian Hydrodynamics</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-steepening">Wave steepening</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tom Abel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
